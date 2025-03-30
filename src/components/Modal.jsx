@@ -42,7 +42,7 @@ const ButtonContainer = styled.div`
   gap: 12px;
 `;
 
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, children }) => {
   if (!isOpen) return null;
 
   return (

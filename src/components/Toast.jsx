@@ -26,7 +26,7 @@ const StyledIcon = styled.div`
   justify-content: center;
 `;
 
-const Toast = ({ show, children, type }) => {
+const Toast = ({ show, text, type }) => {
   const Icon = type === 'positive' ? DoneIcon : ErrorIcon;
 
   return (
@@ -34,7 +34,7 @@ const Toast = ({ show, children, type }) => {
       <StyledIcon>
         <Icon />
       </StyledIcon>
-      {children}
+      {text}
     </ToastMessage>
   );
 };

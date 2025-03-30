@@ -56,7 +56,7 @@ function AppExample() {
         카카오로 로그인
       </Button>
       <Image src={image} alt='프로필' width='90px' height='90px' radius='50%' />
-      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+      <Modal isOpen={modalOpen}>
         <ModalText>
           <h4>해당 블로그를 삭제하시겠어요?</h4>
           <p>삭제된 블로그는 다시 확인할 수 없어요.</p>
@@ -76,9 +76,7 @@ function AppExample() {
         </ButtonContainer>
       </Modal>
       ;
-      <Toast show={toastData.show} type={toastData.type}>
-        {toastData.message}
-      </Toast>
+      <Toast show={toastData.show} type={toastData.type} text={toastData.message} />
     </Container>
   );
 }
