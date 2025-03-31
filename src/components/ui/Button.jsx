@@ -14,7 +14,7 @@ const StyledButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
 `;
 
 const StyledIcon = styled.div`

@@ -10,6 +10,12 @@ const StyledInput = styled.input`
   background-color: ${(props) => props.$bgColor || 'white'};
   border: ${(props) => props.$borderStyle || '1px solid #ccc'};
   border-radius: ${(props) => props.radius || '4px'};
+
+  &::placeholder {
+    color: #bbb;
+    font-size: 12px;
+    padding-left: 10px;
+  }
 `;
 
 const Input = ({
