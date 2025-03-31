@@ -27,6 +27,15 @@ const ModalContent = styled.div`
   min-height: 450px;
   position: relative;
   padding-top: 30px;
+  transform: translateY(-100px);
+
+  @media (max-width: 700px) {
+    width: 90%;
+    height: 60%;
+    flex-direction: column;
+    padding: 60px 0;
+    transform: translateY(-50px);
+  }
 `;
 
 const CloseButton = styled(Clear)`
@@ -46,6 +55,11 @@ const LeftContent = styled.div`
   justify-content: center;
   text-align: center;
   gap: 30px;
+
+  @media (max-width: 700px) {
+    width: 100%;
+    height: 50%;
+  }
 `;
 
 const Text = styled.p`
@@ -60,6 +74,13 @@ const RightContent = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
+
+  @media (max-width: 700px) {
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    gap: 5px;
+  }
 `;
 
 const Sns = styled.div`
@@ -102,8 +123,8 @@ const LoginModal = ({ isOpen, onClose }) => {
           <Text>You can make anything by writing</Text>
         </LeftContent>
         <RightContent>
-          <Input width='80%' height='45px' placeholder='이메일' />
-          <Input width='80%' height='45px' placeholder='비밀번호' />
+          <Input width='80%' height='45px' placeholder='이메일' type='emial' />
+          <Input width='80%' height='45px' placeholder='비밀번호' type='password' />
           <Button
             width='82%'
             height='48px'
