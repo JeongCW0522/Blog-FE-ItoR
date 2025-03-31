@@ -97,7 +97,7 @@ const Sns = styled.div`
     content: '';
     flex: 1;
     height: 1px;
-    background-color: #555; /* 선 색상 */
+    background-color: #555;
   }
 `;
 

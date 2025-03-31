@@ -1,7 +1,13 @@
 import React from 'react';
-import AppExample from '경로';
+import Header from '@/components/Header';
+import AppExample from './AppExample';
 
 function App() {
-  return <AppExample />;
+  return (
+    <div>
+      <Header></Header>
+      <AppExample />
+    </div>
+  );
 }
 export default App;
