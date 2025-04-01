@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import Image from '@/components/ui/Image';
-import image from '@/assets/test.jpg';
 import { Modal, ModalText, ButtonContainer } from '@/components/ui/Modal';
 import Toast from '@/components/ui/Toast';
 import CreateIcon from '@/assets/create.svg?react';
 import KakaoIcon from '@/assets/kakaologo.svg?react';
+import Profile from '@/assets/profile.svg?url';
 import LoginModal from '@/components/Login/LoginModal';
 
 const Container = styled.div`
@@ -60,7 +60,7 @@ function AppExample() {
       >
         카카오로 로그인
       </Button>
-      <Image src={image} alt='프로필' width='90px' height='90px' radius='50%' />
+      <Image src={Profile} alt='프로필' width='90px' height='90px' radius='50%' />
       <Modal isOpen={modalOpen}>
         <ModalText>
           <h4>해당 블로그를 삭제하시겠어요?</h4>
