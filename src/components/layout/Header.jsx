@@ -13,6 +13,7 @@ const HeaderContainer = styled.div`
   max-width: 100vw;
   position: fixed;
   margin: 0 auto;
+  padding-left: 20px;
   box-sizing: border-box;
   background-color: white;
   top: 0;

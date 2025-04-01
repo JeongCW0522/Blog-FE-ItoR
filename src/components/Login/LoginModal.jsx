@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Clear from '@/assets/clear.svg?react';
 import GITLOG from '@/assets/GITLOG.svg?react';
@@ -147,7 +148,11 @@ const LoginModal = ({ isOpen, onClose }) => {
           >
             카카오로 로그인
           </Button>
-          <SignUpText>또는 회원가입</SignUpText>
+          <SignUpText>
+            <Link to='/signUp' style={{ textDecoration: 'none', color: '#909090' }}>
+              또는 회원가입
+            </Link>
+          </SignUpText>
         </RightContent>
       </ModalContent>
     </ModalOverlay>
