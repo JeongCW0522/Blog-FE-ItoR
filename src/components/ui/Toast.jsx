@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import ErrorIcon from '@/assets/error.svg?react';
 import DoneIcon from '@/assets/done.svg?react';

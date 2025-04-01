@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import HeaderBar from '@/assets/reorder.svg?react';
 import HeaderLogo from '@/assets/GITLOG2.svg?react';

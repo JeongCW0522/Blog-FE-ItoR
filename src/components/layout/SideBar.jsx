@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import Image from '../ui/Image';
 import Button from '../ui/Button';
