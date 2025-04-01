@@ -11,9 +11,14 @@ const HeaderContainer = styled.div`
   padding: 0.75rem;
   width: 100%;
   max-width: 100vw;
+  position: fixed;
   margin: 0 auto;
   box-sizing: border-box;
-  overflow-x: hidden;
+  background-color: white;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
 `;
 
 const IconWrapper = styled.div`
@@ -23,11 +28,11 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
-const Header = () => {
+const Header = ({ onClick }) => {
   return (
     <HeaderContainer>
       <IconWrapper>
-        <HeaderBar />
+        <HeaderBar onClick={onClick} />
         <HeaderLogo />
       </IconWrapper>
       <Button width='150px' color='#909090' borderStyle='none' icon={CreateIcon}>
