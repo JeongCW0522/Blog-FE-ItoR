@@ -1,29 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Header from '@/components/Header';
-import SideBar from '@/components/SideBar';
-import AppExample from '@/AppExample';
-
-const Main = styled.div`
-  display: flex;
-  margin-top: 100px;
-`;
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
   return (
-    <div>
-      <Header onClick={toggleSidebar} />
-      <SideBar isOpen={isSidebarOpen} onClose={toggleSidebar} />
-      <Main>
-        <AppExample />
-      </Main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

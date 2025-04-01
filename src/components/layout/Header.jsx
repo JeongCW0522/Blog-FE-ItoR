@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import HeaderBar from '@/assets/reorder.svg?react';
 import HeaderLogo from '@/assets/GITLOG2.svg?react';
 import CreateIcon from '@/assets/create.svg?react';
-import Button from './ui/Button';
+import Button from '../ui/Button';
 
 const HeaderContainer = styled.div`
   display: flex;
