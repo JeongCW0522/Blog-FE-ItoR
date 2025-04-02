@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import {Home, SignUp} from '@/pages'
+import { Home, SignUp, SignUpEmail } from '@/pages';
 
 function App() {
   return (
@@ -7,6 +7,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/signUp' element={<SignUp />} />
+        <Route path='/signUpEmail' element={<SignUpEmail />} />
       </Routes>
     </BrowserRouter>
   );

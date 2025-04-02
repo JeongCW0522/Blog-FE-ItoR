@@ -12,7 +12,7 @@ const StyledInput = styled.input`
 
   &::placeholder {
     color: #bbb;
-    font-size: 12px;
+    font-size: ${(props) => props.$phSize || '12px'};
     padding-left: 10px;
   }
 `;
@@ -27,6 +27,7 @@ const Input = ({
   borderStyle,
   radius,
   placeholder,
+  phSize,
   onFocus,
 }) => {
   return (
@@ -40,6 +41,7 @@ const Input = ({
       $borderStyle={borderStyle}
       radius={radius}
       placeholder={placeholder}
+      $phSize={phSize}
       onFocus={onFocus}
     />
   );

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Header, Button } from '@/components';
-import {KakaoIcon, GITLOG } from '@/assets'
+import { KakaoIcon, GITLOGO } from '@/assets';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -118,20 +119,22 @@ const Signup = () => {
       </TitleContainer>
       <Content>
         <LeftContent>
-          <GITLOG width='284' height='77' />
+          <GITLOGO width='284' height='77' />
           <Text>You can make anything by writing</Text>
         </LeftContent>
         <RightContent>
-          <Button
-            width='82%'
-            height='48px'
-            borderStyle='none'
-            color='white'
-            bgColor='#00A1FF'
-            radius='6px'
-          >
-            이메일로 회원가입
-          </Button>
+          <Link to='/signUpEmail' style={{ width: '82%' }}>
+            <Button
+              width='100%'
+              height='48px'
+              borderStyle='none'
+              color='white'
+              bgColor='#00A1FF'
+              radius='6px'
+            >
+              이메일로 회원가입
+            </Button>
+          </Link>
           <SubText>또는</SubText>
           <Button
             width='82%'
