@@ -17,7 +17,7 @@ function Home() {
 
   return (
     <div>
-      <Header onClick={toggleSidebar} />
+      <Header openSidebar={toggleSidebar} />
       <SideBar isOpen={isSidebarOpen} onClose={toggleSidebar} />
       <Main>
         <AppExample />

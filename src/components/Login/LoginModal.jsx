@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import {ClearIcon, GITLOG, KakaoIcon} from '@/assets'
-import {Input, Button} from '@/components'
+import { ClearIcon, GITLOG, KakaoIcon } from '@/assets';
+import { Input, Button } from '@/components';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -113,7 +113,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose} />
         <LeftContent>

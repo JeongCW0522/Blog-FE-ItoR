@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Image, Button } from '@/components';
 import Profile from '@/assets/profile.svg?url';
 
-const SideOverlay = styled.div`
+const SidebarOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -41,7 +41,7 @@ const SidebarText = styled.p`
 
 const SideBar = ({ isOpen, onClose }) => {
   return (
-    <SideOverlay $isOpen={isOpen} onClick={onClose}>
+    <SidebarOverlay $isOpen={isOpen} onClick={onClose}>
       <SidebarContainer $isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
         <Image src={Profile} alt='프로필' width='80px' height='80px' radius='50%' />
         <SidebarText>You can make anything by writing</SidebarText>
@@ -49,7 +49,7 @@ const SideBar = ({ isOpen, onClose }) => {
           깃로그 시작하기
         </Button>
       </SidebarContainer>
-    </SideOverlay>
+    </SidebarOverlay>
   );
 };
 

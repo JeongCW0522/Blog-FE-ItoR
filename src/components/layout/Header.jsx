@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {SideBarIcon, GITLOGO, CreateIcon } from '@/assets';
+import { SideBarIcon, GITLOGO, CreateIcon } from '@/assets';
 import Button from '@/components/ui/Button';
 
 const HeaderContainer = styled.div`
@@ -26,11 +26,11 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
-const Header = ({ onClick }) => {
+const Header = ({ openSidebar }) => {
   return (
     <HeaderContainer>
       <IconWrapper>
-        <SideBarIcon onClick={onClick} />
+        <SideBarIcon onClick={openSidebar} />
         <GITLOGO />
       </IconWrapper>
       <Button width='150px' color='#909090' borderStyle='none' icon={CreateIcon}>
