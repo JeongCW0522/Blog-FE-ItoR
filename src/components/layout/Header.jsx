@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {SideBarIcon, GITLOGO, CreateIcon } from '@/assets';
-import Button from '../ui/Button';
+import Button from '@/components/ui/Button';
 
 const HeaderContainer = styled.div`
   display: flex;
