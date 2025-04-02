@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import Header from '@/components/layout/Header';
-import Button from '@/components/ui/Button';
-import KakaoIcon from '@/assets/kakaologo.svg?react';
-import GITLOG from '@/assets/GITLOG2.svg?react';
+import { Header, Button } from '@/components';
+import {KakaoIcon, GITLOG } from '@/assets'
 
 const Container = styled.div`
   display: flex;

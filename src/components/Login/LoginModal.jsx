@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Clear from '@/assets/clear.svg?react';
-import GITLOG from '@/assets/GITLOG.svg?react';
-import KakaoIcon from '@/assets/kakaologo.svg?react';
-import Input from '../ui/Input';
-import Button from '../ui/Button';
+import {ClearIcon, GITLOG, KakaoIcon} from '@/assets'
+import {Input, Button} from '@/components'
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -17,6 +14,7 @@ const ModalOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 110;
 `;
 
 const ModalContent = styled.div`
@@ -27,7 +25,7 @@ const ModalContent = styled.div`
   min-height: 450px;
   position: relative;
   padding-top: 30px;
-  transform: translateY(-100px);
+  transform: translateY(-60px);
 
   @media (max-width: 700px) {
     width: 90%;
@@ -38,7 +36,7 @@ const ModalContent = styled.div`
   }
 `;
 
-const CloseButton = styled(Clear)`
+const CloseButton = styled(ClearIcon)`
   position: absolute;
   top: 20px;
   right: 20px;

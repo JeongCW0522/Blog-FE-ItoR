@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import HeaderBar from '@/assets/reorder.svg?react';
-import HeaderLogo from '@/assets/GITLOG2.svg?react';
-import CreateIcon from '@/assets/create.svg?react';
+import {SideBarIcon, GITLOGO, CreateIcon } from '@/assets';
 import Button from '../ui/Button';
 
 const HeaderContainer = styled.div`
@@ -32,8 +30,8 @@ const Header = ({ onClick }) => {
   return (
     <HeaderContainer>
       <IconWrapper>
-        <HeaderBar onClick={onClick} />
-        <HeaderLogo />
+        <SideBarIcon onClick={onClick} />
+        <GITLOGO />
       </IconWrapper>
       <Button width='150px' color='#909090' borderStyle='none' icon={CreateIcon}>
         깃로그 쓰기

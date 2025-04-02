@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import Header from '@/components/layout/Header';
-import SideBar from '@/components/layout/SideBar';
+import { Header, SideBar } from '@/components';
 import AppExample from '@/AppExample';
 
 const Main = styled.div`
