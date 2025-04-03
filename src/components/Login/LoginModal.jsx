@@ -149,7 +149,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            fieldState={fieldState} // 오류 상태 전달
+            fieldState={fieldState} // 상태 전달
           />
           <Button
             width='82%'
@@ -159,6 +159,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             bgColor='#00A1FF'
             radius='6px'
             onClick={handleLogin} // 로그인 버튼 클릭 시 실행
+            buttonColor={true}
           >
             이메일로 로그인
           </Button>
@@ -171,6 +172,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             bgColor='#FEE500'
             radius='6px'
             icon={KakaoIcon}
+            buttonColor={true}
           >
             카카오로 로그인
           </Button>
