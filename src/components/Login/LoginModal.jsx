@@ -12,6 +12,7 @@ const ModalOverlay = styled.div`
   bottom: 0;
   background-color: #9492924d;
   backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,8 +159,8 @@ const LoginModal = ({ isOpen, onClose }) => {
             color='white'
             bgColor='#00A1FF'
             radius='6px'
-            onClick={handleLogin} // 로그인 버튼 클릭 시 실행
-            buttonColor={true}
+            onClick={handleLogin}
+            buttonColor={true} //ture일때 Button hover 적용
           >
             이메일로 로그인
           </Button>

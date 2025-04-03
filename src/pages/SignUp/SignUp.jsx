@@ -131,6 +131,7 @@ const Signup = () => {
               color='white'
               bgColor='#00A1FF'
               radius='6px'
+              buttonColor={true}
             >
               이메일로 회원가입
             </Button>
@@ -144,6 +145,7 @@ const Signup = () => {
             bgColor='#FEE500'
             radius='6px'
             icon={KakaoIcon}
+            buttonColor={true}
           >
             카카오로 회원가입
           </Button>
