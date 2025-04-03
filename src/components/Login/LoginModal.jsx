@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ClearIcon, GITLOG, KakaoIcon } from '@/assets';
@@ -110,6 +111,18 @@ const SignUpText = styled.p`
 `;
 
 const LoginModal = ({ isOpen, onClose }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fieldState, setFieldState] = useState(null); // 비밀번호 오류 상태
+
+  const handleLogin = () => {
+    if (email !== 'jcw0522@gachon.ac.kr') {
+      setFieldState({ message: '이메일을 다시 입력해주세요.' });
+    } else if (password !== '123456') {
+      setFieldState({ message: '비밀번호가 일치하지 않습니다.' });
+    } else setFieldState(null);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -121,8 +134,23 @@ const LoginModal = ({ isOpen, onClose }) => {
           <Text>You can make anything by writing</Text>
         </LeftContent>
         <RightContent>
-          <Input width='80%' height='45px' placeholder='이메일' type='emial' />
-          <Input width='80%' height='45px' placeholder='비밀번호' type='password' />
+          <Input
+            width='80%'
+            height='45px'
+            placeholder='이메일'
+            type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            width='80%'
+            height='45px'
+            placeholder='비밀번호'
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fieldState={fieldState} // 오류 상태 전달
+          />
           <Button
             width='82%'
             height='48px'
@@ -130,6 +158,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             color='white'
             bgColor='#00A1FF'
             radius='6px'
+            onClick={handleLogin} // 로그인 버튼 클릭 시 실행
           >
             이메일로 로그인
           </Button>
