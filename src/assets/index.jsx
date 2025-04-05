@@ -8,6 +8,8 @@ import GITLOGO from './GITLOG2.svg?react';
 import KakaoIcon from './kakaologo.svg?react';
 import Profile from './profile.svg?url';
 import SideBarIcon from './sidebar.svg?react';
+import ChatIcon from './chat.svg?react';
+import MoreIcon from './more.svg?react';
 
 export {
   AddPhoto,
@@ -20,4 +22,6 @@ export {
   KakaoIcon,
   Profile,
   SideBarIcon,
+  ChatIcon,
+  MoreIcon,
 };

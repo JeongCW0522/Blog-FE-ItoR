@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import { SideBarIcon, GITLOGO, CreateIcon } from '@/assets';
-import Button from '@/components/ui/Button';
+import { SideBarIcon, GITLOGO } from '@/assets';
+import CreateLog from './CreateLog';
+import ChatandMore from './ChatandMore';
+import DeleteandLog from './DeleteandLog';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -8,6 +10,7 @@ const HeaderContainer = styled.div`
   padding: 0.75rem;
   width: 100%;
   max-width: 100vw;
+  height: 70px;
   position: fixed;
   margin: 0 auto;
   padding-left: 20px;
@@ -33,9 +36,7 @@ const Header = ({ openSidebar }) => {
         <SideBarIcon onClick={openSidebar} />
         <GITLOGO />
       </IconWrapper>
-      <Button width='150px' color='#909090' borderStyle='none' icon={CreateIcon}>
-        깃로그 쓰기
-      </Button>
+      <DeleteandLog />
     </HeaderContainer>
   );
 };

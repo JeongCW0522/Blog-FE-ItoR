@@ -39,7 +39,7 @@ const Button = ({
   borderStyle,
   icon: Icon,
   onClick,
-  buttonColor = false,
+  buttonColor = false, //기본값을 false로
 }) => {
   return (
     <StyledButton
