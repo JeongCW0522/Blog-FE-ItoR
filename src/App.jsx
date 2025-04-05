@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, SignUp, SignUpEmail } from '@/pages';
+import { Home, SignUp, SignUpEmail, SignUpKakao } from '@/pages';
 
 function App() {
   return (
@@ -8,6 +8,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signUp' element={<SignUp />} />
         <Route path='/signUpEmail' element={<SignUpEmail />} />
+        <Route path='/signUpKakao' element={<SignUpKakao />} />
       </Routes>
     </BrowserRouter>
   );

@@ -137,18 +137,20 @@ const Signup = () => {
             </Button>
           </Link>
           <SubText>또는</SubText>
-          <Button
-            width='82%'
-            height='48px'
-            borderStyle='none'
-            fontWeight='bold'
-            bgColor='#FEE500'
-            radius='6px'
-            icon={KakaoIcon}
-            buttonColor={true}
-          >
-            카카오로 회원가입
-          </Button>
+          <Link to='/signUpKakao' style={{ width: '82%' }}>
+            <Button
+              width='100%'
+              height='48px'
+              borderStyle='none'
+              fontWeight='bold'
+              bgColor='#FEE500'
+              radius='6px'
+              icon={KakaoIcon}
+              buttonColor={true}
+            >
+              카카오로 회원가입
+            </Button>
+          </Link>
         </RightContent>
       </Content>
     </Container>

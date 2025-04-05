@@ -8,13 +8,13 @@ const StyledInput = styled.input`
   color: ${(props) => props.color || 'black'};
   background-color: ${(props) => props.$bgColor || 'white'};
   border: ${(props) =>
-    props.hasError ? '1px solid #ff3f3f' : props.$borderStyle || '1px solid #ccc'};
+    props.fieldState ? '1px solid #ff3f3f' : props.$borderStyle || '1px solid #ccc'};
   border-radius: ${(props) => props.radius || '4px'};
 
   &::placeholder {
     color: #bbb;
     font-size: ${(props) => props.$phSize || '12px'};
-    padding-left: 10px;
+    padding-left: 15px;
   }
 `;
 
@@ -24,6 +24,8 @@ const ErrorText = styled.p`
   font-weight: 300;
   padding-left: 2px;
   margin-top: 6px;
+  width: 80%;
+  text-align: left;
 `;
 
 const Input = ({
@@ -41,6 +43,7 @@ const Input = ({
   fieldState,
   onFocus,
   onChange,
+  disabled = false,
 }) => {
   return (
     <>
@@ -59,6 +62,7 @@ const Input = ({
         fieldState={fieldState}
         onFocus={onFocus}
         onChange={onChange}
+        disabled={disabled}
       />
       {fieldState && <ErrorText>* {fieldState.message}</ErrorText>}
     </>
