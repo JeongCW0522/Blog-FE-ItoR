@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Image, Button } from '@/components';
-import Profile from '@/assets/profile.svg?url';
+import SideLogout from './SideLogout';
+import SideLogin from './SideLogin';
 
 const SidebarOverlay = styled.div`
   position: fixed;
@@ -21,7 +21,6 @@ const SidebarContainer = styled.div`
   height: 100vh;
   background-color: #e6e6e6;
   display: flex;
-  flex-direction: column;
   padding: 20px;
   position: fixed;
   left: 0;
@@ -31,23 +30,11 @@ const SidebarContainer = styled.div`
   z-index: 100;
 `;
 
-const SidebarText = styled.p`
-  font-size: 16px;
-  margin-bottom: 40px;
-  color: #535252;
-  max-width: 200px;
-  word-break: keep-all;
-`;
-
 const SideBar = ({ isOpen, onClose }) => {
   return (
     <SidebarOverlay $isOpen={isOpen} onClick={onClose}>
       <SidebarContainer $isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
-        <Image src={Profile} alt='프로필' width='80px' height='80px' radius='50%' />
-        <SidebarText>You can make anything by writing</SidebarText>
-        <Button width='130px' color='#00A1FF' borderStyle='1px solid #00A1FF'>
-          깃로그 시작하기
-        </Button>
+        <SideLogin />
       </SidebarContainer>
     </SidebarOverlay>
   );
