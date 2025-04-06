@@ -8,6 +8,7 @@ const ModalOverlay = styled.div`
   bottom: 0;
   background-color: #9492924d;
   backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +19,7 @@ const ModalContent = styled.div`
   padding: 20px;
   border-radius: 4px;
   width: 320px;
-  min-height: 140px;
+  max-height: 140px;
 `;
 
 const ModalText = styled.div`

@@ -7,8 +7,7 @@ const StyledInput = styled.input`
   font-weight: ${(props) => props.fontWeight || 'normal'};
   color: ${(props) => props.color || 'black'};
   background-color: ${(props) => props.$bgColor || 'white'};
-  border: ${(props) =>
-    props.fieldState ? '1px solid #ff3f3f' : props.$borderStyle || '1px solid #ccc'};
+  border: ${(props) => props.$borderStyle || '1px solid #ccc'};
   border-radius: ${(props) => props.radius || '4px'};
 
   &::placeholder {
@@ -59,7 +58,7 @@ const Input = ({
         placeholder={placeholder}
         $phSize={phSize}
         type={type}
-        fieldState={fieldState}
+        $fieldState={fieldState}
         onFocus={onFocus}
         onChange={onChange}
         disabled={disabled}

@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import SignUpModal from './SignUpModal';
 import { Header, Image, Button, Input } from '@/components';
 import { AddPhoto, Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
@@ -94,6 +96,8 @@ const SocialBox = styled.div`
 `;
 
 const SignUpKakao = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       <GlobalStyle />
@@ -170,9 +174,15 @@ const SignUpKakao = () => {
             ></Input>
           </Styledgap>
           <br />
-          <Button width='102%' color='#00A1FF' borderStyle='1px solid #00A1FF'>
+          <Button
+            width='102%'
+            color='#00A1FF'
+            borderStyle='1px solid #00A1FF'
+            onClick={() => setModalOpen(true)}
+          >
             회원가입 완료
           </Button>
+          <SignUpModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
         </Content>
       </Container>
     </>

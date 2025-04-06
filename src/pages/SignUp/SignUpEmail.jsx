@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Header, Image, Button, Input } from '@/components';
+import SignUpModal from './SignUpModal';
 import { AddPhoto, Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 
@@ -80,6 +82,8 @@ const Styledgap = styled.div`
 `;
 
 const SignUpEmail = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       <GlobalStyle />
@@ -155,9 +159,15 @@ const SignUpEmail = () => {
             ></Input>
           </Styledgap>
           <br />
-          <Button width='102%' color='#00A1FF' borderStyle='1px solid #00A1FF'>
+          <Button
+            width='102%'
+            color='#00A1FF'
+            borderStyle='1px solid #00A1FF'
+            onClick={() => setModalOpen(true)}
+          >
             회원가입 완료
           </Button>
+          <SignUpModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
         </Content>
       </Container>
     </>
