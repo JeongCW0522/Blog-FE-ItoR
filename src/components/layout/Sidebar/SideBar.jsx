@@ -8,11 +8,13 @@ const SidebarOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
-  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+  background-color: ${({ $isOpen }) => ($isOpen ? 'rgba(0, 0, 0, 0.3)' : 'transparent')};
+  backdrop-filter: ${({ $isOpen }) => ($isOpen ? 'blur(3px)' : 'none')};
   transition:
     opacity 0.3s ease-in-out,
-    visibility 0.3s ease-in-out;
+    backdrop-filter 0.3s ease-in-out;
+  opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
   z-index: 50;
 `;
 
@@ -30,11 +32,15 @@ const SidebarContainer = styled.div`
   z-index: 100;
 `;
 
-const SideBar = ({ isOpen, onClose, onLogoutClick }) => {
+const SideBar = ({ isOpen, onClose, isLogin, openLogoutModal, openLoginModal }) => {
   return (
     <SidebarOverlay $isOpen={isOpen} onClick={onClose}>
       <SidebarContainer $isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
-        <SideLogin onLogoutClick={onLogoutClick} />
+        {isLogin ? (
+          <SideLogin openLogoutModal={openLogoutModal} />
+        ) : (
+          <SideLogout openLoginModal={openLoginModal} />
+        )}
       </SidebarContainer>
     </SidebarOverlay>
   );

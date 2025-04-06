@@ -3,7 +3,6 @@ import { Image, Button } from '@/components';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Profile from '@/assets/profile.svg?url';
-import LogoutModal from '@/components/Modal/LogoutModal';
 
 const Container = styled.div`
   display: flex;
@@ -51,9 +50,7 @@ const SetButton = styled.div`
   gap: 25px;
 `;
 
-const SideLogin = ({ onLogoutClick }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-
+const SideLogin = ({ openLogoutModal }) => {
   return (
     <Container>
       <ProfileBox to='/mypage'>
@@ -77,7 +74,7 @@ const SideLogin = ({ onLogoutClick }) => {
           width='110px'
           color='#909090'
           borderStyle='1px solid #909090'
-          onClick={onLogoutClick}
+          onClick={openLogoutModal}
         >
           로그아웃
         </Button>
