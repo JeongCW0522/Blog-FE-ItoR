@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Header, Image, Button, Input } from '@/components';
-import SignUpModal from './SignUpModal';
+import { Header, Image, Button, Input, SignUpModal } from '@/components';
 import { AddPhoto, Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 
@@ -83,7 +82,73 @@ const Styledgap = styled.div`
 
 const SignUpEmail = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
+  const [birth, setBirth] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [bio, setBio] = useState('');
 
+  const today = new Date();
+  const todayString = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+
+  const [emailError, setEmailError] = useState(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+  const [nameError, setNameError] = useState(null);
+  const [birthError, setBirthError] = useState(null);
+  const [nicknameError, setNicknameError] = useState(null);
+  const [bioError, setBioError] = useState(null);
+
+  const handleSignUp = () => {
+    let isValid = true;
+
+    if (email.trim() === '') {
+      setEmailError({ message: '반드시 입력해야하는 필수 사항입니다.' });
+      isValid = false;
+    } else {
+      setEmailError(null);
+    }
+
+    if (confirmPassword !== password) {
+      setConfirmPasswordError({ message: '비밀번호가 일치하지 않습니다.' });
+      isValid = false;
+    } else {
+      setConfirmPasswordError(null);
+    }
+
+    if (name.trim() === '') {
+      setNameError({ message: '반드시 입력해야하는 필수 사항입니다.' });
+      isValid = false;
+    } else {
+      setNameError(null);
+    }
+
+    if (birth.trim() === '') {
+      setBirthError({ message: `${todayString} 이전의 날짜만 입력 가능합니다.` });
+      isValid = false;
+    } else {
+      setBirthError(null);
+    }
+
+    if (nickname.trim() === '' || nickname.length > 20) {
+      setNicknameError({ message: '닉네임은 최대 20글자입니다.' });
+      isValid = false;
+    } else {
+      setNicknameError(null);
+    }
+
+    if (bio.trim() === '' || bio.length > 30) {
+      setBioError({ message: '한 줄 소개는 최대 30글자입니다.' });
+      isValid = false;
+    } else {
+      setBioError(null);
+    }
+
+    if (isValid) {
+      setModalOpen(true);
+    }
+  };
   return (
     <>
       <GlobalStyle />
@@ -114,7 +179,11 @@ const SignUpEmail = () => {
               radius='3px'
               placeholder='이메일'
               phSize='14px'
-            ></Input>
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fieldState={emailError}
+            />
+
             <Text>비밀번호</Text>
             <Input
               width='100%'
@@ -122,7 +191,9 @@ const SignUpEmail = () => {
               radius='3px'
               placeholder='......'
               phSize='14px'
-            ></Input>
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <Text>비밀번호 확인</Text>
             <Input
               width='100%'
@@ -130,9 +201,21 @@ const SignUpEmail = () => {
               radius='3px'
               placeholder='......'
               phSize='14px'
-            ></Input>
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              fieldState={confirmPasswordError}
+            />
             <Text>이름</Text>
-            <Input width='100%' height='45px' radius='3px' placeholder='이름' phSize='14px'></Input>
+            <Input
+              width='100%'
+              height='45px'
+              radius='3px'
+              placeholder='이름'
+              phSize='14px'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              fieldState={nameError}
+            />
             <Text>생년월일</Text>
             <Input
               width='100%'
@@ -140,7 +223,10 @@ const SignUpEmail = () => {
               radius='3px'
               placeholder='YYYY-MM-DD'
               phSize='14px'
-            ></Input>
+              value={birth}
+              onChange={(e) => setBirth(e.target.value)}
+              fieldState={birthError}
+            />
             <Text>닉네임</Text>
             <Input
               width='100%'
@@ -148,7 +234,10 @@ const SignUpEmail = () => {
               radius='3px'
               placeholder='닉네임'
               phSize='14px'
-            ></Input>
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              fieldState={nicknameError}
+            />
             <Text>한 줄 소개</Text>
             <Input
               width='100%'
@@ -156,14 +245,17 @@ const SignUpEmail = () => {
               radius='3px'
               placeholder='한 줄 소개'
               phSize='14px'
-            ></Input>
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              fieldState={bioError}
+            />
           </Styledgap>
           <br />
           <Button
             width='102%'
             color='#00A1FF'
             borderStyle='1px solid #00A1FF'
-            onClick={() => setModalOpen(true)}
+            onClick={handleSignUp}
           >
             회원가입 완료
           </Button>

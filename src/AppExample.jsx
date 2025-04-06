@@ -8,7 +8,7 @@ import Toast from '@/components/ui/Toast';
 import CreateIcon from '@/assets/create.svg?react';
 import KakaoIcon from '@/assets/kakaologo.svg?react';
 import Profile from '@/assets/profile.svg?url';
-import LoginModal from '@/components/Login/LoginModal';
+import LoginModal from '@/components/Modal/LoginModal';
 
 const Container = styled.div`
   padding: 10px;

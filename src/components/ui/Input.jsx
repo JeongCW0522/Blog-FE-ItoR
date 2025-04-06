@@ -22,9 +22,10 @@ const ErrorText = styled.p`
   font-size: 12px;
   font-weight: 300;
   padding-left: 2px;
-  margin-top: 6px;
   width: 80%;
   text-align: left;
+  margin-top: 2px;
+  margin-bottom: 2px;
 `;
 
 const Input = ({

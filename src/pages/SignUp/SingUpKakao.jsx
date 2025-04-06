@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import SignUpModal from './SignUpModal';
-import { Header, Image, Button, Input } from '@/components';
+import { Header, Image, Button, Input, SignUpModal } from '@/components';
 import { AddPhoto, Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
 
@@ -96,6 +95,46 @@ const SocialBox = styled.div`
 `;
 
 const SignUpKakao = () => {
+  const [birth, setBirth] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [bio, setBio] = useState('');
+
+  const today = new Date();
+  const todayString = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+
+  const [birthError, setBirthError] = useState(null);
+  const [nicknameError, setNicknameError] = useState(null);
+  const [bioError, setBioError] = useState(null);
+
+  const handleSignUp = () => {
+    let isValid = true;
+
+    if (birth.trim() === '') {
+      setBirthError({ message: `${todayString} 이전의 날짜만 입력 가능합니다.` });
+      isValid = false;
+    } else {
+      setBirthError(null);
+    }
+
+    if (nickname.trim() === '' || nickname.length > 20) {
+      setNicknameError({ message: '닉네임은 최대 20글자입니다.' });
+      isValid = false;
+    } else {
+      setNicknameError(null);
+    }
+
+    if (bio.trim() === '' || bio.length > 30) {
+      setBioError({ message: '한 줄 소개는 최대 30글자입니다.' });
+      isValid = false;
+    } else {
+      setBioError(null);
+    }
+
+    if (isValid) {
+      setModalOpen(true);
+    }
+  };
+
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -155,6 +194,9 @@ const SignUpKakao = () => {
               radius='3px'
               placeholder='YYYY-MM-DD'
               phSize='14px'
+              value={birth}
+              onChange={(e) => setBirth(e.target.value)}
+              fieldState={birthError}
             ></Input>
             <Text>닉네임</Text>
             <Input
@@ -163,6 +205,9 @@ const SignUpKakao = () => {
               radius='3px'
               placeholder='닉네임'
               phSize='14px'
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              fieldState={nicknameError}
             ></Input>
             <Text>한 줄 소개</Text>
             <Input
@@ -171,6 +216,9 @@ const SignUpKakao = () => {
               radius='3px'
               placeholder='한 줄 소개'
               phSize='14px'
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              fieldState={bioError}
             ></Input>
           </Styledgap>
           <br />
@@ -178,7 +226,7 @@ const SignUpKakao = () => {
             width='102%'
             color='#00A1FF'
             borderStyle='1px solid #00A1FF'
-            onClick={() => setModalOpen(true)}
+            onClick={handleSignUp}
           >
             회원가입 완료
           </Button>
