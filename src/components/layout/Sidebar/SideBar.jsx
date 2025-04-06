@@ -30,11 +30,11 @@ const SidebarContainer = styled.div`
   z-index: 100;
 `;
 
-const SideBar = ({ isOpen, onClose }) => {
+const SideBar = ({ isOpen, onClose, onLogoutClick }) => {
   return (
     <SidebarOverlay $isOpen={isOpen} onClick={onClose}>
       <SidebarContainer $isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
-        <SideLogin />
+        <SideLogin onLogoutClick={onLogoutClick} />
       </SidebarContainer>
     </SidebarOverlay>
   );

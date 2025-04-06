@@ -5,17 +5,5 @@ import { Modal, ModalText, ButtonContainer } from './ui/Modal';
 import Toast from './ui/Toast';
 import Header from './layout/Header/Header';
 import SideBar from './layout/Sidebar/SideBar';
-import SignUpModal from '../pages/SignUp/SignUpModal';
 
-export {
-  Input,
-  Image,
-  Button,
-  Modal,
-  ModalText,
-  ButtonContainer,
-  Toast,
-  Header,
-  SideBar,
-  SignUpModal,
-};
+export { Input, Image, Button, Modal, ModalText, ButtonContainer, Toast, Header, SideBar };

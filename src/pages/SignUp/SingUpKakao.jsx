@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Header, Image, Button, Input, SignUpModal } from '@/components';
+import { Header, Image, Button, Input } from '@/components';
 import { AddPhoto, Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
+import SignUpModal from '@/components/Modal/SignUpModal';
 
 const Container = styled.div`
   position: relative;
