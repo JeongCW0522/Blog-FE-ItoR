@@ -7,16 +7,25 @@ const Container = styled.div`
   padding-right: 12px;
   gap: 20px;
   color: #909090;
+`;
+
+const StyledChatIcon = styled(ChatIcon)`
   &:hover {
-    cursor: pointer;
+    opacity: 0.6;
+  }
+`;
+
+const StyledMoreIcon = styled(MoreIcon)`
+  &:hover {
+    opacity: 0.6;
   }
 `;
 
 const ChatandMore = () => {
   return (
     <Container>
-      <ChatIcon />
-      <MoreIcon />
+      <StyledChatIcon />
+      <StyledMoreIcon />
     </Container>
   );
 };

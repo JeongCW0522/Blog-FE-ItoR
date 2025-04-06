@@ -5,7 +5,7 @@ import { Modal, ModalText, ButtonContainer } from './ui/Modal';
 import Toast from './ui/Toast';
 import Header from './layout/Header/Header';
 import SideBar from './layout/Sidebar/SideBar';
-import SignUpModal from './Modal/SignUpModal';
+import SignUpModal from '../pages/SignUp/SignUpModal';
 
 export {
   Input,

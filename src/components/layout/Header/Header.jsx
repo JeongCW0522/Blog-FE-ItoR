@@ -3,6 +3,7 @@ import { SideBarIcon, GITLOGO } from '@/assets';
 import CreateLog from './CreateLog';
 import ChatandMore from './ChatandMore';
 import DeleteandLog from './DeleteandLog';
+import Register from './Register';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -29,14 +30,14 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
-const Header = ({ openSidebar }) => {
+const Header = ({ openSidebar, register }) => {
   return (
     <HeaderContainer>
       <IconWrapper>
         <SideBarIcon onClick={openSidebar} />
         <GITLOGO />
       </IconWrapper>
-      <DeleteandLog />
+      {register ? register : <ChatandMore />}
     </HeaderContainer>
   );
 };

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, SignUp, SignUpEmail, SignUpKakao } from '@/pages';
+import { Home, SignUp, SignUpEmail, SignUpKakao, Mypage } from '@/pages';
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
         <Route path='/signUp' element={<SignUp />} />
         <Route path='/signUpEmail' element={<SignUpEmail />} />
         <Route path='/signUpKakao' element={<SignUpKakao />} />
+        <Route path='/mypage' element={<Mypage />} />
       </Routes>
     </BrowserRouter>
   );

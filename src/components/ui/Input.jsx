@@ -13,7 +13,7 @@ const StyledInput = styled.input`
   &::placeholder {
     color: #bbb;
     font-size: ${(props) => props.$phSize || '12px'};
-    padding-left: 15px;
+    padding-left: 12px;
   }
 `;
 
@@ -21,7 +21,7 @@ const ErrorText = styled.p`
   color: #ff3f3f;
   font-size: 12px;
   font-weight: 300;
-  padding-left: 2px;
+  padding-left: 10px;
   width: 80%;
   text-align: left;
   margin-top: 2px;

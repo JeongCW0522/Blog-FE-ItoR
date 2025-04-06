@@ -10,7 +10,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const TitleContainer = styled.div`
+const ProfileContainer = styled.div`
   position: absolute;
   top: 60px;
   left: 0;
@@ -149,15 +149,16 @@ const SignUpEmail = () => {
       setModalOpen(true);
     }
   };
+
   return (
     <>
       <GlobalStyle />
       <Container>
         <Header />
-        <TitleContainer>
+        <ProfileContainer>
           <Title>회원가입</Title>
           <SubTitle>가입을 위해 회원님의 정보를 입력해주세요</SubTitle>
-        </TitleContainer>
+        </ProfileContainer>
         <Content>
           <Text>프로필 사진</Text>
           <Image src={Profile} alt='프로필' width='90px' height='90px' radius='50%' />

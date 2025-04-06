@@ -4,22 +4,30 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding-right: 12px;
-  gap: 30px;
+  gap: 20px;
+
   &:hover {
     cursor: pointer;
   }
 `;
 
-const Text = styled.p`
+const TextButton = styled.button`
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.6;
+  }
 `;
 
 const DeleteandLog = () => {
   return (
     <Container>
-      <Text style={{ color: '#FF3F3F' }}>삭제하기</Text>
-      <Text>게시하기</Text>
+      <TextButton style={{ color: '#FF3F3F' }}>삭제하기</TextButton>
+      <TextButton>게시하기</TextButton>
     </Container>
   );
 };

@@ -175,7 +175,7 @@ const SignUpKakao = () => {
               borderStyle='none'
               bgColor='#E6E6E6'
               disabled={true}
-            ></Input>
+            />
             <Text>이름</Text>
             <Input
               width='100%'
@@ -186,7 +186,7 @@ const SignUpKakao = () => {
               borderStyle='none'
               bgColor='#E6E6E6'
               disabled={true}
-            ></Input>
+            />
             <Text>생년월일</Text>
             <Input
               width='100%'
@@ -197,7 +197,7 @@ const SignUpKakao = () => {
               value={birth}
               onChange={(e) => setBirth(e.target.value)}
               fieldState={birthError}
-            ></Input>
+            />
             <Text>닉네임</Text>
             <Input
               width='100%'
@@ -208,7 +208,7 @@ const SignUpKakao = () => {
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               fieldState={nicknameError}
-            ></Input>
+            />
             <Text>한 줄 소개</Text>
             <Input
               width='100%'
@@ -219,7 +219,7 @@ const SignUpKakao = () => {
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               fieldState={bioError}
-            ></Input>
+            />
           </Styledgap>
           <br />
           <Button

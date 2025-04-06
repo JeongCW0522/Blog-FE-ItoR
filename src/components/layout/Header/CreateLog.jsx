@@ -7,21 +7,30 @@ const Container = styled.div`
   padding-right: 12px;
   gap: 4px;
   color: #909090;
+
   &:hover {
     cursor: pointer;
   }
 `;
 
-const Text = styled.p`
+const TextButton = styled.button`
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #909090;
+
+  &:hover {
+    opacity: 0.6;
+  }
 `;
 
 const CreateLog = () => {
   return (
     <Container>
       <CreateIcon />
-      <Text>깃 로그 쓰기</Text>
+      <TextButton>깃 로그 쓰기</TextButton>
     </Container>
   );
 };
