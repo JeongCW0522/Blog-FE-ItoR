@@ -6,7 +6,7 @@ import Toast from './ui/Toast';
 import Header from './layout/Header/Header';
 import SideBar from './layout/Sidebar/SideBar';
 import BlogPostItem from './BlogPost/BlogPostItem';
-import BlogPostList from './BlogPost/BlogPostList';
+import BlogPostList, { dummyData } from './BlogPost/BlogPostList';
 
 export {
   Input,
@@ -20,4 +20,5 @@ export {
   SideBar,
   BlogPostItem,
   BlogPostList,
+  dummyData,
 };

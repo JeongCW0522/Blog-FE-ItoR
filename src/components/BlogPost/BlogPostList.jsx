@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import BlogPostItem from './BlogPostItem';
 import { Profile } from '@/assets';
 
-const dummyData = Array.from({ length: 10 }).map((_, i) => ({
+export const dummyData = Array.from({ length: 10 }).map((_, i) => ({
   id: i + 1,
   title: `16 Title one line`,
   content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,

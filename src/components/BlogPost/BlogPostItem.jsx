@@ -64,7 +64,7 @@ const BlogPostItem = ({ post }) => {
           <Content>{post.content}</Content>
         </TitleContent>
         <InfoWrapper>
-          <Image width='18px' height='18px' src={post.profileImg} alt='프로필' />
+          <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
           <NameText>{post.nickname}</NameText>
           <span>·</span>
           <span>{post.date}</span>
