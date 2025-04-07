@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { SideBarIcon, GITLOGO } from '@/assets';
+import { useLocation } from 'react-router-dom';
 import CreateLog from './CreateLog';
 import ChatandMore from './ChatandMore';
 import DeleteandLog from './DeleteandLog';
-import Register from './Register';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -30,14 +30,16 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
-const Header = ({ openSidebar, register }) => {
+const Header = ({ openSidebar, setMypage }) => {
+  const location = useLocation(); // 현재 주소정보 가져옴
+  const isDetailPage = location.pathname.startsWith('/detail/'); //현재 주소가 detail로 시작하는지 확인
   return (
     <HeaderContainer>
       <IconWrapper>
         <SideBarIcon onClick={openSidebar} />
         <GITLOGO />
       </IconWrapper>
-      {register ? register : <ChatandMore />}
+      {isDetailPage ? <ChatandMore /> : (setMypage ?? <CreateLog />)}
     </HeaderContainer>
   );
 };

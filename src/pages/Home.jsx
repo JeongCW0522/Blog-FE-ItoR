@@ -35,7 +35,7 @@ function Home() {
         isOpen={isSidebarOpen}
         onClose={toggleSidebar}
         openLogoutModal={openLogoutModal}
-        isLogin={isLoginState}
+        isLogin={true}
         openLoginModal={openLoginModal}
       />
       <Content>

@@ -20,7 +20,7 @@ const TextButton = styled.button`
   }
 `;
 
-const Register = () => {
+const SetMypage = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -39,4 +39,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SetMypage;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Header, Image, Input } from '@/components';
 import { Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import Register from '@/components/layout/Header/Register';
+import SetMypage from '@/components/layout/Header/SetMypage';
 
 const Container = styled.div`
   position: relative;
@@ -73,7 +73,7 @@ const Mypage = () => {
     <>
       <GlobalStyle />
       <Container>
-        <Header register={<Register />} />
+        <Header setMypage={<SetMypage />} />
         <Content>
           <ProfileContet>
             <Image src={Profile} alt='프로필' width='64px' height='64px' radius='50%' />
