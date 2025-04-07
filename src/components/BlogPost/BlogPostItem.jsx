@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Image } from '@/components';
 
-const PostContainer = styled.div`
+const PostContainer = styled(Link)`
   display: flex;
   justify-content: space-between;
   cursor: pointer;
@@ -28,6 +29,7 @@ const TitleContent = styled.div`
 const Title = styled.h2`
   font-size: 16px;
   font-weight: bold;
+  color: black;
   margin: 0 0 10px;
 `;
 
@@ -55,7 +57,7 @@ const NameText = styled.span`
 
 const BlogPostItem = ({ post }) => {
   return (
-    <PostContainer>
+    <PostContainer to={`/detail/${post.id}`} style={{ textDecoration: 'none' }}>
       <PostContent>
         <TitleContent>
           <Title>{post.title}</Title>
