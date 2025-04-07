@@ -155,7 +155,7 @@ const BlogDetail = () => {
         <Line />
         <Content>{post.content}</Content>
         <Line />
-        <CommentContent>
+        <CommentContent id='comment'>
           <CommentHeader>
             댓글 <span>{post.comments}</span>
           </CommentHeader>

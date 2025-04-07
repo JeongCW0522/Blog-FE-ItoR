@@ -77,10 +77,17 @@ const ChatandMore = () => {
     setShowTooltip((prev) => !prev);
   };
 
+  const scrollToComment = () => {
+    const comment = document.getElementById('comment');
+    if (comment) {
+      comment.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
   return (
     <>
       <Container>
-        <StyledChatIcon />
+        <StyledChatIcon onClick={scrollToComment} />
         <StyledMoreIcon onClick={openTooltip} />
         {showTooltip && (
           <TooltipBox>
