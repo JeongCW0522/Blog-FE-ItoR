@@ -5,5 +5,19 @@ import { Modal, ModalText, ButtonContainer } from './ui/Modal';
 import Toast from './ui/Toast';
 import Header from './layout/Header/Header';
 import SideBar from './layout/Sidebar/SideBar';
+import BlogPostItem from './BlogPost/BlogPostItem';
+import BlogPostList from './BlogPost/BlogPostList';
 
-export { Input, Image, Button, Modal, ModalText, ButtonContainer, Toast, Header, SideBar };
+export {
+  Input,
+  Image,
+  Button,
+  Modal,
+  ModalText,
+  ButtonContainer,
+  Toast,
+  Header,
+  SideBar,
+  BlogPostItem,
+  BlogPostList,
+};

@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Header, SideBar } from '@/components';
+import { Header, SideBar, BlogPostList } from '@/components';
 import LogoutModal from '@/components/Modal/LogoutModal';
 import LoginModal from '@/components/Modal/LoginModal';
 
 const ModalOverlay = styled.div`
   position: fixed;
   z-index: 200;
+`;
+
+const Content = styled.div`
+  margin-top: 150px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 function Home() {
@@ -31,6 +38,9 @@ function Home() {
         isLogin={isLoginState}
         openLoginModal={openLoginModal}
       />
+      <Content>
+        <BlogPostList />
+      </Content>
       <ModalOverlay>
         {isLogoutModal && <LogoutModal isOpen={isLogoutModal} onClose={closeLogoutModal} />}
         {isLoginModal && <LoginModal isOpen={isLoginModal} onClose={closeLoginModal} />}
