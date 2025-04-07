@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyle from '@/styles/global';
-import { Image, Header, dummyData } from '@/components';
+import { Button, Image, Header, dummyData } from '@/components';
 
 const DetailContainer = styled.div`
   display: flex;
@@ -94,6 +94,30 @@ const CommentInput = styled.textarea`
   border-radius: 4px;
   resize: none;
   outline: none;
+
+  &::placeholder {
+    color: #909090;
+  }
+`;
+
+const LoginCommentInput = styled.textarea`
+  width: 100%;
+  height: 100px;
+  padding-top: 20px;
+  margin-top: 10px;
+  margin-bottom: -10px;
+  font-size: 14px;
+  color: #333333;
+  background-color: #ffffff;
+  border: none;
+  border-bottom: 1px solid #e6e6e6;
+  border-radius: 4px;
+  resize: none;
+  outline: none;
+
+  &::placeholder {
+    color: #909090;
+  }
 `;
 
 const Nickname = styled.div`
@@ -128,7 +152,20 @@ const ProfileContent = styled.div`
   width: 720px;
 `;
 
-const BlogDetail = () => {
+const CommentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  padding: 16px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const BlogDetail = ({ isLogin }) => {
   const { id } = useParams();
   const post = dummyData.find((p) => p.id === Number(id)); //url에서 가져온 id와 일치하는 해당 post 찾기
 
@@ -159,11 +196,29 @@ const BlogDetail = () => {
           <CommentHeader>
             댓글 <span>{post.comments}</span>
           </CommentHeader>
-          <NoComment>
-            <p>작성된 댓글이 없습니다.</p>
-            <p>응원의 첫 번째 댓글을 달아주세요.</p>
-          </NoComment>
-          <CommentInput disabled placeholder='로그인을 하고 댓글을 달아보세요!' />
+          {post.comments === 0 && (
+            <NoComment>
+              <p>작성된 댓글이 없습니다.</p>
+              <p>응원의 첫 번째 댓글을 달아주세요.</p>
+            </NoComment>
+          )}
+          {isLogin ? (
+            <CommentBox>
+              <InfoWrapper>
+                <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
+                <NameText>{post.nickname}</NameText>
+              </InfoWrapper>
+              <LoginCommentInput placeholder='댓글을 입력해주세요.' />
+              <br />
+              <ButtonWrapper>
+                <Button width='65px' borderStyle='1px solid #909090' color='#909090' radius='25px'>
+                  등록
+                </Button>
+              </ButtonWrapper>
+            </CommentBox>
+          ) : (
+            <CommentInput disabled placeholder='로그인을 하고 댓글을 달아보세요!' />
+          )}
         </CommentContent>
         <ProfileBox>
           <ProfileContent>
