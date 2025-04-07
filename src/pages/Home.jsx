@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Header, SideBar, BlogPostList } from '@/components';
 import LogoutModal from '@/components/Modal/LogoutModal';
 import LoginModal from '@/components/Modal/LoginModal';
+import { useLogin } from '@/context/LoginContext';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -20,7 +21,8 @@ function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLogoutModal, setIsLogoutModal] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
-  const [isLoginState, setIsLoginState] = useState(false); // 로그인 여부
+
+  const { isLogin } = useLogin();
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const openLogoutModal = () => setIsLogoutModal(true);
@@ -35,7 +37,7 @@ function Home() {
         isOpen={isSidebarOpen}
         onClose={toggleSidebar}
         openLogoutModal={openLogoutModal}
-        isLogin={true}
+        isLogin={isLogin}
         openLoginModal={openLoginModal}
       />
       <Content>

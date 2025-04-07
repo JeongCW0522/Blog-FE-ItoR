@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyle from '@/styles/global';
 import { Button, Image, Header, dummyData } from '@/components';
+import { useLogin } from '@/context/LoginContext';
 
 const DetailContainer = styled.div`
   display: flex;
@@ -165,7 +166,9 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const BlogDetail = ({ isLogin }) => {
+const BlogDetail = () => {
+  const { isLogin } = useLogin();
+
   const { id } = useParams();
   const post = dummyData.find((p) => p.id === Number(id)); //url에서 가져온 id와 일치하는 해당 post 찾기
 
