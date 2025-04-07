@@ -1,14 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Header, SideBar } from '@/components';
-import AppExample from '@/AppExample';
 import LogoutModal from '@/components/Modal/LogoutModal';
-import LoginModal from '@/components/Modal/LoginModal'; // 추가
-
-const Main = styled.div`
-  display: flex;
-  margin-top: 100px;
-`;
+import LoginModal from '@/components/Modal/LoginModal';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -37,9 +31,6 @@ function Home() {
         isLogin={isLoginState}
         openLoginModal={openLoginModal}
       />
-      <Main>
-        <AppExample />
-      </Main>
       <ModalOverlay>
         {isLogoutModal && <LogoutModal isOpen={isLogoutModal} onClose={closeLogoutModal} />}
         {isLoginModal && <LoginModal isOpen={isLoginModal} onClose={closeLoginModal} />}
