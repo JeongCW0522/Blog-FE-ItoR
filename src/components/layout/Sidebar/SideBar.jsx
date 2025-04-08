@@ -8,13 +8,12 @@ const SidebarOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${({ $isOpen }) => ($isOpen ? 'rgba(0, 0, 0, 0.3)' : 'transparent')};
-  backdrop-filter: ${({ $isOpen }) => ($isOpen ? 'blur(3px)' : 'none')};
   transition:
     opacity 0.3s ease-in-out,
-    backdrop-filter 0.3s ease-in-out;
+    visibility 0.3s ease-in-out;
   opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
   visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+  transition-delay: ${({ $isOpen }) => ($isOpen ? '0s' : '0.5s')};
   z-index: 50;
 `;
 
