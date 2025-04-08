@@ -7,6 +7,9 @@ import Header from './layout/Header/Header';
 import SideBar from './layout/Sidebar/SideBar';
 import BlogPostItem from './BlogPost/BlogPostItem';
 import BlogPostList, { dummyData } from './BlogPost/BlogPostList';
+import LoginModal from './Login/LoginModal';
+import LogoutModal from './Modal/LogoutModal';
+import SignUpModal from './Login/SignUpModal';
 
 export {
   Input,
@@ -21,4 +24,7 @@ export {
   BlogPostItem,
   BlogPostList,
   dummyData,
+  LoginModal,
+  LogoutModal,
+  SignUpModal,
 };

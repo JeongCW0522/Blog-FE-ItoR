@@ -13,7 +13,7 @@ const SidebarOverlay = styled.div`
     visibility 0.3s ease-in-out;
   opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
   visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
-  transition-delay: ${({ $isOpen }) => ($isOpen ? '0s' : '0.5s')};
+  transition-delay: ${({ $isOpen }) => ($isOpen ? '0s' : '0.3s')};
   z-index: 50;
 `;
 

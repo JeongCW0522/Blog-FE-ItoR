@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { SideBarIcon, GITLOGO } from '@/assets';
 import { useLocation } from 'react-router-dom';
 import { CreateLog, ChatandMore, DeleteandLog } from '@/components/layout/Header';
+import { LogoutModal, LoginModal, SideBar } from '@/components';
 import { useLogin } from '@/context/LoginContext';
-import { SideBar } from '@/components';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -31,12 +31,23 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  z-index: 200;
+`;
+
 const Header = ({ setMypage }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const openLogoutModal = () => setIsLogoutModal(true);
   const openLoginModal = () => setIsLoginModal(true);
+
+  const [isLogoutModal, setIsLogoutModal] = useState(false);
+  const [isLoginModal, setIsLoginModal] = useState(false);
+
+  const closeLogoutModal = () => setIsLogoutModal(false);
+  const closeLoginModal = () => setIsLoginModal(false);
 
   const { isLogin } = useLogin();
 
@@ -59,6 +70,10 @@ const Header = ({ setMypage }) => {
         </IconWrapper>
         {isDetailPage ? <ChatandMore /> : (setMypage ?? <CreateLog />)}
       </HeaderContainer>
+      <ModalOverlay>
+        {isLogoutModal && <LogoutModal isOpen={isLogoutModal} onClose={closeLogoutModal} />}
+        {isLoginModal && <LoginModal isOpen={isLoginModal} onClose={closeLoginModal} />}
+      </ModalOverlay>
     </>
   );
 };
