@@ -30,7 +30,7 @@ const CreateLog = () => {
   return (
     <Container>
       <CreateIcon />
-      <TextButton>깃 로그 쓰기</TextButton>
+      <TextButton>깃로그 쓰기</TextButton>
     </Container>
   );
 };

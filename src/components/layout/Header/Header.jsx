@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { SideBarIcon, GITLOGO } from '@/assets';
 import { useLocation } from 'react-router-dom';
-import CreateLog from './CreateLog';
-import ChatandMore from './ChatandMore';
-import DeleteandLog from './DeleteandLog';
+import { CreateLog, ChatandMore, DeleteandLog } from '@/components/layout/Header';
+import { useLogin } from '@/context/LoginContext';
+import { SideBar } from '@/components';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -30,17 +31,35 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
-const Header = ({ openSidebar, setMypage }) => {
+const Header = ({ setMypage }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const openLogoutModal = () => setIsLogoutModal(true);
+  const openLoginModal = () => setIsLoginModal(true);
+
+  const { isLogin } = useLogin();
+
   const location = useLocation(); // 현재 주소정보 가져옴
   const isDetailPage = location.pathname.startsWith('/detail/'); //현재 주소가 detail로 시작하는지 확인
+
   return (
-    <HeaderContainer>
-      <IconWrapper>
-        <SideBarIcon onClick={openSidebar} />
-        <GITLOGO />
-      </IconWrapper>
-      {isDetailPage ? <ChatandMore /> : (setMypage ?? <CreateLog />)}
-    </HeaderContainer>
+    <>
+      <SideBar
+        isOpen={isSidebarOpen}
+        onClose={toggleSidebar}
+        openLogoutModal={openLogoutModal}
+        isLogin={isLogin}
+        openLoginModal={openLoginModal}
+      />
+      <HeaderContainer>
+        <IconWrapper>
+          <SideBarIcon onClick={setIsSidebarOpen} />
+          <GITLOGO />
+        </IconWrapper>
+        {isDetailPage ? <ChatandMore /> : (setMypage ?? <CreateLog />)}
+      </HeaderContainer>
+    </>
   );
 };
 

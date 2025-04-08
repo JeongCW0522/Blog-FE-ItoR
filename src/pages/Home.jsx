@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Header, SideBar, BlogPostList } from '@/components';
+import { Header, BlogPostList } from '@/components';
 import LogoutModal from '@/components/Modal/LogoutModal';
 import LoginModal from '@/components/Modal/LoginModal';
-import { useLogin } from '@/context/LoginContext';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -18,28 +17,15 @@ const Content = styled.div`
 `;
 
 function Home() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLogoutModal, setIsLogoutModal] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
 
-  const { isLogin } = useLogin();
-
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  const openLogoutModal = () => setIsLogoutModal(true);
   const closeLogoutModal = () => setIsLogoutModal(false);
-  const openLoginModal = () => setIsLoginModal(true);
   const closeLoginModal = () => setIsLoginModal(false);
 
   return (
     <>
-      <Header openSidebar={toggleSidebar} />
-      <SideBar
-        isOpen={isSidebarOpen}
-        onClose={toggleSidebar}
-        openLogoutModal={openLogoutModal}
-        isLogin={isLogin}
-        openLoginModal={openLoginModal}
-      />
+      <Header />
       <Content>
         <BlogPostList />
       </Content>
