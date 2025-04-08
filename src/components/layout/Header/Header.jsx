@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { SideBarIcon, GITLOGO } from '@/assets';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CreateLog, ChatandMore, DeleteandLog } from '@/components/layout/Header';
+import { CreateLog, ChatandMore, DeleteandLog, SetMypage } from '@/components/layout/Header';
 import { LogoutModal, LoginModal, SideBar } from '@/components';
 import { useLogin } from '@/context/LoginContext';
 
@@ -42,7 +42,7 @@ const ModalOverlay = styled.div`
   z-index: 200;
 `;
 
-const Header = ({ setMypage, onToast }) => {
+const Header = ({ onToast }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLogoutModal, setIsLogoutModal] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
@@ -57,8 +57,11 @@ const Header = ({ setMypage, onToast }) => {
   const navigate = useNavigate();
 
   const location = useLocation(); // 현재 주소정보 가져옴
-  const isDetailPage = location.pathname.startsWith('/detail/');
-  const isWritePage = location.pathname.startsWith('/write'); //현재 주소가 detail로 시작하는지 확인
+  const isDetailPage = location.pathname.startsWith('/detail/'); //현재 주소가 detail로 시작하는지 확인
+  const isWritePage = location.pathname.startsWith('/write');
+  const isMypage = location.pathname.startsWith('/mypage');
+  const signupPaths = ['/signUp', '/signUpEmail', '/signUpKakao'];
+  const isSignupPage = signupPaths.includes(location.pathname);
 
   let headerContent = null;
 
@@ -66,8 +69,12 @@ const Header = ({ setMypage, onToast }) => {
     headerContent = <ChatandMore />;
   } else if (isWritePage) {
     headerContent = <DeleteandLog onToast={onToast} />;
+  } else if (isMypage) {
+    headerContent = <SetMypage />;
+  } else if (isSignupPage) {
+    headerContent = null;
   } else {
-    headerContent = setMypage ?? <CreateLog />;
+    headerContent = <CreateLog />;
   }
 
   return (
