@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { SideBarIcon, GITLOGO } from '@/assets';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CreateLog, ChatandMore, DeleteandLog } from '@/components/layout/Header';
 import { LogoutModal, LoginModal, SideBar } from '@/components';
 import { useLogin } from '@/context/LoginContext';
@@ -31,28 +31,44 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
+const SideBarIconClick = styled(SideBarIcon)`
+  &:hover {
+    opacity: 0.6;
+  }
+`;
+
 const ModalOverlay = styled.div`
   position: fixed;
   z-index: 200;
 `;
 
-const Header = ({ setMypage }) => {
+const Header = ({ setMypage, onToast }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLogoutModal, setIsLogoutModal] = useState(false);
+  const [isLoginModal, setIsLoginModal] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const openLogoutModal = () => setIsLogoutModal(true);
   const openLoginModal = () => setIsLoginModal(true);
-
-  const [isLogoutModal, setIsLogoutModal] = useState(false);
-  const [isLoginModal, setIsLoginModal] = useState(false);
-
   const closeLogoutModal = () => setIsLogoutModal(false);
   const closeLoginModal = () => setIsLoginModal(false);
 
   const { isLogin } = useLogin();
+  const navigate = useNavigate();
 
   const location = useLocation(); // 현재 주소정보 가져옴
-  const isDetailPage = location.pathname.startsWith('/detail/'); //현재 주소가 detail로 시작하는지 확인
+  const isDetailPage = location.pathname.startsWith('/detail/');
+  const isWritePage = location.pathname.startsWith('/write'); //현재 주소가 detail로 시작하는지 확인
+
+  let headerContent = null;
+
+  if (isDetailPage) {
+    headerContent = <ChatandMore />;
+  } else if (isWritePage) {
+    headerContent = <DeleteandLog onToast={onToast} />;
+  } else {
+    headerContent = setMypage ?? <CreateLog />;
+  }
 
   return (
     <>
@@ -65,10 +81,10 @@ const Header = ({ setMypage }) => {
       />
       <HeaderContainer>
         <IconWrapper>
-          <SideBarIcon onClick={setIsSidebarOpen} />
-          <GITLOGO />
+          <SideBarIconClick onClick={setIsSidebarOpen} />
+          <GITLOGO onClick={() => navigate('/')} />
         </IconWrapper>
-        {isDetailPage ? <ChatandMore /> : (setMypage ?? <CreateLog />)}
+        {headerContent}
       </HeaderContainer>
       <ModalOverlay>
         {isLogoutModal && <LogoutModal isOpen={isLogoutModal} onClose={closeLogoutModal} />}

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Image, Button } from '@/components';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -62,9 +61,11 @@ const SideLogin = ({ openLogoutModal }) => {
         <Button width='110px' color='#00A1FF' borderStyle='1px solid #00A1FF'>
           나의 깃로그
         </Button>
-        <Button width='110px' color='#00A1FF' borderStyle='1px solid #00A1FF'>
-          깃로그 쓰기
-        </Button>
+        <Link to='/write'>
+          <Button width='110px' color='#00A1FF' borderStyle='1px solid #00A1FF'>
+            깃로그 쓰기
+          </Button>
+        </Link>
       </GitButton>
       <SetButton>
         <Button width='110px' color='#909090' borderStyle='1px solid #909090'>

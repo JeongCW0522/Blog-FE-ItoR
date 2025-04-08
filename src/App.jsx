@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, SignUp, SignUpEmail, SignUpKakao, Mypage, BlogDetail } from '@/pages';
+import { Home, SignUp, SignUpEmail, SignUpKakao, Mypage, BlogDetail, BlogWrite } from '@/pages';
 import { LoginProvider } from './context/LoginContext';
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
           <Route path='/signUpKakao' element={<SignUpKakao />} />
           <Route path='/mypage' element={<Mypage />} />
           <Route path='/detail/:id' element={<BlogDetail />} />
+          <Route path='/write' element={<BlogWrite />} />
         </Routes>
       </BrowserRouter>
     </LoginProvider>

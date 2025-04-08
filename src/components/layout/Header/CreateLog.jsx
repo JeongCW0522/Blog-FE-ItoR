@@ -1,5 +1,9 @@
+import { useState } from 'react';
 import { CreateIcon } from '@/assets';
+import { LoginModal } from '@/components';
 import styled from 'styled-components';
+import { useLogin } from '@/context/LoginContext';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -27,11 +31,28 @@ const TextButton = styled.button`
 `;
 
 const CreateLog = () => {
+  const [isLoginModal, setIsLoginModal] = useState(false);
+
+  const openLoginModal = () => {
+    if (isLogin) {
+      navigate('/write');
+    } else {
+      setIsLoginModal(true);
+    }
+  };
+  const closeLoginModal = () => setIsLoginModal(false);
+
+  const navigate = useNavigate();
+  const { isLogin } = useLogin();
+
   return (
-    <Container>
-      <CreateIcon />
-      <TextButton>깃로그 쓰기</TextButton>
-    </Container>
+    <>
+      <Container onClick={openLoginModal}>
+        <CreateIcon />
+        <TextButton>깃로그 쓰기</TextButton>
+      </Container>
+      {isLoginModal && <LoginModal isOpen={isLoginModal} onClose={closeLoginModal} />}
+    </>
   );
 };
 

@@ -23,11 +23,11 @@ const TextButton = styled.button`
   }
 `;
 
-const DeleteandLog = () => {
+const DeleteandLog = ({ onToast }) => {
   return (
     <Container>
       <TextButton style={{ color: '#FF3F3F' }}>삭제하기</TextButton>
-      <TextButton>게시하기</TextButton>
+      <TextButton onClick={onToast}>게시하기</TextButton>
     </Container>
   );
 };
