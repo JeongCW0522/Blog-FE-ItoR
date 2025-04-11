@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { SideBarIcon, GITLOGO } from '@/assets';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CreateLog, ChatandMore, DeleteandLog, SetMypage } from '@/components/layout/Header';
+import { CreateLog, ChatandMore, DeleteandLog, EditLog } from '@/components/layout/Header';
 import { LogoutModal, LoginModal, SideBar } from '@/components';
 import { useLogin } from '@/context/LoginContext';
 
@@ -57,8 +57,9 @@ const Header = ({ onToast }) => {
   const navigate = useNavigate();
 
   const location = useLocation(); // 현재 주소정보 가져옴
-  const isDetailPage = location.pathname.startsWith('/detail/'); //현재 주소가 detail로 시작하는지 확인
   const isWritePage = location.pathname.startsWith('/write');
+  const isEditPage = location.pathname.endsWith('/edit'); // 주소가 edit으로 끝나는지 확인
+  const isDetailPage = location.pathname.startsWith('/detail/') && !isEditPage; //현재 주소가 detail로 시작하는지 확인
   const isMypage = location.pathname.startsWith('/mypage');
   const signupPaths = ['/signUp', '/signUp/Email', '/signUp/Kakao'];
   const isSignupPage = signupPaths.includes(location.pathname);
@@ -69,8 +70,8 @@ const Header = ({ onToast }) => {
     headerContent = <ChatandMore />;
   } else if (isWritePage) {
     headerContent = <DeleteandLog onToast={onToast} />;
-  } else if (isMypage) {
-    headerContent = <SetMypage />;
+  } else if (isMypage || isEditPage) {
+    headerContent = <EditLog onToast={onToast} />;
   } else if (isSignupPage) {
     headerContent = null;
   } else {

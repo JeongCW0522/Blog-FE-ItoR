@@ -20,7 +20,7 @@ const TextButton = styled.button`
   }
 `;
 
-const SetMypage = () => {
+const SetMypage = ({ onToast }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -32,7 +32,7 @@ const SetMypage = () => {
           <TextButton onClick={() => setOpen(false)} style={{ color: '#FF3F3F' }}>
             취소하기
           </TextButton>
-          <TextButton>저장하기</TextButton>
+          <TextButton onClick={onToast}>저장하기</TextButton>
         </>
       )}
     </Container>

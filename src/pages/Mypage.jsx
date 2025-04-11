@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Header, Image, Input } from '@/components';
 import { Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import SetMypage from '@/components/layout/Header/SetMypage';
+import SetMypage from '@/components/layout/Header/EditLog';
 
 const Container = styled.div`
   position: relative;

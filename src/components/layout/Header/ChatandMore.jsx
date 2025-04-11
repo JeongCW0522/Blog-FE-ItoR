@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ChatIcon, MoreIcon } from '@/assets';
 import { Button, Modal, ModalText, ButtonContainer } from '@/components';
 import styled from 'styled-components';
@@ -54,19 +55,17 @@ const TooltipBox = styled.div`
 const TextItem = styled.div`
   font-size: 14px;
   padding: 6px 0;
+  color: ${(props) => props.color || 'black'};
   cursor: pointer;
-
-  &:first-child {
-    color: black;
-  }
-
-  &:last-child {
-    color: red;
-  }
 
   &:hover {
     opacity: 0.6;
   }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  width: 100%;
 `;
 
 const ChatandMore = () => {
@@ -91,8 +90,12 @@ const ChatandMore = () => {
         <StyledMoreIcon onClick={openTooltip} />
         {showTooltip && (
           <TooltipBox>
-            <TextItem>수정하기</TextItem>
-            <TextItem onClick={() => setModalOpen(true)}>삭제하기</TextItem>
+            <StyledLink to='./edit'>
+              <TextItem color='black'>수정하기</TextItem>
+            </StyledLink>
+            <TextItem color='red' onClick={() => setModalOpen(true)}>
+              삭제하기
+            </TextItem>
           </TooltipBox>
         )}
       </Container>

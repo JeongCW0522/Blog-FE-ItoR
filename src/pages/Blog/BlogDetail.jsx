@@ -1,7 +1,8 @@
-import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyle from '@/styles/global';
-import { Button, Image, Header, dummyData } from '@/components';
+import { Button, Image, Toast, Header, dummyData } from '@/components';
 import { useLogin } from '@/context/LoginContext';
 
 const DetailContainer = styled.div`
@@ -168,9 +169,23 @@ const ButtonWrapper = styled.div`
 
 const BlogDetail = () => {
   const { isLogin } = useLogin();
+  const location = useLocation();
 
   const { id } = useParams();
   const post = dummyData.find((p) => p.id === Number(id)); //url에서 가져온 id와 일치하는 해당 post 찾기
+
+  const [toastData, setToastData] = useState(
+    location.state?.toastData || { show: false, type: '', message: '' },
+  );
+
+  useEffect(() => {
+    if (toastData.show) {
+      const timer = setTimeout(() => {
+        setToastData((prev) => ({ ...prev, show: false }));
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastData]);
 
   if (!post) {
     return <p>게시글을 찾을 수 없습니다.</p>;
@@ -231,6 +246,7 @@ const BlogDetail = () => {
           </ProfileContent>
         </ProfileBox>
       </DetailContainer>
+      <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
     </>
   );
 };

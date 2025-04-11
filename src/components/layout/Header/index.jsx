@@ -1,6 +1,6 @@
 import CreateLog from './CreateLog';
 import ChatandMore from './ChatandMore';
 import DeleteandLog from './DeleteandLog';
-import SetMypage from './SetMypage';
+import EditLog from './EditLog';
 
-export { CreateLog, ChatandMore, DeleteandLog, SetMypage };
+export { CreateLog, ChatandMore, DeleteandLog, EditLog };

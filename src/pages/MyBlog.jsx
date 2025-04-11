@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Image, Header, BlogPostList } from '@/components';
 import { Profile, SettingIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import SetMypage from '@/components/layout/Header/SetMypage';
+import SetMypage from '@/components/layout/Header/EditLog';
 
 const Container = styled.div`
   position: relative;
@@ -71,7 +71,7 @@ const Content = styled.div`
   }
 `;
 
-const Mypage = () => {
+const MyBlog = () => {
   return (
     <>
       <GlobalStyle />
@@ -109,4 +109,4 @@ const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default MyBlog;
