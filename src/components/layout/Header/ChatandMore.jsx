@@ -24,7 +24,7 @@ const StyledMoreIcon = styled(MoreIcon)`
   }
 `;
 
-const TooltipBox = styled.div`
+const MenuBox = styled.div`
   position: absolute;
   top: 60px;
   right: 15px;
@@ -89,14 +89,14 @@ const ChatandMore = () => {
         <StyledChatIcon onClick={scrollToComment} />
         <StyledMoreIcon onClick={openTooltip} />
         {showTooltip && (
-          <TooltipBox>
+          <MenuBox>
             <StyledLink to='./edit'>
               <TextItem color='black'>수정하기</TextItem>
             </StyledLink>
             <TextItem color='red' onClick={() => setModalOpen(true)}>
               삭제하기
             </TextItem>
-          </TooltipBox>
+          </MenuBox>
         )}
       </Container>
       <Modal isOpen={modalOpen}>

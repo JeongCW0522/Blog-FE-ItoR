@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import { Header, Image, Button, Input } from '@/components';
 import { AddPhoto, Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
@@ -100,8 +101,7 @@ const SignUpKakao = () => {
   const [nickname, setNickname] = useState('');
   const [bio, setBio] = useState('');
 
-  const today = new Date();
-  const todayString = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+  const todayString = dayjs().format('YYYY년 M월 D일');
 
   const [birthError, setBirthError] = useState(null);
   const [nicknameError, setNicknameError] = useState(null);
