@@ -16,7 +16,7 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   background: white;
-  padding: 20px;
+  padding: 20px 15px;
   border-radius: 4px;
   width: 320px;
   max-height: 140px;
@@ -27,6 +27,7 @@ const ModalText = styled.div`
 
   h4 {
     font-size: 16px;
+    font-weight: 400;
     margin-bottom: 5px;
   }
 

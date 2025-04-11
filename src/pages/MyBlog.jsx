@@ -93,7 +93,6 @@ const MyBlog = () => {
                   radius='3px'
                   color='#909090'
                   bgColor='#f5f5f5'
-                  buttonColor='true'
                 >
                   내 프로필 설정
                 </Button>

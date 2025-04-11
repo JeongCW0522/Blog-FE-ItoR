@@ -66,10 +66,9 @@ const BlogPostItem = ({ post }) => {
         <InfoWrapper>
           <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
           <NameText>{post.nickname}</NameText>
-          <span>·</span>
-          <span>{post.date}</span>
-          <span>·</span>
-          <span>댓글 {post.comments}</span>
+          <span>
+            · {post.date} · 댓글 {post.comments}
+          </span>
         </InfoWrapper>
       </PostContent>
       <Image width='90px' height='90px' src={post.thumbnail} alt='썸네일' />

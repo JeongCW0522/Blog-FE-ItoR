@@ -98,6 +98,7 @@ const BlogEdit = () => {
 
   const [title, setTitle] = useState(post?.title || '');
   const [content, setContent] = useState(post?.content || '');
+
   const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
   const navigate = useNavigate();
 

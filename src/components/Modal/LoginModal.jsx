@@ -160,7 +160,6 @@ const LoginModal = ({ isOpen, onClose }) => {
             bgColor='#00A1FF'
             radius='6px'
             onClick={handleLogin}
-            buttonColor={true} //ture일때 Button hover 적용
           >
             이메일로 로그인
           </Button>
@@ -173,7 +172,6 @@ const LoginModal = ({ isOpen, onClose }) => {
             bgColor='#FEE500'
             radius='6px'
             icon={KakaoIcon}
-            buttonColor={true}
           >
             카카오로 로그인
           </Button>

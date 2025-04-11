@@ -17,7 +17,7 @@ const StyledButton = styled.button`
   outline: 0;
 
   &:hover {
-    filter: ${({ $buttonColor }) => ($buttonColor ? 'brightness(0.9)' : 'none')};
+    filter: brightness(0.9);
   }
 `;
 
@@ -39,7 +39,6 @@ const Button = ({
   borderStyle,
   icon: Icon,
   onClick,
-  buttonColor = false, //기본값을 false로
 }) => {
   return (
     <StyledButton
@@ -52,7 +51,6 @@ const Button = ({
       fontWeight={fontWeight}
       $borderStyle={borderStyle}
       onClick={onClick}
-      $buttonColor={buttonColor}
     >
       {Icon && (
         <StyledIcon>

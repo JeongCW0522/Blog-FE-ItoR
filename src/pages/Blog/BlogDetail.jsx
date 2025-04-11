@@ -2,8 +2,18 @@ import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyle from '@/styles/global';
-import { Button, Image, Toast, Header, dummyData } from '@/components';
+import {
+  Button,
+  Image,
+  Toast,
+  Header,
+  dummyData,
+  Modal,
+  ModalText,
+  ButtonContainer,
+} from '@/components';
 import { useLogin } from '@/context/LoginContext';
+import { MoreIcon } from '@/assets';
 
 const DetailContainer = styled.div`
   display: flex;
@@ -116,6 +126,7 @@ const LoginCommentInput = styled.textarea`
   border-radius: 4px;
   resize: none;
   outline: none;
+  word-break: break-word;
 
   &::placeholder {
     color: #909090;
@@ -162,9 +173,47 @@ const CommentBox = styled.div`
   padding: 16px;
 `;
 
+const PostedCommetBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 50px 0 60px;
+`;
+
+const MoreFuction = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CommentData = styled.p`
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  color: #909090;
+  padding-left: 27px;
+  margin-top: 0px;
+`;
+
+const PostedComment = styled.p`
+  font-size: 14px;
+  font-weight: 300;
+  color: #333;
+  line-height: 160%;
+  letter-spacing: -0.5%;
+  padding-left: 25px;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
+
+const StyledMoreIcon = styled(MoreIcon)`
+  &:hover {
+    opacity: 0.6;
+  }
 `;
 
 const BlogDetail = () => {
@@ -187,6 +236,31 @@ const BlogDetail = () => {
     }
   }, [toastData]);
 
+  const [commentCount, setCommentCount] = useState(post?.comments || 0);
+  const [commentList, setCommentList] = useState([]);
+  const [commentInput, setCommentInput] = useState('');
+
+  const PostComment = () => {
+    if (!commentInput.trim()) return;
+    const newComment = {
+      id: Date.now(), // 유니크한 값을 id로
+      text: commentInput,
+    };
+    setCommentList((prev) => [...prev, newComment]);
+    setCommentCount((prev) => prev + 1);
+    setCommentInput('');
+  };
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [deleteId, setDeleteIdId] = useState(null);
+
+  const deleteComment = () => {
+    setCommentList((prev) => prev.filter((comment) => comment.id !== deleteId));
+    setCommentCount((prev) => prev - 1);
+    setModalOpen(false);
+    setDeleteIdId(null);
+  };
+
   if (!post) {
     return <p>게시글을 찾을 수 없습니다.</p>;
   }
@@ -201,35 +275,64 @@ const BlogDetail = () => {
           <InfoWrapper>
             <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
             <NameText>{post.nickname}</NameText>
-            <span>·</span>
-            <span>{post.date}</span>
-            <span>·</span>
-            <span>댓글 {post.comments}</span>
+            <span>
+              · {post.date} · 댓글 {post.comments}
+            </span>
           </InfoWrapper>
         </TitleContent>
         <Line />
         <Content>{post.content}</Content>
         <Line />
         <CommentContent id='comment'>
+          {' '}
+          {/* 스크롤 이동을 위한 id값 */}
           <CommentHeader>
-            댓글 <span>{post.comments}</span>
+            댓글 <span>{commentCount}</span>
           </CommentHeader>
-          {post.comments === 0 && (
+          {commentCount === 0 && (
             <NoComment>
               <p>작성된 댓글이 없습니다.</p>
               <p>응원의 첫 번째 댓글을 달아주세요.</p>
             </NoComment>
           )}
+          {commentList.map((comment) => (
+            <PostedCommetBox key={comment.id}>
+              <MoreFuction>
+                <InfoWrapper>
+                  <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
+                  <NameText>{post.nickname}</NameText>
+                </InfoWrapper>
+                <StyledMoreIcon
+                  onClick={() => {
+                    setDeleteIdId(comment.id);
+                    setModalOpen(true);
+                  }}
+                />
+              </MoreFuction>
+              <CommentData>{post.date}</CommentData>
+              <PostedComment>{comment.text}</PostedComment>
+            </PostedCommetBox>
+          ))}
           {isLogin ? (
             <CommentBox>
               <InfoWrapper>
                 <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
                 <NameText>{post.nickname}</NameText>
               </InfoWrapper>
-              <LoginCommentInput placeholder='댓글을 입력해주세요.' />
+              <LoginCommentInput
+                placeholder='댓글을 입력해주세요.'
+                value={commentInput}
+                onChange={(e) => setCommentInput(e.target.value)}
+              />
               <br />
               <ButtonWrapper>
-                <Button width='65px' borderStyle='1px solid #909090' color='#909090' radius='25px'>
+                <Button
+                  width='65px'
+                  borderStyle='1px solid #909090'
+                  color='#909090'
+                  radius='25px'
+                  onClick={PostComment}
+                >
                   등록
                 </Button>
               </ButtonWrapper>
@@ -245,8 +348,33 @@ const BlogDetail = () => {
             <BioText>한 줄 소개</BioText>
           </ProfileContent>
         </ProfileBox>
+        <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
       </DetailContainer>
-      <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
+      <Modal isOpen={modalOpen}>
+        <ModalText>
+          <h4>댓글을 삭제할까요?</h4>
+        </ModalText>
+        <ButtonContainer>
+          <Button
+            onClick={() => setModalOpen(false)}
+            width='150px'
+            borderStyle='1px solid #dfdada'
+            radius='3px'
+          >
+            취소
+          </Button>
+          <Button
+            width='150px'
+            borderStyle='none'
+            radius='3px'
+            color='white'
+            bgColor='#FF3F3F'
+            onClick={deleteComment}
+          >
+            삭제하기
+          </Button>
+        </ButtonContainer>
+      </Modal>
     </>
   );
 };
