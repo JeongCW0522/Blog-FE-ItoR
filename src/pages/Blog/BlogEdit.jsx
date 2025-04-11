@@ -39,7 +39,7 @@ const Line = styled.div`
 const TitleWrapper = styled.div`
   max-width: 800px;
   width: 100%;
-  margin: 70px auto 50px auto;
+  margin: 70px auto 50px;
 
   @media screen {
     padding-left: 20px;

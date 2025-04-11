@@ -44,8 +44,7 @@ const SetButton = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: auto;
-  margin-bottom: 50px;
+  margin: auto 0 50px;
   gap: 25px;
 `;
 

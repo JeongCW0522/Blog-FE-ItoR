@@ -116,8 +116,7 @@ const LoginCommentInput = styled.textarea`
   width: 100%;
   height: 100px;
   padding-top: 20px;
-  margin-top: 10px;
-  margin-bottom: -10px;
+  margin-top: 10px 0 -10px;
   font-size: 14px;
   color: #333333;
   background-color: #ffffff;

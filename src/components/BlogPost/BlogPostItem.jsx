@@ -8,7 +8,7 @@ const PostContainer = styled(Link)`
   cursor: pointer;
   transition: opacity 0.2s ease;
   border-bottom: 1px solid #f5f5f5;
-  padding: 10px 0 20px 0;
+  padding: 10px 0 20px;
 
   &:hover {
     opacity: 0.7;
@@ -47,8 +47,7 @@ const InfoWrapper = styled.div`
   font-size: 12px;
   color: #909090;
   gap: 6px;
-  margin-top: 50px;
-  margin-left: 10px;
+  margin: 50px 0 0 10px;
 `;
 
 const NameText = styled.span`

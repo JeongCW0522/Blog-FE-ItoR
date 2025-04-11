@@ -21,11 +21,11 @@ const TextButton = styled.button`
 `;
 
 const SetMypage = ({ onToast }) => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(false);
 
   return (
     <Container>
-      {!open ? (
+      {!isOpen ? (
         <TextButton onClick={() => setOpen(true)}>수정하기</TextButton>
       ) : (
         <>

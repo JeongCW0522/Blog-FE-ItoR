@@ -6,7 +6,7 @@ const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin: 30px 0 60px 0;
+  margin: 30px 0 60px;
 `;
 
 const PageButton = styled.button`

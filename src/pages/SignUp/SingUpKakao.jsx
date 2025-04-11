@@ -197,7 +197,7 @@ const SignUpKakao = () => {
               phSize='14px'
               value={birth}
               onChange={(e) => setBirth(e.target.value)}
-              fieldState={birthError}
+              errorState={birthError}
             />
             <Text>닉네임</Text>
             <Input
@@ -208,7 +208,7 @@ const SignUpKakao = () => {
               phSize='14px'
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              fieldState={nicknameError}
+              errorState={nicknameError}
             />
             <Text>한 줄 소개</Text>
             <Input
@@ -219,7 +219,7 @@ const SignUpKakao = () => {
               phSize='14px'
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              fieldState={bioError}
+              errorState={bioError}
             />
           </Styledgap>
           <br />

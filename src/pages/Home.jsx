@@ -2,10 +2,8 @@ import styled from 'styled-components';
 import { Header, BlogPostList } from '@/components';
 
 const Content = styled.div`
-  margin-top: 150px;
+  margin: 150px auto 0;
   max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
 `;
 
 function Home() {

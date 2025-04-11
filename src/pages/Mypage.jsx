@@ -29,7 +29,6 @@ const Content = styled.div`
   @media (max-width: 700px) {
     min-width: 300px;
     width: 90%;
-    margin-left: 0;
     padding: 20px;
   }
 `;

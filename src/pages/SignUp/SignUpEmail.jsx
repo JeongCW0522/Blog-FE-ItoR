@@ -42,8 +42,7 @@ const SubTitle = styled.div`
   display: flex;
   font-size: 14px;
   color: #706e6e;
-  margin-left: 30%;
-  margin-bottom: 30px;
+  margin: 0 0 30px 30%;
 
   @media (max-width: 700px) {
     margin-left: 0px;
@@ -63,16 +62,14 @@ const Content = styled.div`
   @media (max-width: 700px) {
     min-width: 300px;
     width: 90%;
-    margin-top: 160px;
-    margin-left: -20px;
+    margin-top: 160px 0 0 -20px;
   }
 `;
 
 const Text = styled.div`
   color: #9e9e9e;
   font-size: 14px;
-  margin-top: 20px;
-  margin-left: 7px;
+  margin: 20px 0 0 7px;
 `;
 
 const Styledgap = styled.div`
@@ -183,7 +180,7 @@ const SignUpEmail = () => {
               phSize='14px'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              fieldState={emailError}
+              errorState={emailError}
             />
 
             <Text>비밀번호</Text>
@@ -205,7 +202,7 @@ const SignUpEmail = () => {
               phSize='14px'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              fieldState={confirmPasswordError}
+              errorState={confirmPasswordError}
             />
             <Text>이름</Text>
             <Input
@@ -216,7 +213,7 @@ const SignUpEmail = () => {
               phSize='14px'
               value={name}
               onChange={(e) => setName(e.target.value)}
-              fieldState={nameError}
+              errorState={nameError}
             />
             <Text>생년월일</Text>
             <Input
@@ -227,7 +224,7 @@ const SignUpEmail = () => {
               phSize='14px'
               value={birth}
               onChange={(e) => setBirth(e.target.value)}
-              fieldState={birthError}
+              errorState={birthError}
             />
             <Text>닉네임</Text>
             <Input
@@ -238,7 +235,7 @@ const SignUpEmail = () => {
               phSize='14px'
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              fieldState={nicknameError}
+              errorState={nicknameError}
             />
             <Text>한 줄 소개</Text>
             <Input
@@ -249,7 +246,7 @@ const SignUpEmail = () => {
               phSize='14px'
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              fieldState={bioError}
+              errorState={bioError}
             />
           </Styledgap>
           <br />
