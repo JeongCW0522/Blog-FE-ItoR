@@ -179,7 +179,7 @@ const PostedCommetBox = styled.div`
   margin: 50px 0 60px;
 `;
 
-const MoreFuction = styled.div`
+const PostedCommentContent = styled.div`
   display: flex;
   justify-content: space-between;
 `;
@@ -252,13 +252,21 @@ const BlogDetail = () => {
   };
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [deleteId, setDeleteIdId] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
 
   const deleteComment = () => {
     setCommentList((prev) => prev.filter((comment) => comment.id !== deleteId));
     setCommentCount((prev) => prev - 1);
     setModalOpen(false);
-    setDeleteIdId(null);
+    setDeleteId(null);
+  };
+
+  const onToast = () => {
+    setToastData({
+      show: true,
+      type: 'positive',
+      message: '삭제가 완료되었습니다!',
+    });
   };
 
   if (!post) {
@@ -270,6 +278,7 @@ const BlogDetail = () => {
       <GlobalStyle />
       <Header />
       <DetailContainer>
+        <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
         <TitleContent>
           <Title>{post.title}</Title>
           <InfoWrapper>
@@ -284,10 +293,8 @@ const BlogDetail = () => {
         <Content>{post.content}</Content>
         <Line />
         <CommentContent id='comment'>
-          {' '}
-          {/* 스크롤 이동을 위한 id값 */}
           <CommentHeader>
-            댓글 <span>{commentCount}</span>
+            댓글 <span>{commentList.length}</span>
           </CommentHeader>
           {commentCount === 0 && (
             <NoComment>
@@ -297,18 +304,18 @@ const BlogDetail = () => {
           )}
           {commentList.map((comment) => (
             <PostedCommetBox key={comment.id}>
-              <MoreFuction>
+              <PostedCommentContent>
                 <InfoWrapper>
                   <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
                   <NameText>{post.nickname}</NameText>
                 </InfoWrapper>
                 <StyledMoreIcon
                   onClick={() => {
-                    setDeleteIdId(comment.id);
+                    setDeleteId(comment.id);
                     setModalOpen(true);
                   }}
                 />
-              </MoreFuction>
+              </PostedCommentContent>
               <CommentData>{post.date}</CommentData>
               <PostedComment>{comment.text}</PostedComment>
             </PostedCommetBox>
@@ -348,7 +355,6 @@ const BlogDetail = () => {
             <BioText>한 줄 소개</BioText>
           </ProfileContent>
         </ProfileBox>
-        <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
       </DetailContainer>
       <Modal isOpen={modalOpen}>
         <ModalText>
@@ -369,7 +375,10 @@ const BlogDetail = () => {
             radius='3px'
             color='white'
             bgColor='#FF3F3F'
-            onClick={deleteComment}
+            onClick={() => {
+              deleteComment();
+              onToast();
+            }}
           >
             삭제하기
           </Button>

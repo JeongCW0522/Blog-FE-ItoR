@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { ErrorIcon, DoneIcon } from '@/assets';
 
 const ToastMessage = styled.div`
-  position: absolute;
+  position: fixed;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
   padding: 8px 12px;
@@ -16,6 +17,7 @@ const ToastMessage = styled.div`
   align-items: center;
   justify-content: center;
   gap: 4px;
+  z-index: 50;
 `;
 
 const StyledIcon = styled.div`
