@@ -1,7 +1,13 @@
 import { Button, Modal, ModalText, ButtonContainer } from '@/components';
-import { Link } from 'react-router-dom';
+import { useLogin } from '@/context/LoginContext';
 
 const LogoutModal = ({ isOpen: madalOpen, onClose }) => {
+  const { setIsLogin } = useLogin();
+
+  const goLogout = () => {
+    setIsLogin(false); // 로그인 상태 false로 변경
+  };
+
   return (
     <Modal isOpen={madalOpen}>
       <ModalText>
@@ -11,11 +17,19 @@ const LogoutModal = ({ isOpen: madalOpen, onClose }) => {
         <Button onClick={onClose} width='150px' borderStyle='1px solid #dfdada' radius='3px'>
           취소
         </Button>
-        <Link to='/' state={{ openLoginModal: true }}>
-          <Button width='150px' borderStyle='none' radius='3px' color='white' bgColor='#00A1FF'>
-            로그아웃
-          </Button>
-        </Link>
+        <Button
+          width='150px'
+          borderStyle='none'
+          radius='3px'
+          color='white'
+          bgColor='#00A1FF'
+          onClick={() => {
+            goLogout();
+            onClose();
+          }}
+        >
+          로그아웃
+        </Button>
       </ButtonContainer>
     </Modal>
   );

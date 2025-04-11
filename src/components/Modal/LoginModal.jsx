@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ClearIcon, GITLOG, KakaoIcon } from '@/assets';
 import { Input, Button } from '@/components';
+import { useLogin } from '@/context/LoginContext';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -115,13 +116,18 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fieldState, setFieldState] = useState(null); // 비밀번호 오류 상태
+  const { setIsLogin } = useLogin();
 
   const handleLogin = () => {
     if (email !== 'jcw0522@gachon.ac.kr') {
       setFieldState({ message: '이메일을 다시 입력해주세요.' });
     } else if (password !== '123456') {
       setFieldState({ message: '비밀번호가 일치하지 않습니다.' });
-    } else setFieldState(null);
+    } else {
+      setFieldState(null);
+      setIsLogin(true);
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
