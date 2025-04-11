@@ -8,7 +8,7 @@ const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: rgb(245, 245, 245);
+  background-color: #f5f5f5;
   height: 420px;
 
   @media (max-width: 700px) {
@@ -20,7 +20,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  width: 40%;
+  width: 37%;
   min-width: 600px;
   min-height: 1000px;
   padding: 40px;
@@ -34,7 +34,7 @@ const Content = styled.div`
   }
 `;
 
-const ProfileContet = styled.div`
+const ProfileContent = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 600px;
@@ -75,7 +75,7 @@ const Mypage = () => {
       <Container>
         <Header setMypage={<SetMypage />} />
         <Content>
-          <ProfileContet>
+          <ProfileContent>
             <Image src={Profile} alt='프로필' width='64px' height='64px' radius='50%' />
             <InputContent>
               <Input
@@ -96,7 +96,7 @@ const Mypage = () => {
                 bgColor='#f5f5f5'
               />
             </InputContent>
-          </ProfileContet>
+          </ProfileContent>
           <Styledgap>
             <Text>이메일</Text>
             <Input width='100%' height='45px' radius='3px' placeholder='이메일' phSize='14px' />

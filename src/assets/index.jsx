@@ -12,6 +12,7 @@ import ChatIcon from './chat.svg?react';
 import MoreIcon from './more.svg?react';
 import LeftIcon from './Left.svg?react';
 import RightIcon from './Right.svg?react';
+import SettingIcon from './setting.svg?react';
 
 export {
   AddPhoto,
@@ -28,4 +29,5 @@ export {
   MoreIcon,
   LeftIcon,
   RightIcon,
+  SettingIcon,
 };

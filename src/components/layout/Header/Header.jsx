@@ -60,7 +60,7 @@ const Header = ({ onToast }) => {
   const isDetailPage = location.pathname.startsWith('/detail/'); //현재 주소가 detail로 시작하는지 확인
   const isWritePage = location.pathname.startsWith('/write');
   const isMypage = location.pathname.startsWith('/mypage');
-  const signupPaths = ['/signUp', '/signUpEmail', '/signUpKakao'];
+  const signupPaths = ['/signUp', '/signUp/Email', '/signUp/Kakao'];
   const isSignupPage = signupPaths.includes(location.pathname);
 
   let headerContent = null;

@@ -123,7 +123,7 @@ const Signup = () => {
           <Text>You can make anything by writing</Text>
         </LeftContent>
         <RightContent>
-          <Link to='/signUpEmail' style={{ width: '82%' }}>
+          <Link to='/signUp/Email' style={{ width: '82%' }}>
             <Button
               width='100%'
               height='48px'
@@ -137,7 +137,7 @@ const Signup = () => {
             </Button>
           </Link>
           <SubText>또는</SubText>
-          <Link to='/signUpKakao' style={{ width: '82%' }}>
+          <Link to='/signUp/Kakao' style={{ width: '82%' }}>
             <Button
               width='100%'
               height='48px'

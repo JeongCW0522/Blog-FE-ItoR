@@ -58,9 +58,11 @@ const SideLogin = ({ openLogoutModal }) => {
         <SidebarText>You can make anything by writing</SidebarText>
       </ProfileBox>
       <GitButton>
-        <Button width='110px' color='#00A1FF' borderStyle='1px solid #00A1FF'>
-          나의 깃로그
-        </Button>
+        <Link to='/myblog'>
+          <Button width='110px' color='#00A1FF' borderStyle='1px solid #00A1FF'>
+            나의 깃로그
+          </Button>
+        </Link>
         <Link to='/write'>
           <Button width='110px' color='#00A1FF' borderStyle='1px solid #00A1FF'>
             깃로그 쓰기
@@ -68,9 +70,11 @@ const SideLogin = ({ openLogoutModal }) => {
         </Link>
       </GitButton>
       <SetButton>
-        <Button width='110px' color='#909090' borderStyle='1px solid #909090'>
-          설정
-        </Button>
+        <Link to='/mypage'>
+          <Button width='110px' color='#909090' borderStyle='1px solid #909090'>
+            설정
+          </Button>
+        </Link>
         <Button
           width='110px'
           color='#909090'
