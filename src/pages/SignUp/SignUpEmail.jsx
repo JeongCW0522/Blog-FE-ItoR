@@ -69,7 +69,7 @@ const Content = styled.div`
 const Text = styled.div`
   color: #9e9e9e;
   font-size: 14px;
-  margin: 20px 0 0 7px;
+  margin: 15px 0 13px 7px;
 `;
 
 const Styledgap = styled.div`
@@ -148,6 +148,72 @@ const SignUpEmail = () => {
     }
   };
 
+  const inputFields = [
+    {
+      label: '이메일',
+      value: email,
+      onChange: (e) => setEmail(e.target.value),
+      name: 'email',
+      error: emailError,
+      placeholder: '이메일',
+      type: 'email',
+    },
+    {
+      label: '비밀번호',
+      value: password,
+      onChange: (e) => setPassword(e.target.value),
+      name: 'password',
+      error: null,
+      placeholder: '비밀번호',
+      type: 'password',
+    },
+    {
+      label: '비밀번호 확인',
+      value: confirmPassword,
+      onChange: (e) => setConfirmPassword(e.target.value),
+      name: 'confirmPassword',
+      error: confirmPasswordError,
+      placeholder: '비밀번호 확인',
+      type: 'password',
+    },
+    {
+      label: '이름',
+      value: name,
+      onChange: (e) => setName(e.target.value),
+      name: 'name',
+      error: nameError,
+      placeholder: '이름',
+      type: 'text',
+    },
+    {
+      label: '생년월일',
+      value: birth,
+      onChange: (e) => setBirth(e.target.value),
+      name: 'birth',
+      error: birthError,
+      placeholder: 'YYYY-MM-DD',
+      type: 'text',
+    },
+    {
+      label: '닉네임',
+      value: nickname,
+      onChange: (e) => setNickname(e.target.value),
+      name: 'nickname',
+      error: nicknameError,
+      placeholder: '닉네임',
+      type: 'text',
+    },
+    {
+      label: '한 줄 소개',
+      value: bio,
+      onChange: (e) => setBio(e.target.value),
+      name: 'bio',
+      error: bioError,
+      placeholder: '한 줄 소개',
+      type: 'text',
+    },
+  ];
+
   return (
     <>
       <GlobalStyle />
@@ -171,83 +237,23 @@ const SignUpEmail = () => {
             프로필 사진 추가
           </Button>
           <Styledgap>
-            <Text>이메일</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='이메일'
-              phSize='14px'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              errorState={emailError}
-            />
-
-            <Text>비밀번호</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='......'
-              phSize='14px'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Text>비밀번호 확인</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='......'
-              phSize='14px'
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              errorState={confirmPasswordError}
-            />
-            <Text>이름</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='이름'
-              phSize='14px'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              errorState={nameError}
-            />
-            <Text>생년월일</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='YYYY-MM-DD'
-              phSize='14px'
-              value={birth}
-              onChange={(e) => setBirth(e.target.value)}
-              errorState={birthError}
-            />
-            <Text>닉네임</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='닉네임'
-              phSize='14px'
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              errorState={nicknameError}
-            />
-            <Text>한 줄 소개</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='한 줄 소개'
-              phSize='14px'
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              errorState={bioError}
-            />
+            {inputFields.map((field) => (
+              <div key={field.name}>
+                <Text>{field.label}</Text>
+                <Input
+                  width='100%'
+                  height='45px'
+                  radius='3px'
+                  placeholder={field.placeholder}
+                  phSize='14px'
+                  value={field.value}
+                  onChange={field.onChange}
+                  name={field.name}
+                  type={field.type}
+                  errorState={field.error}
+                />
+              </div>
+            ))}
           </Styledgap>
           <br />
           <Button

@@ -72,14 +72,7 @@ const Content = styled.div`
 const Text = styled.div`
   color: #9e9e9e;
   font-size: 14px;
-  margin-top: 20px;
-  margin-left: 7px;
-`;
-
-const Styledgap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  margin: 15px 0 13px 7px;
 `;
 
 const SocialBox = styled.div`
@@ -87,6 +80,7 @@ const SocialBox = styled.div`
   align-items: center;
   gap: 10px;
   padding-left: 15px;
+  margin-top: -20px;
   height: 45px;
   background: #e6e6e6;
   width: 100%;
@@ -106,6 +100,8 @@ const SignUpKakao = () => {
   const [birthError, setBirthError] = useState(null);
   const [nicknameError, setNicknameError] = useState(null);
   const [bioError, setBioError] = useState(null);
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleSignUp = () => {
     let isValid = true;
@@ -136,7 +132,49 @@ const SignUpKakao = () => {
     }
   };
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const inputFields = [
+    {
+      label: '이메일',
+      name: 'email',
+      placeholder: '이메일',
+      type: 'email',
+      disabled: true,
+    },
+    {
+      label: '이름',
+      name: 'name',
+      placeholder: '이름',
+      type: 'text',
+      disabled: true,
+    },
+    {
+      label: '생년월일',
+      value: birth,
+      onChange: (e) => setBirth(e.target.value),
+      name: 'birth',
+      error: birthError,
+      placeholder: 'YYYY-MM-DD',
+      type: 'text',
+    },
+    {
+      label: '닉네임',
+      value: nickname,
+      onChange: (e) => setNickname(e.target.value),
+      name: 'nickname',
+      error: nicknameError,
+      placeholder: '닉네임',
+      type: 'text',
+    },
+    {
+      label: '한 줄 소개',
+      value: bio,
+      onChange: (e) => setBio(e.target.value),
+      name: 'bio',
+      error: bioError,
+      placeholder: '한 줄 소개',
+      type: 'text',
+    },
+  ];
 
   return (
     <>
@@ -160,68 +198,31 @@ const SignUpKakao = () => {
           >
             프로필 사진 추가
           </Button>
-          <Styledgap>
-            <Text>소셜 로그인</Text>
-            <SocialBox disabled>
-              <KakaoIcon />
-              카카오 로그인
-            </SocialBox>
-            <Text>이메일</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='jcw0522@gachon.ac.kr'
-              phSize='14px'
-              borderStyle='none'
-              bgColor='#E6E6E6'
-              disabled={true}
-            />
-            <Text>이름</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='정찬원'
-              phSize='14px'
-              borderStyle='none'
-              bgColor='#E6E6E6'
-              disabled={true}
-            />
-            <Text>생년월일</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='YYYY-MM-DD'
-              phSize='14px'
-              value={birth}
-              onChange={(e) => setBirth(e.target.value)}
-              errorState={birthError}
-            />
-            <Text>닉네임</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='닉네임'
-              phSize='14px'
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              errorState={nicknameError}
-            />
-            <Text>한 줄 소개</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='한 줄 소개'
-              phSize='14px'
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              errorState={bioError}
-            />
-          </Styledgap>
+          <Text>소셜 로그인</Text>
+          <SocialBox disabled>
+            <KakaoIcon />
+            카카오 로그인
+          </SocialBox>
+          {inputFields.map((field) => (
+            <div key={field.name}>
+              <Text>{field.label}</Text>
+              <Input
+                width='100%'
+                height='45px'
+                radius='3px'
+                phSize='14px'
+                borderStyle={field.disabled && 'none'}
+                bgColor={field.disabled && '#E6E6E6'}
+                placeholder={field.placeholder}
+                type={field.type}
+                name={field.name}
+                value={field.value}
+                onChange={field.onChange}
+                errorState={field.error}
+                disabled={field.disabled}
+              />
+            </div>
+          ))}
           <br />
           <Button
             width='102%'

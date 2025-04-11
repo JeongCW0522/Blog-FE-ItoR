@@ -24,7 +24,7 @@ const ErrorText = styled.p`
   padding-left: 10px;
   width: 80%;
   text-align: left;
-  margin: 2px 0;
+  margin: 4px 0;
 `;
 
 const Input = ({

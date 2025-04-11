@@ -29,13 +29,11 @@ const ProfileContent = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 700px;
-  padding-top: 50px;
-  padding-left: 20px;
+  padding: 50px 0 0 20px;
 
   @media (max-width: 700px) {
     min-width: 440px;
-    padding-top: 40px;
-    padding-left: 0px;
+    padding-top: 40px 0 0;
   }
 `;
 
