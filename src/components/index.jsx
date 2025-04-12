@@ -10,6 +10,7 @@ import BlogPostList, { dummyData } from './BlogPost/BlogPostList';
 import LoginModal from './Modal/LoginModal';
 import LogoutModal from './Modal/LogoutModal';
 import SignUpModal from './Modal/SignUpModal';
+import BlogComment from './BlogPost/BlogComment';
 
 export {
   Input,
@@ -27,4 +28,5 @@ export {
   LoginModal,
   LogoutModal,
   SignUpModal,
+  BlogComment,
 };
