@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Image, Modal, ModalText, ButtonContainer, Toast } from '@/components';
+import { Button, Image, Modal, Toast } from '@/components';
 import { useLogin } from '@/context/LoginContext';
 import { MoreIcon } from '@/assets';
 
@@ -68,33 +68,16 @@ const PostedComment = styled.p`
   word-break: break-word;
 `;
 
-const CommentInput = styled.textarea`
+const StyledTextarea = styled.textarea`
   width: 100%;
-  height: 100px;
-  padding-top: 20px;
-  margin-top: 10px 0 -10px;
+  height: ${({ $disabled }) => ($disabled ? '80px' : '100px')};
+  padding: ${({ $disabled }) => ($disabled ? '25px 16px' : '10px 0')};
+  margin: ${({ $disabled }) => !$disabled && '10px 0 -10px'};
   font-size: 14px;
   color: #333;
   background-color: #fff;
-  border: none;
-  border-bottom: 1px solid #e6e6e6;
-  border-radius: 4px;
-  resize: none;
-  outline: none;
-
-  &::placeholder {
-    color: #909090;
-  }
-`;
-
-const DisabledInput = styled.textarea`
-  width: 100%;
-  height: 80px;
-  padding: 25px 16px;
-  font-size: 14px;
-  color: #333;
-  background-color: #fff;
-  border: 1px solid #e6e6e6;
+  border: ${({ $disabled }) => ($disabled ? '1px solid #e6e6e6' : 'none')};
+  border-bottom: ${({ $disabled }) => !$disabled && '1px solid #e6e6e6'};
   border-radius: 4px;
   resize: none;
   outline: none;
@@ -115,10 +98,6 @@ const InfoWrapper = styled.div`
   font-size: 14px;
   color: #909090;
   gap: 6px;
-`;
-
-const NameText = styled.span`
-  color: #333;
 `;
 
 const StyledMoreIcon = styled(MoreIcon)`
@@ -149,19 +128,12 @@ const BlogComment = ({ post }) => {
     setCommentList((prev) => prev.filter((comment) => comment.id !== deleteId));
     setModalOpen(false);
     setDeleteId(null);
-    onToast();
+    onToast('삭제가 완료되었습니다!');
   };
 
-  const onToast = () => {
-    setToastData({
-      show: true,
-      type: 'positive',
-      message: '삭제가 완료되었습니다!',
-    });
-
-    setTimeout(() => {
-      setToastData((prev) => ({ ...prev, show: false }));
-    }, 2000);
+  const onToast = (message) => {
+    setToastData({ show: true, type: 'positive', message });
+    setTimeout(() => setToastData({ show: false, type: '', message: '' }), 2000);
   };
 
   return (
@@ -181,7 +153,7 @@ const BlogComment = ({ post }) => {
           <PostedCommentContent>
             <InfoWrapper>
               <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
-              <NameText>{post.nickname}</NameText>
+              <span style={{ color: '#333' }}>{post.nickname}</span>
             </InfoWrapper>
             <StyledMoreIcon
               onClick={() => {
@@ -198,9 +170,9 @@ const BlogComment = ({ post }) => {
         <CommentBox>
           <InfoWrapper>
             <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
-            <NameText>{post.nickname}</NameText>
+            <span style={{ color: '#333' }}>{post.nickname}</span>
           </InfoWrapper>
-          <CommentInput
+          <StyledTextarea
             placeholder='댓글을 입력해주세요.'
             value={commentInput}
             onChange={(e) => setCommentInput(e.target.value)}
@@ -219,34 +191,17 @@ const BlogComment = ({ post }) => {
           </ButtonWrapper>
         </CommentBox>
       ) : (
-        <DisabledInput disabled placeholder='로그인을 하고 댓글을 달아보세요!' />
+        <StyledTextarea disabled $disabled placeholder='로그인을 하고 댓글을 달아보세요!' />
       )}
-
-      <Modal isOpen={modalOpen}>
-        <ModalText>
-          <h4>댓글을 삭제할까요?</h4>
-        </ModalText>
-        <ButtonContainer>
-          <Button
-            onClick={() => setModalOpen(false)}
-            width='150px'
-            borderStyle='1px solid #dfdada'
-            radius='3px'
-          >
-            취소
-          </Button>
-          <Button
-            width='150px'
-            borderStyle='none'
-            radius='3px'
-            color='white'
-            bgColor='#FF3F3F'
-            onClick={deleteComment}
-          >
-            삭제하기
-          </Button>
-        </ButtonContainer>
-      </Modal>
+      <Modal
+        isOpen={modalOpen}
+        title='댓글을 삭제할까요?'
+        confirmText='삭제하기'
+        cancelText='취소'
+        bgColor='#FF3F3F'
+        onClose={() => setModalOpen(false)}
+        onConfirm={deleteComment}
+      />
     </CommentContent>
   );
 };

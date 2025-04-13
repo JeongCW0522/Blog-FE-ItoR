@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChatIcon, MoreIcon } from '@/assets';
-import { Button, Modal, ModalText, ButtonContainer } from '@/components';
+import { Modal } from '@/components';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -99,25 +99,15 @@ const ChatandMore = () => {
           </MenuBox>
         )}
       </Container>
-      <Modal isOpen={modalOpen}>
-        <ModalText>
-          <h4>해당 블로그를 삭제하시겠어요?</h4>
-          <p>삭제된 블로그는 다시 확인할 수 없어요.</p>
-        </ModalText>
-        <ButtonContainer>
-          <Button
-            onClick={() => setModalOpen(false)}
-            width='150px'
-            borderStyle='1px solid #dfdada'
-            radius='3px'
-          >
-            취소
-          </Button>
-          <Button width='150px' borderStyle='none' radius='3px' color='white' bgColor='#FF3F3F'>
-            삭제하기
-          </Button>
-        </ButtonContainer>
-      </Modal>
+      <Modal
+        isOpen={modalOpen}
+        title='해당 블로그를 삭제하시겠어요?'
+        description='삭제된 블로그는 다시 확인할 수 없어요.'
+        confirmText='삭제하기'
+        cancelText='취소'
+        bgColor='#FF3F3F'
+        onClose={() => setModalOpen(false)}
+      />
     </>
   );
 };

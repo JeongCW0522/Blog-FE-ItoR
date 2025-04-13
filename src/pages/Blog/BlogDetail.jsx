@@ -16,7 +16,6 @@ const TitleContent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-
   padding-bottom: 24px;
 `;
 
@@ -77,7 +76,6 @@ const ProfileBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
   width: 100vw;
   height: 350px;
   padding: 10px 5px;
@@ -87,6 +85,10 @@ const ProfileBox = styled.div`
 
 const ProfileContent = styled.div`
   width: 720px;
+
+  @media (max-width: 700px) {
+    width: 90%;
+  }
 `;
 
 const BlogDetail = () => {

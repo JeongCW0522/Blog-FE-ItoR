@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { SideBarIcon, GITLOGO } from '@/assets';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CreateLog, ChatandMore, DeleteandLog, EditLog } from '@/components/layout/Header';
-import { LogoutModal, LoginModal, SideBar } from '@/components';
+import { LoginModal, SideBar, Modal } from '@/components';
 import { useLogin } from '@/context/LoginContext';
 
 const HeaderContainer = styled.div`
@@ -37,11 +37,6 @@ const SideBarIconClick = styled(SideBarIcon)`
   }
 `;
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  z-index: 200;
-`;
-
 const Header = ({ onToast }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLogoutModal, setIsLogoutModal] = useState(false);
@@ -53,7 +48,7 @@ const Header = ({ onToast }) => {
   const closeLogoutModal = () => setIsLogoutModal(false);
   const closeLoginModal = () => setIsLoginModal(false);
 
-  const { isLogin } = useLogin();
+  const { isLogin, setIsLogin } = useLogin();
   const navigate = useNavigate();
 
   const location = useLocation(); // 현재 주소정보 가져옴
@@ -72,11 +67,14 @@ const Header = ({ onToast }) => {
     headerContent = <DeleteandLog onToast={onToast} />;
   } else if (isMypage || isEditPage) {
     headerContent = <EditLog onToast={onToast} />;
-  } else if (isSignupPage) {
-    headerContent = null;
-  } else {
+  } else if (!isSignupPage) {
     headerContent = <CreateLog />;
   }
+
+  const handleLogout = () => {
+    setIsLogin(false);
+    closeLogoutModal();
+  };
 
   return (
     <>
@@ -94,10 +92,18 @@ const Header = ({ onToast }) => {
         </IconWrapper>
         {headerContent}
       </HeaderContainer>
-      <ModalOverlay>
-        {isLogoutModal && <LogoutModal isOpen={isLogoutModal} onClose={closeLogoutModal} />}
-        {isLoginModal && <LoginModal isOpen={isLoginModal} onClose={closeLoginModal} />}
-      </ModalOverlay>
+      {isLogoutModal && (
+        <Modal
+          isOpen={isLogoutModal}
+          title='로그아웃을 진행할게요'
+          confirmText='로그아웃'
+          cancelText='취소'
+          onConfirm={handleLogout}
+          onClose={closeLogoutModal}
+          bgColor='#00A1FF'
+        />
+      )}
+      {isLoginModal && <LoginModal isOpen={isLoginModal} onClose={closeLoginModal} />}
     </>
   );
 };

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Button from './Button';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -45,14 +46,43 @@ const ButtonContainer = styled.div`
   gap: 12px;
 `;
 
-const Modal = ({ isOpen, children }) => {
+const Modal = ({
+  isOpen,
+  title,
+  description,
+  confirmText,
+  cancelText,
+  onConfirm,
+  onClose,
+  bgColor,
+}) => {
   if (!isOpen) return null;
 
   return (
-    <ModalOverlay>
-      <ModalContent onClick={(e) => e.stopPropagation()}>{children}</ModalContent>
+    <ModalOverlay onClick={onClose}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        <ModalText>
+          <h4>{title}</h4>
+          {description && <p>{description}</p>}
+        </ModalText>
+        <ButtonContainer>
+          <Button width='150px' borderStyle='1px solid #dfdada' radius='3px' onClick={onClose}>
+            {cancelText}
+          </Button>
+          <Button
+            width='150px'
+            borderStyle='none'
+            radius='3px'
+            color='white'
+            bgColor={bgColor}
+            onClick={onConfirm}
+          >
+            {confirmText}
+          </Button>
+        </ButtonContainer>
+      </ModalContent>
     </ModalOverlay>
   );
 };
 
-export { Modal, ModalText, ButtonContainer };
+export default Modal;

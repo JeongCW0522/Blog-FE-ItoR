@@ -1,54 +1,15 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { Header, Image, Button, Input } from '@/components';
+import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components';
 import { AddPhoto, Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import SignUpModal from '@/components/Modal/SignUpModal';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-`;
-
-const TitleContainer = styled.div`
-  position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  background-color: #f5f5f5;
-  height: 150px;
-
-  @media (max-width: 700px) {
-    padding-left: 20px;
-    height: 120px;
-  }
-`;
-
-const Title = styled.h1`
-  display: flex;
-  padding-top: 30px;
-  font-size: 24px;
-  font-weight: bold;
-  margin-left: 30%;
-
-  @media (max-width: 700px) {
-    padding-top: 15px;
-    margin-left: 0px;
-  }
-`;
-
-const SubTitle = styled.div`
-  display: flex;
-  font-size: 14px;
-  color: #706e6e;
-  margin-left: 30%;
-  margin-bottom: 30px;
-
-  @media (max-width: 700px) {
-    margin-left: 0px;
-  }
 `;
 
 const Content = styled.div`
@@ -96,6 +57,12 @@ const SignUpKakao = () => {
   const [bio, setBio] = useState('');
 
   const todayString = dayjs().format('YYYY년 M월 D일');
+  const navigate = useNavigate();
+
+  const onModalConfirm = () => {
+    setModalOpen(false);
+    navigate('/', { state: { openLoginModal: true } });
+  };
 
   const [birthError, setBirthError] = useState(null);
   const [nicknameError, setNicknameError] = useState(null);
@@ -149,7 +116,6 @@ const SignUpKakao = () => {
     },
     {
       label: '생년월일',
-      value: birth,
       onChange: (e) => setBirth(e.target.value),
       name: 'birth',
       error: birthError,
@@ -158,7 +124,6 @@ const SignUpKakao = () => {
     },
     {
       label: '닉네임',
-      value: nickname,
       onChange: (e) => setNickname(e.target.value),
       name: 'nickname',
       error: nicknameError,
@@ -167,7 +132,6 @@ const SignUpKakao = () => {
     },
     {
       label: '한 줄 소개',
-      value: bio,
       onChange: (e) => setBio(e.target.value),
       name: 'bio',
       error: bioError,
@@ -181,10 +145,7 @@ const SignUpKakao = () => {
       <GlobalStyle />
       <Container>
         <Header />
-        <TitleContainer>
-          <Title>회원가입</Title>
-          <SubTitle>가입을 위해 회원님의 정보를 입력해주세요</SubTitle>
-        </TitleContainer>
+        <SignUpHeader />
         <Content>
           <Text>프로필 사진</Text>
           <Image src={Profile} alt='프로필' width='90px' height='90px' radius='50%' />
@@ -216,7 +177,7 @@ const SignUpKakao = () => {
                 placeholder={field.placeholder}
                 type={field.type}
                 name={field.name}
-                value={field.value}
+                value={field.name}
                 onChange={field.onChange}
                 errorState={field.error}
                 disabled={field.disabled}
@@ -232,7 +193,15 @@ const SignUpKakao = () => {
           >
             회원가입 완료
           </Button>
-          <SignUpModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+          <Modal
+            isOpen={modalOpen}
+            title='회원가입이 완료되었습니다.'
+            confirmText='로그인하기'
+            cancelText='확인'
+            bgColor='#00A1FF'
+            onClose={() => setModalOpen(false)}
+            onConfirm={onModalConfirm}
+          />
         </Content>
       </Container>
     </>

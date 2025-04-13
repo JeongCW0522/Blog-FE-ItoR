@@ -1,52 +1,15 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Header, Image, Button, Input } from '@/components';
+import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components';
 import { AddPhoto, Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import SignUpModal from '@/components/Modal/SignUpModal';
+import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-`;
-
-const ProfileContainer = styled.div`
-  position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  background-color: #f5f5f5;
-  height: 150px;
-
-  @media (max-width: 700px) {
-    padding-left: 20px;
-    height: 120px;
-  }
-`;
-
-const Title = styled.h1`
-  display: flex;
-  padding-top: 30px;
-  font-size: 24px;
-  font-weight: bold;
-  margin-left: 30%;
-
-  @media (max-width: 700px) {
-    padding-top: 15px;
-    margin-left: 0px;
-  }
-`;
-
-const SubTitle = styled.div`
-  display: flex;
-  font-size: 14px;
-  color: #706e6e;
-  margin: 0 0 30px 30%;
-
-  @media (max-width: 700px) {
-    margin-left: 0px;
-  }
 `;
 
 const Content = styled.div`
@@ -72,12 +35,6 @@ const Text = styled.div`
   margin: 15px 0 13px 7px;
 `;
 
-const Styledgap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
-
 const SignUpEmail = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [email, setEmail] = useState('');
@@ -88,8 +45,13 @@ const SignUpEmail = () => {
   const [nickname, setNickname] = useState('');
   const [bio, setBio] = useState('');
 
-  const today = new Date();
-  const todayString = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+  const navigate = useNavigate();
+  const todayString = dayjs().format('YYYY년 M월 D일');
+
+  const onModalConfirm = () => {
+    setModalOpen(false);
+    navigate('/', { state: { openLoginModal: true } });
+  };
 
   const [emailError, setEmailError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
@@ -151,7 +113,6 @@ const SignUpEmail = () => {
   const inputFields = [
     {
       label: '이메일',
-      value: email,
       onChange: (e) => setEmail(e.target.value),
       name: 'email',
       error: emailError,
@@ -160,7 +121,6 @@ const SignUpEmail = () => {
     },
     {
       label: '비밀번호',
-      value: password,
       onChange: (e) => setPassword(e.target.value),
       name: 'password',
       error: null,
@@ -169,7 +129,6 @@ const SignUpEmail = () => {
     },
     {
       label: '비밀번호 확인',
-      value: confirmPassword,
       onChange: (e) => setConfirmPassword(e.target.value),
       name: 'confirmPassword',
       error: confirmPasswordError,
@@ -178,7 +137,6 @@ const SignUpEmail = () => {
     },
     {
       label: '이름',
-      value: name,
       onChange: (e) => setName(e.target.value),
       name: 'name',
       error: nameError,
@@ -187,7 +145,6 @@ const SignUpEmail = () => {
     },
     {
       label: '생년월일',
-      value: birth,
       onChange: (e) => setBirth(e.target.value),
       name: 'birth',
       error: birthError,
@@ -196,7 +153,6 @@ const SignUpEmail = () => {
     },
     {
       label: '닉네임',
-      value: nickname,
       onChange: (e) => setNickname(e.target.value),
       name: 'nickname',
       error: nicknameError,
@@ -205,7 +161,6 @@ const SignUpEmail = () => {
     },
     {
       label: '한 줄 소개',
-      value: bio,
       onChange: (e) => setBio(e.target.value),
       name: 'bio',
       error: bioError,
@@ -219,10 +174,7 @@ const SignUpEmail = () => {
       <GlobalStyle />
       <Container>
         <Header />
-        <ProfileContainer>
-          <Title>회원가입</Title>
-          <SubTitle>가입을 위해 회원님의 정보를 입력해주세요</SubTitle>
-        </ProfileContainer>
+        <SignUpHeader />
         <Content>
           <Text>프로필 사진</Text>
           <Image src={Profile} alt='프로필' width='90px' height='90px' radius='50%' />
@@ -236,25 +188,23 @@ const SignUpEmail = () => {
           >
             프로필 사진 추가
           </Button>
-          <Styledgap>
-            {inputFields.map((field) => (
-              <div key={field.name}>
-                <Text>{field.label}</Text>
-                <Input
-                  width='100%'
-                  height='45px'
-                  radius='3px'
-                  placeholder={field.placeholder}
-                  phSize='14px'
-                  value={field.value}
-                  onChange={field.onChange}
-                  name={field.name}
-                  type={field.type}
-                  errorState={field.error}
-                />
-              </div>
-            ))}
-          </Styledgap>
+          {inputFields.map((field) => (
+            <div key={field.name}>
+              <Text>{field.label}</Text>
+              <Input
+                width='100%'
+                height='45px'
+                radius='3px'
+                placeholder={field.placeholder}
+                phSize='14px'
+                value={field.name}
+                onChange={field.onChange}
+                name={field.name}
+                type={field.type}
+                errorState={field.error}
+              />
+            </div>
+          ))}
           <br />
           <Button
             width='102%'
@@ -264,7 +214,15 @@ const SignUpEmail = () => {
           >
             회원가입 완료
           </Button>
-          <SignUpModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+          <Modal
+            isOpen={modalOpen}
+            title='회원가입이 완료되었습니다.'
+            confirmText='로그인하기'
+            cancelText='확인'
+            bgColor='#00A1FF'
+            onClose={() => setModalOpen(false)}
+            onConfirm={onModalConfirm}
+          />
         </Content>
       </Container>
     </>
