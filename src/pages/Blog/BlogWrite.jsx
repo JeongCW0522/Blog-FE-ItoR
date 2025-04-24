@@ -3,6 +3,7 @@ import { Header, Toast } from '@/components';
 import { useState } from 'react';
 import { AddPhoto } from '@/assets';
 import GlobalStyle from '@/styles/global';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -91,6 +92,7 @@ const ContentText = styled.textarea`
 const BlogWrite = () => {
   const [content, setContent] = useState('');
   const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
+  const navigate = useNavigate();
 
   const onToast = () => {
     if (!content.trim()) {
@@ -99,15 +101,18 @@ const BlogWrite = () => {
         type: 'error',
         message: '내용을 입력해주세요',
       });
+      setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
     } else {
-      setToastData({
-        show: true,
-        type: 'positive',
-        message: '저장되었습니다!',
+      navigate(`/`, {
+        state: {
+          toastData: {
+            show: true,
+            type: 'positive',
+            message: '저장되었습니다!',
+          },
+        },
       });
     }
-
-    setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
   };
 
   return (
@@ -118,7 +123,7 @@ const BlogWrite = () => {
         <Line />
         <AddPhotoButton>
           <AddPhoto />
-          <span>사진 추가하기</span>
+          사진 추가하기
         </AddPhotoButton>
         <TitleWrapper>
           <TitleInput placeholder='제목' />

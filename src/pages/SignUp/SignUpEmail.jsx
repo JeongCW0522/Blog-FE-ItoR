@@ -218,7 +218,7 @@ const SignUpEmail = () => {
             isOpen={modalOpen}
             title='회원가입이 완료되었습니다.'
             confirmText='로그인하기'
-            cancelText='확인'
+            closeText='확인'
             bgColor='#00A1FF'
             onClose={() => setModalOpen(false)}
             onConfirm={onModalConfirm}

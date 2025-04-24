@@ -97,16 +97,19 @@ const BlogDetail = () => {
   const { id } = useParams();
   const post = dummyData.find((p) => p.id === Number(id)); //url에서 가져온 id와 일치하는 해당 post 찾기
 
-  const [toastData, setToastData] = useState(
-    location.state?.toastData || { show: false, type: '', message: '' },
-  );
+  const [toastData, setToastData] = useState({ show: false, type: '', message: '' });
+
+  useEffect(() => {
+    const stateToast = location.state?.toastData;
+    if (stateToast) {
+      setToastData(stateToast);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     if (toastData.show) {
-      const timer = setTimeout(() => {
-        setToastData((prev) => ({ ...prev, show: false }));
-      }, 2000);
-      return () => clearTimeout(timer);
+      setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
     }
   }, [toastData]);
 

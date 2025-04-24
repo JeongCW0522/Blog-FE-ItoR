@@ -5,6 +5,7 @@ const StyledImage = styled.img`
   height: ${(props) => props.height || '500px'};
   border-radius: ${(props) => props.radius || '0px'};
   object-fit: cover;
+  aspect-ratio: 1/1;
 `;
 
 const Image = ({ src, alt, width, height, radius }) => {

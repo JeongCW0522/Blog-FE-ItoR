@@ -97,7 +97,7 @@ const Header = ({ onToast }) => {
           isOpen={isLogoutModal}
           title='로그아웃을 진행할게요'
           confirmText='로그아웃'
-          cancelText='취소'
+          closeText='취소'
           onConfirm={handleLogout}
           onClose={closeLogoutModal}
           bgColor='#00A1FF'

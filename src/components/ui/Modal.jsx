@@ -51,7 +51,7 @@ const Modal = ({
   title,
   description,
   confirmText,
-  cancelText,
+  closeText,
   onConfirm,
   onClose,
   bgColor,
@@ -67,7 +67,7 @@ const Modal = ({
         </ModalText>
         <ButtonContainer>
           <Button width='150px' borderStyle='1px solid #dfdada' radius='3px' onClick={onClose}>
-            {cancelText}
+            {closeText}
           </Button>
           <Button
             width='150px'

@@ -99,7 +99,6 @@ const Mypage = () => {
           <Styledgap>
             <Text>이메일</Text>
             <Input width='100%' height='45px' radius='3px' placeholder='이메일' phSize='14px' />
-
             <Text>비밀번호</Text>
             <Input width='100%' height='45px' radius='3px' placeholder='......' phSize='14px' />
             <Text>비밀번호 확인</Text>

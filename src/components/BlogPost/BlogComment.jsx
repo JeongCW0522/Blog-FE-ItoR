@@ -124,16 +124,16 @@ const BlogComment = ({ post }) => {
     setCommentInput('');
   };
 
+  const onToast = (message) => {
+    setToastData({ show: true, type: 'positive', message });
+    setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
+  };
+
   const deleteComment = () => {
     setCommentList((prev) => prev.filter((comment) => comment.id !== deleteId));
     setModalOpen(false);
     setDeleteId(null);
     onToast('삭제가 완료되었습니다!');
-  };
-
-  const onToast = (message) => {
-    setToastData({ show: true, type: 'positive', message });
-    setTimeout(() => setToastData({ show: false, type: '', message: '' }), 2000);
   };
 
   return (
@@ -197,7 +197,7 @@ const BlogComment = ({ post }) => {
         isOpen={modalOpen}
         title='댓글을 삭제할까요?'
         confirmText='삭제하기'
-        cancelText='취소'
+        closeText='취소'
         bgColor='#FF3F3F'
         onClose={() => setModalOpen(false)}
         onConfirm={deleteComment}

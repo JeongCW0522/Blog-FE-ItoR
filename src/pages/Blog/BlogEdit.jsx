@@ -111,7 +111,7 @@ const BlogEdit = () => {
       });
       setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
     } else {
-      navigate(-1, {
+      navigate(`/detail/${id}`, {
         state: {
           toastData: {
             show: true,
