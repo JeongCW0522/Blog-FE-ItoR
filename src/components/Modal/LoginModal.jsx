@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { ClearIcon, GITLOG, KakaoIcon } from '@/assets';
 import { Input, Button } from '@/components';
 import { useLogin } from '@/context/LoginContext';
+import { useMutation } from '@tanstack/react-query';
+import { loginRequest } from '@/api/Login';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -118,23 +120,29 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [errorState, setErrorState] = useState(null); // 비밀번호 오류 상태
   const { setIsLogin } = useLogin();
 
-  const handleLogin = () => {
-    const errors = [
-      { value: email === 'jcw0522@gachon.ac.kr', message: '이메일을 다시 입력해주세요.' },
-      {
-        value: password === '123456',
-        message: '비밀번호가 일치하지 않습니다.',
-      },
-    ];
-
-    const error = errors.find((e) => !e.value);
-    if (error) {
-      setErrorState({ message: error.message });
-    } else {
-      setErrorState(null);
+  const loginMutation = useMutation({
+    mutationFn: loginRequest,
+    onSuccess: () => {
       setIsLogin(true);
       onClose();
+    },
+    onError: (error) => {
+      setErrorState({ message: error.message });
+    },
+  });
+
+  const handleLogin = () => {
+    if (!email.includes('@')) {
+      setErrorState({ message: '이메일을 다시 입력해주세요.' });
+      return;
     }
+
+    if (!password) {
+      setErrorState({ message: '비밀번호를 입력해주세요.' });
+      return;
+    }
+    // 로그인 요청
+    loginMutation.mutate({ email, password });
   };
 
   if (!isOpen) return null;

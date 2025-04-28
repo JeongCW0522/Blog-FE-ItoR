@@ -5,6 +5,7 @@ import { AddPhoto, Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import SignUp from '@/api/SignUp';
 
 const Container = styled.div`
   position: relative;
@@ -60,7 +61,7 @@ const SignUpEmail = () => {
   const [nicknameError, setNicknameError] = useState(null);
   const [bioError, setBioError] = useState(null);
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     let isValid = true;
 
     if (email.trim() === '') {
@@ -106,7 +107,16 @@ const SignUpEmail = () => {
     }
 
     if (isValid) {
-      setModalOpen(true);
+      try {
+        const response = await SignUp(email, nickname, password, null, birth, name, bio);
+        if (response.error) {
+          setErrorState({ message: response.message });
+        } else {
+          setModalOpen(true);
+        }
+      } catch (error) {
+        setErrorState({ message: '회원가입에 실패했습니다.' });
+      }
     }
   };
 
