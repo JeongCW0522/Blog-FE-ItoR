@@ -33,4 +33,23 @@ const SignUp = async (email, nickname, password, profilePicture, birthDate, name
   }
 };
 
-export default SignUp;
+const KakaoSignUp = async (email, nickname, profilePicture, birthDate, name, introduction) => {
+  try {
+    const response = await api.post('/auth/register-oauth', {
+      email,
+      nickname,
+      profilePicture,
+      birthDate,
+      name,
+      introduction,
+    });
+    return response.data;
+  } catch (error) {
+    return {
+      error: true,
+      message: error.response?.data?.message || '회원가입에 실패했습니다.',
+    };
+  }
+};
+
+export { SignUp, KakaoSignUp };

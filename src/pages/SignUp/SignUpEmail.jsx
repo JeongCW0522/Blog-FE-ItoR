@@ -5,7 +5,7 @@ import { AddPhoto, Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import SignUp from '@/api/SignUp';
+import { SignUp } from '@/api/SignUp';
 
 const Container = styled.div`
   position: relative;

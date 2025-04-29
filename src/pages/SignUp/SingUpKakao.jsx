@@ -5,7 +5,6 @@ import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components'
 import { AddPhoto, Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
-import SignUpKakaoApi from '@/api/SignUpKakaoApi';
 
 const Container = styled.div`
   position: relative;
@@ -75,7 +74,7 @@ const SignUpKakao = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     let isValid = true;
 
     if (email.trim() === '') {
@@ -113,12 +112,7 @@ const SignUpKakao = () => {
     }
 
     if (isValid) {
-      const response = SignUpKakaoApi(email, nickname, birth, name, bio);
-      if (response.error) {
-        console.log(response.message);
-      } else {
-        setModalOpen(true);
-      }
+      setModalOpen(true);
     }
   };
 

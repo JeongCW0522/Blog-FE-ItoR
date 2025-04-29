@@ -5,7 +5,7 @@ import { ClearIcon, GITLOG, KakaoIcon } from '@/assets';
 import { Input, Button } from '@/components';
 import { useLogin } from '@/context/LoginContext';
 import { useMutation } from '@tanstack/react-query';
-import loginRequest from '@/api/Login';
+import { loginRequest } from '@/api/Login';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -163,6 +163,11 @@ const LoginModal = ({ isOpen, onClose }) => {
     loginMutation.mutate({ email, password });
   };
 
+  const handleKakaoLogin = () => {
+    const url = `${import.meta.env.VITE_API_URL}/auth/kakao`;
+    window.location.href = url; // 카카오 로그인 페이지로 리디렉션
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -211,6 +216,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             bgColor='#FEE500'
             radius='6px'
             icon={KakaoIcon}
+            onClick={handleKakaoLogin}
           >
             카카오로 로그인
           </Button>
