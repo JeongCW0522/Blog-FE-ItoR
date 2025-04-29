@@ -1,11 +1,10 @@
 import api from './auth';
 
-const SignUp = async (email, nickname, password, profilePicture, birthDate, name, introduction) => {
+const SignUpKakaoApi = async (email, nickname, profilePicture, birthDate, name, introduction) => {
   try {
-    const response = await api.post('/auth/register', {
+    const response = await api.post('/auth/register-oauth', {
       email,
       nickname,
-      password,
       profilePicture,
       birthDate,
       name,
@@ -16,7 +15,6 @@ const SignUp = async (email, nickname, password, profilePicture, birthDate, name
     const userInfo = {
       email,
       nickname,
-      password,
       profilePicture,
       birth: birthDate,
       name,
@@ -33,4 +31,4 @@ const SignUp = async (email, nickname, password, profilePicture, birthDate, name
   }
 };
 
-export default SignUp;
+export default SignUpKakaoApi;

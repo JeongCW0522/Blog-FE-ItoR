@@ -15,11 +15,13 @@ const loginRequest = async ({ email, password }) => {
 
     return response.data;
   } catch (error) {
+    const status = error.response?.status;
     return {
       error: true,
+      status,
       message: error.response?.data?.message || '로그인에 실패했습니다.',
     };
   }
 };
 
-export { loginRequest };
+export default loginRequest;

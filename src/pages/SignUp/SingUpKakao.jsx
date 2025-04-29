@@ -5,6 +5,7 @@ import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components'
 import { AddPhoto, Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
+import SignUpKakaoApi from '@/api/SignUpKakaoApi';
 
 const Container = styled.div`
   position: relative;
@@ -52,6 +53,8 @@ const SocialBox = styled.div`
 `;
 
 const SignUpKakao = () => {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
   const [nickname, setNickname] = useState('');
   const [bio, setBio] = useState('');
@@ -64,6 +67,8 @@ const SignUpKakao = () => {
     navigate('/', { state: { openLoginModal: true } });
   };
 
+  const [emailError, setEmailError] = useState(null);
+  const [nameError, setNameError] = useState(null);
   const [birthError, setBirthError] = useState(null);
   const [nicknameError, setNicknameError] = useState(null);
   const [bioError, setBioError] = useState(null);
@@ -73,6 +78,19 @@ const SignUpKakao = () => {
   const handleSignUp = () => {
     let isValid = true;
 
+    if (email.trim() === '') {
+      setEmailError({ message: '반드시 입력해야하는 필수 사항입니다.' });
+      isValid = false;
+    } else {
+      setEmailError(null);
+    }
+
+    if (name.trim() === '') {
+      setNameError({ message: '반드시 입력해야하는 필수 사항입니다.' });
+      isValid = false;
+    } else {
+      setNameError(null);
+    }
     if (birth.trim() === '') {
       setBirthError({ message: `${todayString} 이전의 날짜만 입력 가능합니다.` });
       isValid = false;
@@ -95,28 +113,38 @@ const SignUpKakao = () => {
     }
 
     if (isValid) {
-      setModalOpen(true);
+      const response = SignUpKakaoApi(email, nickname, birth, name, bio);
+      if (response.error) {
+        console.log(response.message);
+      } else {
+        setModalOpen(true);
+      }
     }
   };
 
   const inputFields = [
     {
       label: '이메일',
+      onChange: (e) => setEmail(e.target.value),
+      value: email,
       name: 'email',
+      error: emailError,
       placeholder: '이메일',
       type: 'email',
-      disabled: true,
     },
     {
       label: '이름',
+      onChange: (e) => setName(e.target.value),
+      value: name,
       name: 'name',
+      error: nameError,
       placeholder: '이름',
       type: 'text',
-      disabled: true,
     },
     {
       label: '생년월일',
       onChange: (e) => setBirth(e.target.value),
+      value: birth,
       name: 'birth',
       error: birthError,
       placeholder: 'YYYY-MM-DD',
@@ -125,6 +153,7 @@ const SignUpKakao = () => {
     {
       label: '닉네임',
       onChange: (e) => setNickname(e.target.value),
+      value: nickname,
       name: 'nickname',
       error: nicknameError,
       placeholder: '닉네임',
@@ -133,6 +162,7 @@ const SignUpKakao = () => {
     {
       label: '한 줄 소개',
       onChange: (e) => setBio(e.target.value),
+      value: bio,
       name: 'bio',
       error: bioError,
       placeholder: '한 줄 소개',
@@ -172,15 +202,12 @@ const SignUpKakao = () => {
                 height='45px'
                 radius='3px'
                 phSize='14px'
-                borderStyle={field.disabled && 'none'}
-                bgColor={field.disabled && '#E6E6E6'}
                 placeholder={field.placeholder}
                 type={field.type}
                 name={field.name}
-                value={field.name}
+                value={field.value}
                 onChange={field.onChange}
                 errorState={field.error}
-                disabled={field.disabled}
               />
             </div>
           ))}
