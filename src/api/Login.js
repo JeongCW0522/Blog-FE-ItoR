@@ -6,6 +6,13 @@ const loginRequest = async ({ email, password }) => {
       email,
       password,
     });
+
+    const { accessToken, refreshToken } = response.data;
+
+    // 토큰 로컬 스토리지에 저장
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+
     return response.data;
   } catch (error) {
     return {

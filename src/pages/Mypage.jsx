@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import { Header, Image, Input } from '@/components';
 import { Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
@@ -68,6 +69,22 @@ const Text = styled.div`
 `;
 
 const Mypage = () => {
+  const [userInfo, setUserInfo] = useState({
+    nickname: '',
+    bio: '',
+    email: '',
+    password: '',
+    name: '',
+    birth: '',
+  });
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('userInfo'));
+    if (storedUser) {
+      setUserInfo(storedUser);
+    }
+  }, []);
+
   return (
     <>
       <GlobalStyle />
@@ -85,6 +102,8 @@ const Mypage = () => {
                 placeholder='닉네임'
                 phSize='24px'
                 bgColor='#f5f5f5'
+                value={userInfo?.nickname || ''}
+                disabled
               />
               <Input
                 width='100%'
@@ -93,20 +112,64 @@ const Mypage = () => {
                 placeholder='한 줄 소개'
                 phSize='14px'
                 bgColor='#f5f5f5'
+                value={userInfo?.bio || ''}
+                disabled
               />
             </InputContent>
           </ProfileContent>
           <Styledgap>
             <Text>이메일</Text>
-            <Input width='100%' height='45px' radius='3px' placeholder='이메일' phSize='14px' />
+            <Input
+              width='100%'
+              height='45px'
+              radius='3px'
+              placeholder='이메일'
+              phSize='14px'
+              value={userInfo?.email || ''}
+              disabled
+            />
             <Text>비밀번호</Text>
-            <Input width='100%' height='45px' radius='3px' placeholder='......' phSize='14px' />
+            <Input
+              width='100%'
+              height='45px'
+              radius='3px'
+              placeholder='......'
+              phSize='14px'
+              value={userInfo?.password || ''}
+              type='password'
+              disabled
+            />
             <Text>비밀번호 확인</Text>
-            <Input width='100%' height='45px' radius='3px' placeholder='......' phSize='14px' />
+            <Input
+              width='100%'
+              height='45px'
+              radius='3px'
+              placeholder='......'
+              phSize='14px'
+              value={userInfo?.password || ''}
+              type='password'
+              disabled
+            />
             <Text>이름</Text>
-            <Input width='100%' height='45px' radius='3px' placeholder='이름' phSize='14px' />
+            <Input
+              width='100%'
+              height='45px'
+              radius='3px'
+              placeholder='이름'
+              phSize='14px'
+              value={userInfo?.name || ''}
+              disabled
+            />
             <Text>생년월일</Text>
-            <Input width='100%' height='45px' radius='3px' placeholder='YYYY-MM-DD' phSize='14px' />
+            <Input
+              width='100%'
+              height='45px'
+              radius='3px'
+              placeholder='YYYY-MM-DD'
+              phSize='14px'
+              value={userInfo?.birth || ''}
+              disabled
+            />
           </Styledgap>
         </Content>
       </Container>

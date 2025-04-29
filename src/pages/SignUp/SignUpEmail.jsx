@@ -107,15 +107,11 @@ const SignUpEmail = () => {
     }
 
     if (isValid) {
-      try {
-        const response = await SignUp(email, nickname, password, null, birth, name, bio);
-        if (response.error) {
-          setErrorState({ message: response.message });
-        } else {
-          setModalOpen(true);
-        }
-      } catch (error) {
-        setErrorState({ message: '회원가입에 실패했습니다.' });
+      const response = await SignUp(email, nickname, password, '', birth, name, bio);
+      if (response.error) {
+        console.log(response.message);
+      } else {
+        setModalOpen(true);
       }
     }
   };
@@ -124,6 +120,7 @@ const SignUpEmail = () => {
     {
       label: '이메일',
       onChange: (e) => setEmail(e.target.value),
+      value: email,
       name: 'email',
       error: emailError,
       placeholder: '이메일',
@@ -132,6 +129,7 @@ const SignUpEmail = () => {
     {
       label: '비밀번호',
       onChange: (e) => setPassword(e.target.value),
+      value: password,
       name: 'password',
       error: null,
       placeholder: '비밀번호',
@@ -140,6 +138,7 @@ const SignUpEmail = () => {
     {
       label: '비밀번호 확인',
       onChange: (e) => setConfirmPassword(e.target.value),
+      vlaue: confirmPassword,
       name: 'confirmPassword',
       error: confirmPasswordError,
       placeholder: '비밀번호 확인',
@@ -148,6 +147,7 @@ const SignUpEmail = () => {
     {
       label: '이름',
       onChange: (e) => setName(e.target.value),
+      value: name,
       name: 'name',
       error: nameError,
       placeholder: '이름',
@@ -156,6 +156,7 @@ const SignUpEmail = () => {
     {
       label: '생년월일',
       onChange: (e) => setBirth(e.target.value),
+      value: birth,
       name: 'birth',
       error: birthError,
       placeholder: 'YYYY-MM-DD',
@@ -164,6 +165,7 @@ const SignUpEmail = () => {
     {
       label: '닉네임',
       onChange: (e) => setNickname(e.target.value),
+      value: nickname,
       name: 'nickname',
       error: nicknameError,
       placeholder: '닉네임',
@@ -172,6 +174,7 @@ const SignUpEmail = () => {
     {
       label: '한 줄 소개',
       onChange: (e) => setBio(e.target.value),
+      value: bio,
       name: 'bio',
       error: bioError,
       placeholder: '한 줄 소개',
@@ -207,7 +210,7 @@ const SignUpEmail = () => {
                 radius='3px'
                 placeholder={field.placeholder}
                 phSize='14px'
-                value={field.name}
+                value={field.value}
                 onChange={field.onChange}
                 name={field.name}
                 type={field.type}

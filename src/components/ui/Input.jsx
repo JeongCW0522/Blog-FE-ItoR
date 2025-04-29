@@ -43,6 +43,7 @@ const Input = ({
   onFocus,
   onChange,
   disabled = false,
+  value,
 }) => {
   return (
     <>
@@ -62,6 +63,7 @@ const Input = ({
         onFocus={onFocus}
         onChange={onChange}
         disabled={disabled}
+        value={value}
       />
       {errorState && <ErrorText>* {errorState.message}</ErrorText>}
     </>
