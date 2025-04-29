@@ -5,7 +5,7 @@ import { AddPhoto, Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { SignUp } from '@/api/SignUp';
+import { EmailSignUp } from '@/api/SignUp';
 
 const Container = styled.div`
   position: relative;
@@ -107,7 +107,7 @@ const SignUpEmail = () => {
     }
 
     if (isValid) {
-      const response = await SignUp(email, nickname, password, '', birth, name, bio);
+      const response = await EmailSignUp(email, nickname, password, '', birth, name, bio);
       if (response.error) {
         console.log(response.message);
       } else {

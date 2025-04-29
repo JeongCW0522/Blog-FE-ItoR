@@ -1,6 +1,6 @@
-import Axios from './auth';
+import { Axios, BaseUrl } from './auth';
 
-const loginRequest = async ({ email, password }) => {
+const EmailLogin = async ({ email, password }) => {
   try {
     const response = await Axios.post('/auth/login', {
       email,
@@ -26,15 +26,15 @@ const loginRequest = async ({ email, password }) => {
 };
 
 const KakaoLogin = async () => {
-  const url = `${import.meta.env.VITE_API_URL}/auth/kakao`;
+  const url = `${BaseUrl}/auth/kakao`;
   window.location.href = url;
 };
 
-const KakaoRedirect = async (authCode) => {
-  const response = await api.get('/auth/kakao/redirect', {
-    params: { authCode },
+const KakaoRedirect = async (code) => {
+  const response = await Axios.get('/auth/kakao/redirect', {
+    params: { code },
   });
   return response.data;
 };
 
-export { loginRequest, KakaoLogin, KakaoRedirect };
+export { EmailLogin, KakaoLogin, KakaoRedirect };

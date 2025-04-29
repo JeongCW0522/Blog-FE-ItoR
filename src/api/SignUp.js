@@ -1,6 +1,14 @@
-import Axios from './auth';
+import { Axios } from './auth';
 
-const SignUp = async (email, nickname, password, profilePicture, birthDate, name, introduction) => {
+const EmailSignUp = async (
+  email,
+  nickname,
+  password,
+  profilePicture,
+  birthDate,
+  name,
+  introduction,
+) => {
   try {
     const response = await Axios.post('/auth/register', {
       email,
@@ -18,9 +26,9 @@ const SignUp = async (email, nickname, password, profilePicture, birthDate, name
       nickname,
       password,
       profilePicture,
-      birth: birthDate,
+      birthDate,
       name,
-      bio: introduction,
+      introduction,
     };
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
 
@@ -35,7 +43,7 @@ const SignUp = async (email, nickname, password, profilePicture, birthDate, name
 
 const KakaoSignUp = async (email, nickname, profilePicture, birthDate, name, introduction) => {
   try {
-    const response = await api.post('/auth/register-oauth', {
+    const response = await Axios.post('/auth/register-oauth', {
       email,
       nickname,
       profilePicture,
@@ -43,6 +51,16 @@ const KakaoSignUp = async (email, nickname, profilePicture, birthDate, name, int
       name,
       introduction,
     });
+    const userInfo = {
+      email,
+      nickname,
+      profilePicture,
+      birthDate,
+      name,
+      introduction,
+    };
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
     return response.data;
   } catch (error) {
     return {
@@ -52,4 +70,4 @@ const KakaoSignUp = async (email, nickname, profilePicture, birthDate, name, int
   }
 };
 
-export { SignUp, KakaoSignUp };
+export { EmailSignUp, KakaoSignUp };

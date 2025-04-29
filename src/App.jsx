@@ -12,6 +12,7 @@ import {
 } from '@/pages';
 import { LoginProvider } from './context/LoginContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import KakaoRedirectPage from './pages/KakaoRedirectPage';
 
 function App() {
   const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ function App() {
             <Route path='/write' element={<BlogWrite />} />
             <Route path='/detail/:id/edit' element={<BlogEdit />} />
             <Route path='/myblog' element={<MyBlog />} />
+            <Route path='/oauth/kakao/success' element={<KakaoRedirectPage />} />
           </Routes>
         </BrowserRouter>
       </LoginProvider>

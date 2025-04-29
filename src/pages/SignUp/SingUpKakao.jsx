@@ -5,6 +5,7 @@ import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components'
 import { AddPhoto, Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
+import { KakaoSignUp } from '@/api/SignUp';
 
 const Container = styled.div`
   position: relative;
@@ -112,7 +113,12 @@ const SignUpKakao = () => {
     }
 
     if (isValid) {
-      setModalOpen(true);
+      const response = await KakaoSignUp(email, nickname, '', birth, name, bio);
+      if (response.error) {
+        console.log('카카오 회원가입 실패:', response.message);
+      } else {
+        setModalOpen(true); // 성공 시 모달 오픈
+      }
     }
   };
 
