@@ -48,7 +48,7 @@ const Header = ({ onToast }) => {
   const closeLogoutModal = () => setIsLogoutModal(false);
   const closeLoginModal = () => setIsLoginModal(false);
 
-  const { isLogin, setIsLogin } = useLogin();
+  const { isLogin, logout } = useLogin();
   const navigate = useNavigate();
 
   const location = useLocation(); // 현재 주소정보 가져옴
@@ -72,8 +72,9 @@ const Header = ({ onToast }) => {
   }
 
   const handleLogout = () => {
-    setIsLogin(false);
+    logout();
     closeLogoutModal();
+    navigate('/');
   };
 
   return (

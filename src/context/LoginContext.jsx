@@ -13,7 +13,18 @@ export const LoginProvider = ({ children }) => {
     }
   }, []);
 
-  return <LoginContext.Provider value={{ isLogin, setIsLogin }}>{children}</LoginContext.Provider>;
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('userInfo');
+    setIsLogin(false);
+  };
+
+  return (
+    <LoginContext.Provider value={{ isLogin, setIsLogin, logout }}>
+      {children}
+    </LoginContext.Provider>
+  );
 };
 
 //커스텀 Hook useLogin 만듦

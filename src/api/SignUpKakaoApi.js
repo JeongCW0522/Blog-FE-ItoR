@@ -1,8 +1,8 @@
-import api from './auth';
+import Axios from './auth';
 
 const SignUpKakaoApi = async (email, nickname, profilePicture, birthDate, name, introduction) => {
   try {
-    const response = await api.post('/auth/register-oauth', {
+    const response = await Axios.post('/auth/register-oauth', {
       email,
       nickname,
       profilePicture,

@@ -1,8 +1,8 @@
-import api from './auth';
+import Axios from './auth';
 
 const SignUp = async (email, nickname, password, profilePicture, birthDate, name, introduction) => {
   try {
-    const response = await api.post('/auth/register', {
+    const response = await Axios.post('/auth/register', {
       email,
       nickname,
       password,
