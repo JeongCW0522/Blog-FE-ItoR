@@ -20,11 +20,6 @@ const Title = styled.h1`
   font-size: 24px;
   font-weight: bold;
   margin-left: 30%;
-
-  @media (max-width: 700px) {
-    padding-top: 15px;
-    margin-left: 0px;
-  }
 `;
 
 const SubTitle = styled.div`

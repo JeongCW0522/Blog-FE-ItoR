@@ -6,6 +6,7 @@ import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { EmailSignUp } from '@/api/SignUp';
+import { useMutation } from '@tanstack/react-query';
 
 const Container = styled.div`
   position: relative;
@@ -46,74 +47,67 @@ const SignUpEmail = () => {
   const [nickname, setNickname] = useState('');
   const [bio, setBio] = useState('');
 
-  const navigate = useNavigate();
-  const todayString = dayjs().format('YYYY년 M월 D일');
-
-  const onModalConfirm = () => {
-    setModalOpen(false);
-    navigate('/', { state: { openLoginModal: true } });
-  };
-
   const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
   const [nameError, setNameError] = useState(null);
   const [birthError, setBirthError] = useState(null);
   const [nicknameError, setNicknameError] = useState(null);
   const [bioError, setBioError] = useState(null);
 
-  const handleSignUp = async () => {
-    let isValid = true;
+  const navigate = useNavigate();
+  const onModalConfirm = () => {
+    setModalOpen(false);
+    navigate('/', { state: { openLoginModal: true } });
+  };
 
-    if (email.trim() === '') {
-      setEmailError({ message: '반드시 입력해야하는 필수 사항입니다.' });
-      isValid = false;
-    } else {
-      setEmailError(null);
-    }
+  const todayString = dayjs().format('YYYY년 M월 D일');
 
-    if (confirmPassword !== password) {
-      setConfirmPasswordError({ message: '비밀번호가 일치하지 않습니다.' });
-      isValid = false;
-    } else {
-      setConfirmPasswordError(null);
-    }
-
-    if (name.trim() === '') {
-      setNameError({ message: '반드시 입력해야하는 필수 사항입니다.' });
-      isValid = false;
-    } else {
-      setNameError(null);
-    }
-
-    if (birth.trim() === '') {
-      setBirthError({ message: `${todayString} 이전의 날짜만 입력 가능합니다.` });
-      isValid = false;
-    } else {
-      setBirthError(null);
-    }
-
-    if (nickname.trim() === '' || nickname.length > 20) {
-      setNicknameError({ message: '닉네임은 최대 20글자입니다.' });
-      isValid = false;
-    } else {
-      setNicknameError(null);
-    }
-
-    if (bio.trim() === '' || bio.length > 30) {
-      setBioError({ message: '한 줄 소개는 최대 30글자입니다.' });
-      isValid = false;
-    } else {
-      setBioError(null);
-    }
-
-    if (isValid) {
-      const response = await EmailSignUp(email, nickname, password, '', birth, name, bio);
-      if (response.error) {
-        console.log(response.message);
+  const signupMutation = useMutation({
+    mutationFn: () => EmailSignUp(email, nickname, password, '', birth, name, bio), //실행할 함수
+    onSuccess: (data) => {
+      if (data.error) {
+        onValidation(data.message);
       } else {
         setModalOpen(true);
       }
-    }
+    },
+    onError: (error) => {
+      alert(error.message);
+    },
+  });
+
+  const onValidation = (msg) => {
+    if (email.trim() === '') setEmailError({ message: '반드시 입력해야하는 필수 사항입니다.' });
+    else if (msg.includes('이메일')) setEmailError({ message: msg });
+    else setEmailError(null);
+
+    if (password.trim() === '')
+      setPasswordError({ message: '반드시 입력해야하는 필수 사항입니다.' });
+    else if (msg.includes('비밀번호')) setPasswordError({ message: msg });
+    else setPasswordError(null);
+
+    if (confirmPassword !== password)
+      setConfirmPasswordError({ message: '비밀번호가 일치하지 않습니다.' });
+    else setConfirmPasswordError(null);
+
+    if (name.trim() === '') setNameError({ message: '반드시 입력해야하는 필수 사항입니다.' });
+    else if (msg.includes('이름')) setNameError({ message: msg });
+    else setNameError(null);
+
+    if (birth === '' || dayjs(birth).isAfter(dayjs()))
+      setBirthError({ message: `${todayString} 이전의 날짜만 입력 가능합니다.` });
+    else setBirthError(null);
+
+    if (nickname.trim() === '' || msg.includes('닉네임')) setNicknameError({ message: msg });
+    else setNicknameError(null);
+
+    if (bio.length > 30) setBioError({ message: msg });
+    else setBioError(null);
+  };
+
+  const handleSignUp = () => {
+    signupMutation.mutate();
   };
 
   const inputFields = [
@@ -131,14 +125,14 @@ const SignUpEmail = () => {
       onChange: (e) => setPassword(e.target.value),
       value: password,
       name: 'password',
-      error: null,
+      error: passwordError,
       placeholder: '비밀번호',
       type: 'password',
     },
     {
       label: '비밀번호 확인',
       onChange: (e) => setConfirmPassword(e.target.value),
-      vlaue: confirmPassword,
+      value: confirmPassword,
       name: 'confirmPassword',
       error: confirmPasswordError,
       placeholder: '비밀번호 확인',

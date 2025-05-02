@@ -1,3 +1,5 @@
+export { BaseUrl, Axios };
+
 import { Axios, BaseUrl } from './auth';
 
 const EmailLogin = async ({ email, password }) => {
@@ -26,15 +28,27 @@ const EmailLogin = async ({ email, password }) => {
 };
 
 const KakaoLogin = async () => {
-  const url = `${BaseUrl}/auth/kakao`;
-  window.location.href = url;
+  try {
+    const response = await Axios.get('/auth/kakao');
+    const redirectUrl = response.data.data.redirectUrl;
+
+    window.location.href = redirectUrl;
+  } catch (error) {
+    console.error('카카오 로그인 URL 요청 실패:', error);
+  }
 };
 
-const KakaoRedirect = async (code) => {
-  const response = await Axios.get('/auth/kakao/redirect', {
-    params: { code },
-  });
-  return response.data;
+const KakaoRedirect = async (authCode) => {
+  try {
+    const response = await Axios.get(`/auth/kakao/redirect?code=${authCode}`);
+    return {
+      ...response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error('카카오 리다이렉트 처리 실패:', error);
+    throw error;
+  }
 };
 
 export { EmailLogin, KakaoLogin, KakaoRedirect };

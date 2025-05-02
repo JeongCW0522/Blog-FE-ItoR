@@ -9,20 +9,25 @@ const KakaoRedirectPage = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
 
-    const handleRedirect = async () => {
+    const handleKakaoRedirect = async () => {
       try {
-        const { accessToken, refreshToken } = await KakaoRedirect(code);
+        const data = await KakaoRedirect(code);
 
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-        navigate('/'); // 홈으로 이동
+        if (data?.status === 200) {
+          const { accessToken, refreshToken } = data;
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+          navigate('/');
+        } else if (data?.status === 201) {
+          navigate('/signup');
+        }
       } catch (error) {
         console.error('카카오 로그인 실패:', error);
       }
     };
 
-    code && handleRedirect();
-  }, []);
+    if (code) handleKakaoRedirect();
+  }, [navigate]);
 
   return <p>카카오 로그인 처리 중입니다...</p>;
 };

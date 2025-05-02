@@ -20,18 +20,6 @@ const EmailSignUp = async (
       introduction,
     });
 
-    // 회원가입 성공 시 localStorage에 사용자 정보 저장
-    const userInfo = {
-      email,
-      nickname,
-      password,
-      profilePicture,
-      birthDate,
-      name,
-      introduction,
-    };
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
-
     return response.data;
   } catch (error) {
     return {
@@ -51,15 +39,6 @@ const KakaoSignUp = async (email, nickname, profilePicture, birthDate, name, int
       name,
       introduction,
     });
-    const userInfo = {
-      email,
-      nickname,
-      profilePicture,
-      birthDate,
-      name,
-      introduction,
-    };
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
 
     return response.data;
   } catch (error) {

@@ -130,7 +130,7 @@ const LoginModal = ({ isOpen, onClose }) => {
         } else if (data.status === 401) {
           setErrorState({ message: '비밀번호를 다시 확인해주세요.' });
         } else {
-          setErrorState({ message: data.message || '로그인에 실패했습니다.' });
+          setErrorState({ message: data.message });
         }
         setIsLogin(false);
         return;
