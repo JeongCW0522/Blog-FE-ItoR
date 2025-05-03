@@ -1,5 +1,3 @@
-export { BaseUrl, Axios };
-
 import { Axios, BaseUrl } from './auth';
 
 const EmailLogin = async ({ email, password }) => {
@@ -9,11 +7,13 @@ const EmailLogin = async ({ email, password }) => {
       password,
     });
 
-    const { accessToken, refreshToken } = response.data;
+    const { accessToken, refreshToken } = response?.data?.data || {};
 
     // 토큰 로컬 스토리지에 저장
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
+    if (accessToken && refreshToken) {
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    }
     console.log(response.data);
 
     return response.data;
@@ -41,6 +41,13 @@ const KakaoLogin = async () => {
 const KakaoRedirect = async (authCode) => {
   try {
     const response = await Axios.get(`/auth/kakao/redirect?code=${authCode}`);
+    const { accessToken, refreshToken } = response?.data?.data || {};
+
+    if (accessToken && refreshToken) {
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    }
+
     return {
       ...response.data,
       status: response.status,
