@@ -154,7 +154,6 @@ const LoginModal = ({ isOpen, onClose }) => {
       setErrorState({ message: '올바른 이메일 형식이 아닙니다.' });
       return;
     }
-
     if (!password) {
       setErrorState({ message: '비밀번호를 입력해주세요.' });
       return;
@@ -168,7 +167,6 @@ const LoginModal = ({ isOpen, onClose }) => {
   };
 
   if (!isOpen) return null;
-
   return (
     <ModalOverlay onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components';
 import { AddPhoto, Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
@@ -8,35 +7,7 @@ import { EmailSignUp } from '@/api/SignUp';
 import { useMutation } from '@tanstack/react-query';
 import { createInputFields } from '@/constant/SignupFields';
 import { onValiadation } from '@/utils/validation';
-
-const Container = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 210px auto;
-  width: 40%;
-  min-width: 600px;
-  min-height: 800px;
-  padding: 40px;
-  gap: 20px;
-
-  @media (max-width: 700px) {
-    min-width: 300px;
-    width: 90%;
-    margin-top: 160px 0 0 -20px;
-  }
-`;
-
-const Text = styled.div`
-  color: #9e9e9e;
-  font-size: 14px;
-  margin: 15px 0 13px 7px;
-`;
+import { Container, Content, Text } from '@/styles/SignupStyles';
 
 const SignUpEmail = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -90,7 +61,6 @@ const SignUpEmail = () => {
   };
 
   const inputFields = createInputFields(formData, setFormData, formError);
-
   return (
     <>
       <GlobalStyle />
@@ -110,7 +80,6 @@ const SignUpEmail = () => {
           >
             프로필 사진 추가
           </Button>
-
           {inputFields.map((field) => (
             <div key={field.name}>
               <Text>{field.label}</Text>
@@ -128,7 +97,6 @@ const SignUpEmail = () => {
               />
             </div>
           ))}
-
           <br />
           <Button
             width='102%'
@@ -138,7 +106,6 @@ const SignUpEmail = () => {
           >
             회원가입 완료
           </Button>
-
           <Modal
             isOpen={modalOpen}
             title='회원가입이 완료되었습니다.'
