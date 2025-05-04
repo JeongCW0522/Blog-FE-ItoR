@@ -1,25 +1,8 @@
 import { Axios } from './auth';
 
-const EmailSignUp = async (
-  email,
-  nickname,
-  password,
-  profilePicture,
-  birthDate,
-  name,
-  introduction,
-) => {
+const EmailSignUp = async (resisterData) => {
   try {
-    const response = await Axios.post('/auth/register', {
-      email,
-      nickname,
-      password,
-      profilePicture,
-      birthDate,
-      name,
-      introduction,
-    });
-
+    const response = await Axios.post('/auth/register', resisterData);
     return response.data;
   } catch (error) {
     return {
@@ -29,16 +12,9 @@ const EmailSignUp = async (
   }
 };
 
-const KakaoSignUp = async (email, nickname, profilePicture, birthDate, name, introduction) => {
+const KakaoSignUp = async (kakaoData) => {
   try {
-    const response = await Axios.post('/auth/register-oauth', {
-      email,
-      nickname,
-      profilePicture,
-      birthDate,
-      name,
-      introduction,
-    });
+    const response = await Axios.post('/auth/register-oauth', kakaoData);
 
     return response.data;
   } catch (error) {

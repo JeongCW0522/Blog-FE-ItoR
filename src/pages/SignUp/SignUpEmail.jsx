@@ -4,9 +4,10 @@ import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components'
 import { AddPhoto, Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
-import dayjs from 'dayjs';
 import { EmailSignUp } from '@/api/SignUp';
 import { useMutation } from '@tanstack/react-query';
+import { createInputFields } from '@/constant/SignupFields';
+import { onValiadation } from '@/utils/validation';
 
 const Container = styled.div`
   position: relative;
@@ -39,35 +40,39 @@ const Text = styled.div`
 
 const SignUpEmail = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
-  const [birth, setBirth] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [bio, setBio] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    name: '',
+    birth: '',
+    nickname: '',
+    bio: '',
+  });
 
-  const [emailError, setEmailError] = useState(null);
-  const [passwordError, setPasswordError] = useState(null);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
-  const [nameError, setNameError] = useState(null);
-  const [birthError, setBirthError] = useState(null);
-  const [nicknameError, setNicknameError] = useState(null);
-  const [bioError, setBioError] = useState(null);
-
+  const [formError, setFormError] = useState({});
   const navigate = useNavigate();
+
   const onModalConfirm = () => {
     setModalOpen(false);
     navigate('/', { state: { openLoginModal: true } });
   };
 
-  const todayString = dayjs().format('YYYY년 M월 D일');
-
   const signupMutation = useMutation({
-    mutationFn: () => EmailSignUp(email, nickname, password, '', birth, name, bio), //실행할 함수
+    mutationFn: () =>
+      EmailSignUp({
+        email: formData.email,
+        nickname: formData.nickname,
+        password: formData.password,
+        profilePicture: '',
+        birthDate: formData.birth,
+        name: formData.name,
+        introduction: formData.bio,
+      }),
     onSuccess: (data) => {
       if (data.error) {
-        onValidation(data.message);
+        onValiadation(formData, setFormError, data.message); // 사용 중인 이메일, 닉네임 여부 확인
+        console.log(data.message);
       } else {
         setModalOpen(true);
       }
@@ -77,105 +82,14 @@ const SignUpEmail = () => {
     },
   });
 
-  const onValidation = (msg) => {
-    if (email.trim() === '') setEmailError({ message: '반드시 입력해야하는 필수 사항입니다.' });
-    else if (msg.includes('이메일')) setEmailError({ message: msg });
-    else setEmailError(null);
-
-    if (password.trim() === '') setPasswordError({ message: '비밀번호는 공백이 아니어야 합니다.' });
-    else if (msg.includes('비밀번호')) setPasswordError({ message: msg });
-    else setPasswordError(null);
-
-    if (confirmPassword !== password)
-      setConfirmPasswordError({ message: '비밀번호가 일치하지 않습니다.' });
-    else setConfirmPasswordError(null);
-
-    if (name.trim() === '') setNameError({ message: '반드시 입력해야하는 필수 사항입니다.' });
-    else if (msg.includes('이름')) setNameError({ message: msg });
-    else setNameError(null);
-
-    if (birth === '' || dayjs(birth).isAfter(dayjs()))
-      setBirthError({ message: `${todayString} 이전의 날짜만 입력 가능합니다.` });
-    else setBirthError(null);
-
-    if (nickname.trim() === '')
-      setNicknameError({ message: '반드시 입력해야하는 필수 사항입니다.' });
-    else if (msg.includes('닉네임')) setNicknameError({ message: msg });
-    else setNicknameError(null);
-
-    if (bio.length > 30) setBioError({ message: '소개는 최대 30자 이하여야 합니다.' });
-    else setBioError(null);
-  };
-
   const handleSignUp = () => {
-    signupMutation.mutate();
+    const isValid = onValiadation(formData, setFormError); //먼저 실행
+    if (isValid) {
+      signupMutation.mutate();
+    }
   };
 
-  const inputFields = [
-    {
-      label: '이메일',
-      onChange: (e) => setEmail(e.target.value),
-      value: email,
-      name: 'email',
-      error: emailError,
-      placeholder: '이메일',
-      type: 'email',
-    },
-    {
-      label: '비밀번호',
-      onChange: (e) => setPassword(e.target.value),
-      value: password,
-      name: 'password',
-      error: passwordError,
-      placeholder: '비밀번호',
-      type: 'password',
-    },
-    {
-      label: '비밀번호 확인',
-      onChange: (e) => setConfirmPassword(e.target.value),
-      value: confirmPassword,
-      name: 'confirmPassword',
-      error: confirmPasswordError,
-      placeholder: '비밀번호 확인',
-      type: 'password',
-    },
-    {
-      label: '이름',
-      onChange: (e) => setName(e.target.value),
-      value: name,
-      name: 'name',
-      error: nameError,
-      placeholder: '이름',
-      type: 'text',
-    },
-    {
-      label: '생년월일',
-      onChange: (e) => setBirth(e.target.value),
-      value: birth,
-      name: 'birth',
-      error: birthError,
-      placeholder: 'YYYY-MM-DD',
-      type: 'text',
-    },
-    {
-      label: '닉네임',
-      onChange: (e) => setNickname(e.target.value),
-      value: nickname,
-      name: 'nickname',
-      error: nicknameError,
-      placeholder: '닉네임',
-      type: 'text',
-    },
-    {
-      label: '한 줄 소개',
-      onChange: (e) => setBio(e.target.value),
-      value: bio,
-      name: 'bio',
-      error: bioError,
-      placeholder: '한 줄 소개',
-      type: 'text',
-    },
-  ];
+  const inputFields = createInputFields(formData, setFormData, formError);
 
   return (
     <>
@@ -196,6 +110,7 @@ const SignUpEmail = () => {
           >
             프로필 사진 추가
           </Button>
+
           {inputFields.map((field) => (
             <div key={field.name}>
               <Text>{field.label}</Text>
@@ -213,6 +128,7 @@ const SignUpEmail = () => {
               />
             </div>
           ))}
+
           <br />
           <Button
             width='102%'
@@ -222,6 +138,7 @@ const SignUpEmail = () => {
           >
             회원가입 완료
           </Button>
+
           <Modal
             isOpen={modalOpen}
             title='회원가입이 완료되었습니다.'

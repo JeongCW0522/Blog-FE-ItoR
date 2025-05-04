@@ -77,7 +77,15 @@ const SignUpKakao = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const signupMutation = useMutation({
-    mutationFn: () => KakaoSignUp(email, nickname, '', birth, name, bio), //실행할 함수
+    mutationFn: () =>
+      KakaoSignUp({
+        email,
+        nickname,
+        profilePicture: '',
+        birthDate: birth,
+        name,
+        introduction: bio,
+      }), //실행할 함수
     onSuccess: (data) => {
       if (data.error) {
         onValidation(data.message);

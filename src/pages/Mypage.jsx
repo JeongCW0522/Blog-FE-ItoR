@@ -85,6 +85,19 @@ const Mypage = () => {
     }
   }, []);
 
+  const inputFields = [
+    { label: '이메일', value: userInfo?.email || '', placeholder: '이메일' },
+    { label: '비밀번호', value: userInfo?.password || '', placeholder: '......', type: 'password' },
+    {
+      label: '비밀번호 확인',
+      value: userInfo?.password || '',
+      placeholder: '......',
+      type: 'password',
+    },
+    { label: '이름', value: userInfo?.name || '', placeholder: '이름' },
+    { label: '생년월일', value: userInfo?.birth || '', placeholder: 'YYYY-MM-DD' },
+  ];
+
   return (
     <>
       <GlobalStyle />
