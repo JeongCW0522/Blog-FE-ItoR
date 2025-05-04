@@ -1,4 +1,5 @@
 import { Axios, BaseUrl } from './auth';
+import { storeTokens } from '@/utils/storeTokens';
 
 const EmailLogin = async ({ email, password }) => {
   try {
@@ -10,10 +11,7 @@ const EmailLogin = async ({ email, password }) => {
     const { accessToken, refreshToken } = response?.data?.data || {};
 
     // 토큰 로컬 스토리지에 저장
-    if (accessToken && refreshToken) {
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-    }
+    storeTokens(accessToken, refreshToken);
     console.log(response.data);
 
     return response.data;
@@ -29,29 +27,20 @@ const EmailLogin = async ({ email, password }) => {
 
 const KakaoLogin = async () => {
   try {
-    const response = await Axios.get('/auth/kakao');
-    const redirectUrl = response.data.data.redirectUrl;
-
-    window.location.href = redirectUrl;
+    const url = `${BaseUrl}/auth/kakao`;
+    window.location.href = url;
   } catch (error) {
     console.error('카카오 로그인 URL 요청 실패:', error);
   }
 };
 
-const KakaoRedirect = async (authCode) => {
+const KakaoRedirect = async (code) => {
   try {
-    const response = await Axios.get(`/auth/kakao/redirect?code=${authCode}`);
-    const { accessToken, refreshToken } = response?.data?.data || {};
+    const response = await Axios.get('/auth/kakao/redirect', {
+      params: { code },
+    });
 
-    if (accessToken && refreshToken) {
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-    }
-
-    return {
-      ...response.data,
-      status: response.status,
-    };
+    return response.data;
   } catch (error) {
     console.error('카카오 리다이렉트 처리 실패:', error);
     throw error;

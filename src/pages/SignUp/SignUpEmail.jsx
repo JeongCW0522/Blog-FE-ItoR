@@ -82,8 +82,7 @@ const SignUpEmail = () => {
     else if (msg.includes('이메일')) setEmailError({ message: msg });
     else setEmailError(null);
 
-    if (password.trim() === '')
-      setPasswordError({ message: '반드시 입력해야하는 필수 사항입니다.' });
+    if (password.trim() === '') setPasswordError({ message: '비밀번호는 공백이 아니어야 합니다.' });
     else if (msg.includes('비밀번호')) setPasswordError({ message: msg });
     else setPasswordError(null);
 
@@ -99,10 +98,12 @@ const SignUpEmail = () => {
       setBirthError({ message: `${todayString} 이전의 날짜만 입력 가능합니다.` });
     else setBirthError(null);
 
-    if (nickname.trim() === '' || msg.includes('닉네임')) setNicknameError({ message: msg });
+    if (nickname.trim() === '')
+      setNicknameError({ message: '반드시 입력해야하는 필수 사항입니다.' });
+    else if (msg.includes('닉네임')) setNicknameError({ message: msg });
     else setNicknameError(null);
 
-    if (bio.length > 30) setBioError({ message: msg });
+    if (bio.length > 30) setBioError({ message: '소개는 최대 30자 이하여야 합니다.' });
     else setBioError(null);
   };
 

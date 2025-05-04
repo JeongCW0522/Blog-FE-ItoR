@@ -56,9 +56,8 @@ Axios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
+    //accessToekn 만료
     if (error.response?.status === 401 && !originalRequest.retry) {
-      //accessToekn 만료
       originalRequest.retry = true;
 
       try {
