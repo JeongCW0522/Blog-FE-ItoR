@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { Header, Image, Input } from '@/components';
 import { Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import SetMypage from '@/components/layout/Header/EditLog';
 import { createInputFields } from '@/constant/SignupFields';
+import { getUserInfo, updateUserInfo, updateNickname, updatePassword } from '@/api/users';
 
 const Container = styled.div`
   position: relative;
@@ -57,7 +57,72 @@ const Mypage = () => {
     birth: '',
     nickname: '',
     bio: '',
+    profilePicture: '',
   });
+
+  const [currentUserInfo, setCurrentUserInfo] = useState(null);
+
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const user = await getUserInfo();
+        setFormData((prev) => ({
+          ...prev,
+          email: user.email,
+          nickname: user.nickname,
+          profilePicture: user.profilePicture || '',
+        }));
+        console.log('불러온 유저 정보', user);
+        setCurrentUserInfo(user);
+      } catch (err) {
+        console.error('유저 정보를 불러오지 못했습니다:', err);
+      }
+    };
+
+    userData();
+  }, []);
+
+  const handleSave = async () => {
+    try {
+      const { email, name, birth, bio, profilePicture, nickname, password, confirmPassword } =
+        formData;
+
+      // 비밀번호 변경 여부 확인
+      const passwordCheck = password && password === confirmPassword;
+      const nicknameCheck = nickname !== currentUserInfo.nickname; // 기존 닉네임과 비교
+
+      // 전체 정보 업데이트
+      const userFormInfo = {
+        email,
+        name,
+        birthDate: birth,
+        introduction: bio,
+        profilePicture,
+        nickname,
+        password,
+      };
+
+      if (!nicknameCheck && !passwordCheck) {
+        await updateUserInfo(userFormInfo);
+      } else {
+        if (nicknameCheck) {
+          await updateNickname(nickname);
+          console.log('닉네임이 업데이트 되었습니다.');
+        }
+        if (passwordCheck) {
+          await updatePassword(password);
+          console.log('비밀번호가 업데이트 되었습니다.');
+        }
+        await updateUserInfo(userFormInfo);
+      }
+
+      console.log('유저 정보 저장 완료!');
+      const updatedUser = await getUserInfo();
+      console.log('새로운 유저 정보:', updatedUser);
+    } catch (err) {
+      console.error('유저 정보 저장 오류:', err);
+    }
+  };
 
   const inputFields = createInputFields(formData, setFormData, {}, false, true);
 
@@ -65,7 +130,7 @@ const Mypage = () => {
     <>
       <GlobalStyle />
       <Container>
-        <Header setMypage={<SetMypage />} />
+        <Header onSave={handleSave} />
         <Content>
           <ProfileContent>
             <Image src={Profile} alt='프로필' width='64px' height='64px' radius='50%' />
