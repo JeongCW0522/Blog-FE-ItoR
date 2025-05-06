@@ -6,17 +6,7 @@ export const getUserInfo = async () => {
 };
 
 export const updateUserInfo = async (userData) => {
-  const { email, name, birthDate, introduction, profilePicture, nickname, password } = userData;
-
-  const response = await Axios.patch('/users', {
-    email,
-    name,
-    birthDate,
-    introduction,
-    profilePicture,
-    nickname,
-    password,
-  });
+  const response = await Axios.patch('/users', { userData });
   return response.data;
 };
 
