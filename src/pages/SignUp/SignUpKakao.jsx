@@ -59,7 +59,7 @@ const SignUpKakao = () => {
     }
   };
 
-  const inputFields = createInputFields(formData, setFormData, formError);
+  const inputFields = createInputFields(formData, setFormData, formError, true);
   return (
     <>
       <GlobalStyle />

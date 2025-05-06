@@ -4,6 +4,7 @@ import { Header, Image, Input } from '@/components';
 import { Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import SetMypage from '@/components/layout/Header/EditLog';
+import { createInputFields } from '@/constant/SignupFields';
 
 const Container = styled.div`
   position: relative;
@@ -37,66 +38,28 @@ const Content = styled.div`
 const ProfileContent = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 600px;
-  padding-top: 100px;
-  gap: 20px;
-
-  @media (max-width: 700px) {
-    min-width: 440px;
-    padding-top: 80px;
-  }
-`;
-
-const InputContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 15px;
-  margin-bottom: 40px;
+  margin: 85px 0 40px 0;
   gap: 40px;
 `;
 
-const Styledgap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
-
-const Text = styled.div`
+export const Text = styled.div`
   color: #9e9e9e;
   font-size: 14px;
-  margin-top: 20px;
-  margin-left: 7px;
+  margin: 15px 0 13px 7px;
 `;
 
 const Mypage = () => {
-  const [userInfo, setUserInfo] = useState({
-    nickname: '',
-    bio: '',
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
+    confirmPassword: '',
     name: '',
     birth: '',
+    nickname: '',
+    bio: '',
   });
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('userInfo'));
-    if (storedUser) {
-      setUserInfo(storedUser);
-    }
-  }, []);
-
-  const inputFields = [
-    { label: '이메일', value: userInfo?.email || '', placeholder: '이메일' },
-    { label: '비밀번호', value: userInfo?.password || '', placeholder: '......', type: 'password' },
-    {
-      label: '비밀번호 확인',
-      value: userInfo?.password || '',
-      placeholder: '......',
-      type: 'password',
-    },
-    { label: '이름', value: userInfo?.name || '', placeholder: '이름' },
-    { label: '생년월일', value: userInfo?.birth || '', placeholder: 'YYYY-MM-DD' },
-  ];
+  const inputFields = createInputFields(formData, setFormData, {}, false, true);
 
   return (
     <>
@@ -106,84 +69,37 @@ const Mypage = () => {
         <Content>
           <ProfileContent>
             <Image src={Profile} alt='프로필' width='64px' height='64px' radius='50%' />
-            <InputContent>
+            {['nickname', 'bio'].map((field) => (
               <Input
+                key={field}
                 width='100%'
-                height='60px'
-                fontSize='24px'
+                height={field === 'nickname' ? '60px' : '45px'}
+                fontSize={field === 'nickname' ? '24px' : undefined}
                 radius='3px'
-                placeholder='닉네임'
-                phSize='24px'
+                placeholder={field === 'nickname' ? '닉네임' : '한 줄 소개'}
+                phSize={field === 'nickname' ? '24px' : '14px'}
                 bgColor='#f5f5f5'
-                value={userInfo?.nickname || ''}
-                disabled
+                value={formData[field] || ''}
+                onChange={(e) => setFormData((prev) => ({ ...prev, [field]: e.target.value }))}
               />
+            ))}
+          </ProfileContent>
+          {inputFields.map((field) => (
+            <div key={field.name}>
+              <Text>{field.label}</Text>
               <Input
                 width='100%'
                 height='45px'
                 radius='3px'
-                placeholder='한 줄 소개'
                 phSize='14px'
-                bgColor='#f5f5f5'
-                value={userInfo?.bio || ''}
-                disabled
+                placeholder={field.placeholder}
+                type={field.type}
+                name={field.name}
+                value={field.value}
+                onChange={field.onChange}
               />
-            </InputContent>
-          </ProfileContent>
-          <Styledgap>
-            <Text>이메일</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='이메일'
-              phSize='14px'
-              value={userInfo?.email || ''}
-              disabled
-            />
-            <Text>비밀번호</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='......'
-              phSize='14px'
-              value={userInfo?.password || ''}
-              type='password'
-              disabled
-            />
-            <Text>비밀번호 확인</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='......'
-              phSize='14px'
-              value={userInfo?.password || ''}
-              type='password'
-              disabled
-            />
-            <Text>이름</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='이름'
-              phSize='14px'
-              value={userInfo?.name || ''}
-              disabled
-            />
-            <Text>생년월일</Text>
-            <Input
-              width='100%'
-              height='45px'
-              radius='3px'
-              placeholder='YYYY-MM-DD'
-              phSize='14px'
-              value={userInfo?.birth || ''}
-              disabled
-            />
-          </Styledgap>
+            </div>
+          ))}
         </Content>
       </Container>
     </>

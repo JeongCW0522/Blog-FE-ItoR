@@ -1,23 +1,33 @@
-export const createInputFields = (formData, setFormData, formError) =>
-  [
+export const createInputFields = (
+  formData,
+  setFormData,
+  formError = {},
+  isKakao = false,
+  isUserInfo = false,
+) => {
+  const inputfields = [
     {
       label: '이메일',
       name: 'email',
       type: 'email',
       placeholder: '이메일',
     },
-    {
-      label: '비밀번호',
-      name: 'password',
-      type: 'password',
-      placeholder: '비밀번호',
-    },
-    {
-      label: '비밀번호 확인',
-      name: 'confirmPassword',
-      type: 'password',
-      placeholder: '비밀번호 확인',
-    },
+    ...(!isKakao
+      ? [
+          {
+            label: '비밀번호',
+            name: 'password',
+            type: 'password',
+            placeholder: '비밀번호',
+          },
+          {
+            label: '비밀번호 확인',
+            name: 'confirmPassword',
+            type: 'password',
+            placeholder: '비밀번호 확인',
+          },
+        ]
+      : []),
     {
       label: '이름',
       name: 'name',
@@ -42,9 +52,16 @@ export const createInputFields = (formData, setFormData, formError) =>
       type: 'text',
       placeholder: '한 줄 소개',
     },
-  ].map((field) => ({
+  ];
+
+  const mypageFields = isUserInfo
+    ? inputfields.filter((field) => field.name !== 'nickname' && field.name !== 'bio')
+    : inputfields;
+
+  return mypageFields.map((field) => ({
     ...field,
     value: formData[field.name],
     onChange: (e) => setFormData((prev) => ({ ...prev, [field.name]: e.target.value })),
     error: formError[field.name],
   }));
+};
