@@ -192,6 +192,9 @@ const LoginModal = ({ isOpen, onClose }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             errorState={errorState} // 상태 전달
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleLogin();
+            }}
           />
           <Button
             width='82%'

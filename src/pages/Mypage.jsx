@@ -5,6 +5,8 @@ import { Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { createInputFields } from '@/constant/SignupFields';
 import { getUserInfo, updateUserInfo, updateNickname, updatePassword } from '@/api/users';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import userDummy from '@/data/userDummy';
 
 const Container = styled.div`
   position: relative;
@@ -49,6 +51,8 @@ export const Text = styled.div`
 `;
 
 const Mypage = () => {
+  const queryClient = useQueryClient();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -60,67 +64,63 @@ const Mypage = () => {
     profilePicture: '',
   });
 
-  const [currentUserInfo, setCurrentUserInfo] = useState(null);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: getUserInfo,
+  });
 
   useEffect(() => {
-    const userData = async () => {
-      try {
-        const user = await getUserInfo();
-        setFormData((prev) => ({
-          ...prev,
-          email: user.email,
-          nickname: user.nickname,
-          profilePicture: user.profilePicture || '',
-        }));
-        console.log('불러온 유저 정보', user);
-        setCurrentUserInfo(user);
-      } catch (err) {
-        console.error('유저 정보를 불러오지 못했습니다:', err);
-      }
-    };
+    if (data) {
+      setFormData((prev) => ({
+        ...prev,
+        email: data.email,
+        nickname: data.nickname,
+        profilePicture: data.profilePicture || '',
+        name: userDummy.name,
+        birth: userDummy.birthDate,
+        bio: userDummy.introduction,
+      }));
+    }
+  }, [data]);
 
-    userData();
-  }, []);
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError) return <div>유저 정보를 불러올 수 없습니다.</div>;
 
   const handleSave = async () => {
+    const nicknameCheck = formData.nickname !== data.nickname;
+    const emailCheck = formData.email !== data.email;
+    const passwordCheck = formData.password === formData.confirmPassword;
+
     try {
-      const { email, name, birth, bio, profilePicture, nickname, password, confirmPassword } =
-        formData;
-
-      // 비밀번호 변경 여부 확인
-      const passwordCheck = password && password === confirmPassword;
-      const nicknameCheck = nickname !== currentUserInfo.nickname; // 기존 닉네임과 비교
-
-      // 전체 정보 업데이트
-      const userFormInfo = {
-        email,
-        name,
-        birthDate: birth,
-        introduction: bio,
-        profilePicture,
-        nickname,
-        password,
-      };
-
-      if (!nicknameCheck && !passwordCheck) {
-        await updateUserInfo(userFormInfo);
-      } else {
-        if (nicknameCheck) {
-          await updateNickname(nickname);
-          console.log('닉네임이 업데이트 되었습니다.');
-        }
-        if (passwordCheck) {
-          await updatePassword(password);
-          console.log('비밀번호가 업데이트 되었습니다.');
-        }
-        await updateUserInfo(userFormInfo);
+      // 유저 정보 전체 변경
+      if (nicknameCheck && emailCheck && passwordCheck) {
+        await updateUserInfo({
+          email: formData.email,
+          nickname: formData.nickname,
+          password: formData.password,
+          profilePicture: formData.profilePicture,
+          birthDate: formData.birth,
+          name: formData.name,
+          introduction: formData.bio,
+        });
+        console.log('유저 정보가 업데이트 되었습니다.');
       }
 
-      console.log('유저 정보 저장 완료!');
-      const updatedUser = await getUserInfo();
-      console.log('새로운 유저 정보:', updatedUser);
+      // 닉네임 변경
+      if (nicknameCheck) {
+        await updateNickname(formData.nickname);
+        console.log('닉네임이 업데이트 되었습니다.');
+      }
+
+      // 비밀번호 변경
+      if (passwordCheck && formData.password) {
+        await updatePassword(formData.password);
+        console.log('비밀번호가 업데이트 되었습니다.');
+      }
+
+      await queryClient.invalidateQueries({ queryKey: ['userInfo'] });
     } catch (err) {
-      console.error('유저 정보 저장 오류:', err);
+      console.error('유저 정보 저장 중 오류 발생:', err);
     }
   };
 

@@ -42,6 +42,7 @@ const Input = ({
   errorState,
   onFocus,
   onChange,
+  onKeyDown,
   disabled = false,
   value,
 }) => {
@@ -62,6 +63,7 @@ const Input = ({
         $errorState={errorState}
         onFocus={onFocus}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         disabled={disabled}
         value={value}
       />

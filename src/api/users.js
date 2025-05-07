@@ -6,7 +6,8 @@ export const getUserInfo = async () => {
 };
 
 export const updateUserInfo = async (userData) => {
-  const response = await Axios.patch('/users', { userData });
+  console.log('보낼 유저 데이터:', userData);
+  const response = await Axios.patch('/users', userData);
   return response.data;
 };
 
