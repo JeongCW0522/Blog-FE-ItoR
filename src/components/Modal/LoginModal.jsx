@@ -176,28 +176,28 @@ const LoginModal = ({ isOpen, onClose }) => {
           <Text>You can make anything by writing</Text>
         </LeftContent>
         <RightContent>
-          <Input
-            width='80%'
-            height='45px'
-            placeholder='이메일'
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            width='80%'
-            height='45px'
-            placeholder='비밀번호'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            errorState={errorState} // 상태 전달
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') handleLogin();
-            }}
-          />
+          <div style={{ width: '77%', margin: '0 12px 10px 0' }}>
+            <Input
+              placeholder='이메일'
+              type='email'
+              borderStyle='4px'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder='비밀번호'
+              type='password'
+              borderStyle='4px'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              errorState={errorState} // 상태 전달
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleLogin();
+              }}
+            />
+          </div>
           <Button
-            width='82%'
+            width='80%'
             height='48px'
             borderStyle='none'
             color='white'
@@ -209,7 +209,7 @@ const LoginModal = ({ isOpen, onClose }) => {
           </Button>
           <Sns>SNS</Sns>
           <Button
-            width='82%'
+            width='80%'
             height='48px'
             borderStyle='none'
             fontWeight='bold'

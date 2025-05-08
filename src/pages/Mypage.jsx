@@ -4,6 +4,7 @@ import { Header, Image, Input } from '@/components';
 import { Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { createInputFields } from '@/constant/SignupFields';
+import { onValidation } from '@/utils/validation';
 import { getUserInfo, updateUserInfo, updateNickname, updatePassword } from '@/api/users';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import userDummy from '@/data/userDummy';
@@ -13,7 +14,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #f5f5f5;
-  height: 420px;
+  height: 410px;
 
   @media (max-width: 700px) {
     height: 390px;
@@ -26,7 +27,7 @@ const Content = styled.div`
   margin: 0 auto;
   width: 37%;
   min-width: 600px;
-  min-height: 1000px;
+  min-height: 1100px;
   padding: 40px;
   gap: 20px;
 
@@ -63,6 +64,7 @@ const Mypage = () => {
     bio: '',
     profilePicture: '',
   });
+  const [formError, setFormError] = useState({});
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['userInfo'],
@@ -76,6 +78,7 @@ const Mypage = () => {
         email: data.email,
         nickname: data.nickname,
         profilePicture: data.profilePicture || '',
+        // TODO: 이름, 생년월일, 소개
         name: userDummy.name,
         birth: userDummy.birthDate,
         bio: userDummy.introduction,
@@ -91,9 +94,12 @@ const Mypage = () => {
     const emailCheck = formData.email !== data.email;
     const passwordCheck = formData.password === formData.confirmPassword;
 
+    const isValid = onValidation(formData, setFormError, '', data);
+    if (!isValid) return;
+
     try {
       // 유저 정보 전체 변경
-      if (nicknameCheck && emailCheck && passwordCheck) {
+      if (nicknameCheck && emailCheck) {
         await updateUserInfo({
           email: formData.email,
           nickname: formData.nickname,
@@ -105,15 +111,13 @@ const Mypage = () => {
         });
         console.log('유저 정보가 업데이트 되었습니다.');
       }
-
-      // 닉네임 변경
-      if (nicknameCheck) {
+      // 닉네임 업데이트
+      else if (nicknameCheck) {
         await updateNickname(formData.nickname);
         console.log('닉네임이 업데이트 되었습니다.');
       }
-
-      // 비밀번호 변경
-      if (passwordCheck && formData.password) {
+      //비밀번호 업데이트
+      else if (formData.password && passwordCheck) {
         await updatePassword(formData.password);
         console.log('비밀번호가 업데이트 되었습니다.');
       }
@@ -124,8 +128,7 @@ const Mypage = () => {
     }
   };
 
-  const inputFields = createInputFields(formData, setFormData, {}, false, true);
-
+  const inputFields = createInputFields(formData, setFormData, formError, false, true);
   return (
     <>
       <GlobalStyle />
@@ -137,15 +140,15 @@ const Mypage = () => {
             {['nickname', 'bio'].map((field) => (
               <Input
                 key={field}
-                width='100%'
                 height={field === 'nickname' ? '60px' : '45px'}
                 fontSize={field === 'nickname' ? '24px' : undefined}
-                radius='3px'
                 placeholder={field === 'nickname' ? '닉네임' : '한 줄 소개'}
                 phSize={field === 'nickname' ? '24px' : '14px'}
                 bgColor='#f5f5f5'
                 value={formData[field] || ''}
                 onChange={(e) => setFormData((prev) => ({ ...prev, [field]: e.target.value }))}
+                errorState={field === 'nickname' ? formError.nickname : ''}
+                showHint={field === 'nickname'}
               />
             ))}
           </ProfileContent>
@@ -153,15 +156,12 @@ const Mypage = () => {
             <div key={field.name}>
               <Text>{field.label}</Text>
               <Input
-                width='100%'
-                height='45px'
-                radius='3px'
-                phSize='14px'
                 placeholder={field.placeholder}
                 type={field.type}
                 name={field.name}
                 value={field.value}
                 onChange={field.onChange}
+                errorState={field.error}
               />
             </div>
           ))}

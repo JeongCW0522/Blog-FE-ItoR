@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { EmailSignUp } from '@/api/SignUp';
 import { useMutation } from '@tanstack/react-query';
 import { createInputFields } from '@/constant/SignupFields';
-import { onValiadation } from '@/utils/validation';
+import { onValidation } from '@/utils/validation';
 import { Container, Content, Text } from '@/styles/SignupStyles';
 
 const SignUpEmail = () => {
@@ -42,7 +42,7 @@ const SignUpEmail = () => {
       }),
     onSuccess: (data) => {
       if (data.error) {
-        onValiadation(formData, setFormError, data.message); // 사용 중인 이메일, 닉네임 여부 확인
+        onValidation(formData, setFormError, data.message); // 사용 중인 이메일, 닉네임 여부 확인
         console.log(data.message);
       } else {
         setModalOpen(true);
@@ -54,7 +54,7 @@ const SignUpEmail = () => {
   });
 
   const handleSignUp = () => {
-    const isValid = onValiadation(formData, setFormError); //먼저 실행
+    const isValid = onValidation(formData, setFormError); //먼저 실행
     if (isValid) {
       signupMutation.mutate();
     }
@@ -84,11 +84,7 @@ const SignUpEmail = () => {
             <div key={field.name}>
               <Text>{field.label}</Text>
               <Input
-                width='100%'
-                height='45px'
-                radius='3px'
                 placeholder={field.placeholder}
-                phSize='14px'
                 value={field.value}
                 onChange={field.onChange}
                 name={field.name}

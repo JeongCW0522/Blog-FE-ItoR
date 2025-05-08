@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-export const onValiadation = (formData, setFormError, msg = '') => {
+export const onValidation = (formData, setFormError, msg = '', myPageCheck) => {
   const errors = {};
   const todayString = dayjs().format('YYYY년 M월 D일');
   const today = dayjs();
@@ -28,6 +28,18 @@ export const onValiadation = (formData, setFormError, msg = '') => {
       };
     }
   });
+
+  if (myPageCheck) {
+    const isSameEmail = formData.email === myPageCheck.email;
+    const isSameNickname = formData.nickname === myPageCheck.nickname;
+
+    if (isSameEmail && isSameNickname) {
+      errors.email = { message: '이전과 동일한 이메일입니다.' };
+      errors.nickname = { message: '이전과 동일한 닉네임입니다.' };
+    } else if (isSameNickname) {
+      errors.nickname = { message: '이전과 동일한 닉네임입니다.' };
+    }
+  }
 
   if (email && email.trim() && !emailRegex.test(email)) {
     errors.email = { message: '이메일 형식이 올바르지 않습니다.' };

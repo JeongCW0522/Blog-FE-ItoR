@@ -10,10 +10,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #f5f5f5;
-  height: 390px;
+  height: 400px;
 
   @media (max-width: 700px) {
-    height: 370px;
+    height: 380px;
   }
 `;
 
@@ -61,7 +61,7 @@ const BioText = styled.p`
 
 const Content = styled.div`
   min-width: 700px;
-  margin: 50px auto;
+  margin: 60px auto;
 
   @media (max-width: 700px) {
     min-width: 400px;
