@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components';
-import { AddPhoto, Profile, KakaoIcon } from '@/assets';
+import { AddPhoto, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { KakaoSignUp } from '@/api/SignUp';
 import { useMutation } from '@tanstack/react-query';
 import { createInputFields } from '@/constant/SignupFields';
@@ -11,11 +11,11 @@ import { Container, Content, Text, SocialBox } from '@/styles/SignupStyles';
 
 const SignUpKakao = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const location = useLocation();
+  const { kakaoId, nickname, picture } = location.state || {};
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
-    confirmPassword: '',
-    name: '',
+    name: nickname || '',
     birth: '',
     nickname: '',
     bio: '',
@@ -34,14 +34,15 @@ const SignUpKakao = () => {
       KakaoSignUp({
         email: formData.email,
         nickname: formData.nickname,
-        profilePicture: '',
+        profilePicture: picture || '',
         birthDate: formData.birth,
         name: formData.name,
         introduction: formData.bio,
+        kakaoId: kakaoId,
       }),
     onSuccess: (data) => {
       if (data.error) {
-        onValidation(formData, setFormError, data.message);
+        onValidation(formData, setFormError, data.message, false, true);
         console.log(data.message);
       } else {
         setModalOpen(true);
@@ -53,7 +54,7 @@ const SignUpKakao = () => {
   });
 
   const handleSignUp = () => {
-    const isValid = onValidation(formData, setFormError); //먼저 실행
+    const isValid = onValidation(formData, setFormError, '', false, true); //먼저 실행
     if (isValid) {
       signupMutation.mutate();
     }
@@ -68,7 +69,7 @@ const SignUpKakao = () => {
         <SignUpHeader />
         <Content>
           <Text>프로필 사진</Text>
-          <Image src={Profile} alt='프로필' width='90px' height='90px' radius='50%' />
+          <Image src={picture} alt='프로필' width='90px' height='90px' radius='50%' />
           <Button
             width='145px'
             height='27px'

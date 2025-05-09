@@ -18,13 +18,13 @@ export const createInputFields = (
             label: '비밀번호',
             name: 'password',
             type: 'password',
-            placeholder: '비밀번호',
+            placeholder: '.....',
           },
           {
             label: '비밀번호 확인',
             name: 'confirmPassword',
             type: 'password',
-            placeholder: '비밀번호 확인',
+            placeholder: '.....',
           },
         ]
       : []),

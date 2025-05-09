@@ -45,6 +45,33 @@ const ProfileContent = styled.div`
   gap: 40px;
 `;
 
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 64px;
+  height: 64px;
+`;
+
+const EditButton = styled.button`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #464646;
+  border: 2px solid white;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;
+
 export const Text = styled.div`
   color: #9e9e9e;
   font-size: 14px;
@@ -136,7 +163,10 @@ const Mypage = () => {
         <Header onSave={handleSave} />
         <Content>
           <ProfileContent>
-            <Image src={Profile} alt='프로필' width='64px' height='64px' radius='50%' />
+            <ImageWrapper>
+              <Image src={Profile} alt='프로필' width='64px' height='64px' radius='50%' />
+              <EditButton onClick={() => alert('프로필 수정 클릭')}>+</EditButton>
+            </ImageWrapper>
             {['nickname', 'bio'].map((field) => (
               <Input
                 key={field}
