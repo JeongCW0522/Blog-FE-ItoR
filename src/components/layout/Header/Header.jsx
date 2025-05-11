@@ -37,7 +37,7 @@ const SideBarIconClick = styled(SideBarIcon)`
   }
 `;
 
-const Header = ({ onSave, onToast }) => {
+const Header = ({ onSave, onToast, onPost }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLogoutModal, setIsLogoutModal] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
@@ -64,7 +64,7 @@ const Header = ({ onSave, onToast }) => {
   if (isDetailPage) {
     headerContent = <ChatandMore />;
   } else if (isWritePage) {
-    headerContent = <DeleteandLog onToast={onToast} />;
+    headerContent = <DeleteandLog onToast={onToast} onPost={onPost} />;
   } else if (isMypage || isEditPage) {
     headerContent = <EditLog onSave={onSave} onToast={onToast} />;
   } else if (!isSignupPage) {
