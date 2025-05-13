@@ -5,6 +5,7 @@ import { AddPhoto } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
 import { Blogpost } from '@/api/post';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Container = styled.div`
   display: flex;
@@ -98,6 +99,7 @@ const BlogWrite = () => {
   const [content, setContent] = useState('');
   const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const showToast = (type, message) => {
     setToastData({ show: true, type, message });
@@ -113,11 +115,10 @@ const BlogWrite = () => {
       showToast('error', '내용을 입력해주세요');
       return;
     }
-
     try {
       const response = await Blogpost(title, content, 1, 'TEXT');
-
       if (!response?.error) {
+        await queryClient.invalidateQueries({ queryKey: ['postList'] });
         navigate(`/`, {
           state: {
             toastData: {

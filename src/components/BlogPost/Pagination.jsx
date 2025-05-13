@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { LeftIcon, RightIcon } from '@/assets';
-import { useState, useEffect } from 'react';
 
 const PaginationWrapper = styled.div`
   display: flex;
@@ -26,33 +25,30 @@ const PageButton = styled.button`
   }
 `;
 
-const Pagination = ({ data, onChange }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 5;
-  const totalPages = Math.ceil(data.length / postsPerPage);
-
-  const onPageChange = (page) => {
-    setCurrentPage(page);
+const Pagination = ({ currentPage, totalPage, onPageChange }) => {
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPage) {
+      onPageChange(page);
+    }
   };
-
-  useEffect(() => {
-    const currentPosts = data.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
-    onChange(currentPosts);
-  }, [currentPage, data]);
 
   return (
     <PaginationWrapper>
-      <PageButton onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>
+      <PageButton onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
         <LeftIcon />
       </PageButton>
-      {Array.from({ length: totalPages }, (_, i) => (
-        <PageButton key={i + 1} onClick={() => onPageChange(i + 1)} $active={currentPage === i + 1}>
+      {Array.from({ length: totalPage }, (_, i) => (
+        <PageButton
+          key={i + 1}
+          onClick={() => handlePageChange(i + 1)}
+          $active={currentPage === i + 1}
+        >
           {i + 1}
         </PageButton>
       ))}
       <PageButton
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPage}
       >
         <RightIcon />
       </PageButton>

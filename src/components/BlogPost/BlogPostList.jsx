@@ -1,19 +1,9 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BlogPostItem from './BlogPostItem';
 import Pagination from './Pagination';
-import { Profile } from '@/assets';
-
-export const dummyData = Array.from({ length: 23 }).map((_, i) => ({
-  id: i + 1,
-  title: `16 Title one line`,
-  content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-  thumbnail: Profile,
-  profileImg: Profile,
-  nickname: '닉네임',
-  date: 'Feb 17, 2025',
-  comments: 0,
-}));
+import { getPostList } from '@/api/post';
+import { useQuery } from '@tanstack/react-query';
 
 const List = styled.div`
   display: flex;
@@ -22,16 +12,39 @@ const List = styled.div`
 `;
 
 const BlogPostList = () => {
-  const [currentPosts, setCurrentPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const postsPerPage = 5;
 
+  const {
+    data: res,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['postList', currentPage],
+    queryFn: () => getPostList(postsPerPage, currentPage - 1),
+    keepPreviousData: true,
+    staleTime: 1000 * 60,
+  });
+
+  const postList = res?.data?.post;
+  useEffect(() => {
+    if (res?.data?.pageMax) {
+      setTotalPage(res.data.pageMax);
+      console.log('게시물 조회에 성공했습니다.', res);
+    }
+  }, [res]);
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError) return <div>에러 발생</div>;
   return (
     <>
       <List>
-        {currentPosts.map((post) => (
-          <BlogPostItem key={post.id} post={post} />
+        {postList.map((post) => (
+          <BlogPostItem key={post.postId} post={post} />
         ))}
       </List>
-      <Pagination data={dummyData} onChange={setCurrentPosts} />
+      <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
     </>
   );
 };

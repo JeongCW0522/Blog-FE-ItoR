@@ -6,10 +6,12 @@ import Toast from './ui/Toast';
 import Header from './layout/Header/Header';
 import SideBar from './layout/Sidebar/SideBar';
 import BlogPostItem from './BlogPost/BlogPostItem';
-import BlogPostList, { dummyData } from './BlogPost/BlogPostList';
+import BlogPostList from './BlogPost/BlogPostList';
 import LoginModal from './Modal/LoginModal';
 import BlogComment from './BlogPost/BlogComment';
 import SignUpHeader from './SignUp/SignUpHeader';
+import BlogDetailField from './BlogPost/BlogDetailField';
+import BlogDetailFooter from './BlogPost/BlogDetailFooter';
 
 export {
   Input,
@@ -21,8 +23,9 @@ export {
   SideBar,
   BlogPostItem,
   BlogPostList,
-  dummyData,
   LoginModal,
   BlogComment,
   SignUpHeader,
+  BlogDetailField,
+  BlogDetailFooter,
 };

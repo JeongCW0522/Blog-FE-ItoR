@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Image } from '@/components';
+import dayjs from 'dayjs';
+import { Profile } from '@/assets';
 
 const PostContainer = styled(Link)`
   display: flex;
@@ -55,22 +57,32 @@ const NameText = styled.span`
 `;
 
 const BlogPostItem = ({ post }) => {
+  const textContent = post.contents.find((c) => c.contentType === 'TEXT')?.content || '';
+  const imageContent = post.contents.find((c) => c.contentType === 'IMAGE')?.content || null;
+  const createdAt = dayjs(post.createdAt).format('YYYY.M.D');
+
   return (
-    <PostContainer to={`/detail/${post.id}`} style={{ textDecoration: 'none' }}>
+    <PostContainer to={`/detail/${post.postId}`} style={{ textDecoration: 'none' }}>
       <PostContent>
         <TitleContent>
           <Title>{post.title}</Title>
-          <Content>{post.content}</Content>
+          <Content>{textContent}</Content>
         </TitleContent>
         <InfoWrapper>
-          <Image width='20px' height='20px' src={post.profileImg} alt='프로필' />
-          <NameText>{post.nickname}</NameText>
+          <Image
+            width='20px'
+            height='20px'
+            radius='50%'
+            src={post.profileUrl || Profile}
+            alt='프로필'
+          />
+          <NameText>{post.nickName}</NameText>
           <span>
-            · {post.date} · 댓글 {post.comments}
+            · {createdAt} · 댓글 {post.comments.length}
           </span>
         </InfoWrapper>
       </PostContent>
-      <Image width='90px' height='90px' src={post.thumbnail} alt='썸네일' />
+      {imageContent && <Image width='90px' height='90px' src={imageContent} alt='썸네일' />}
     </PostContainer>
   );
 };

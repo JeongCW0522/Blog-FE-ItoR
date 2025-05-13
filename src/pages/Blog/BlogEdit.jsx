@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { Header, Toast, dummyData } from '@/components';
-import { useState } from 'react';
+import { Header, Toast } from '@/components';
+import { useState, useEffect } from 'react';
 import { AddPhoto } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -94,13 +94,22 @@ const ContentText = styled.textarea`
 
 const BlogEdit = () => {
   const { id } = useParams();
-  const post = dummyData.find((p) => p.id === Number(id));
-
-  const [title, setTitle] = useState(post?.title || '');
-  const [content, setContent] = useState(post?.content || '');
-
-  const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
   const navigate = useNavigate();
+  const location = useLocation();
+  const post = location.state?.post;
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
+
+  useEffect(() => {
+    if (!post) {
+      navigate(`/detail/${id}`);
+    } else {
+      setTitle(post.title);
+      setContent(post.content);
+    }
+  }, [post, navigate, id]);
 
   const onToast = () => {
     if (!content.trim()) {
