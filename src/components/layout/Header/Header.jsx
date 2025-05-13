@@ -37,7 +37,7 @@ const SideBarIconClick = styled(SideBarIcon)`
   }
 `;
 
-const Header = ({ onSave, onToast, onPost }) => {
+const Header = ({ onSave, onToast, onPost, postId }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLogoutModal, setIsLogoutModal] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
@@ -62,7 +62,7 @@ const Header = ({ onSave, onToast, onPost }) => {
   let headerContent = null;
 
   if (isDetailPage) {
-    headerContent = <ChatandMore />;
+    headerContent = <ChatandMore postId={postId} />;
   } else if (isWritePage) {
     headerContent = <DeleteandLog onToast={onToast} onPost={onPost} />;
   } else if (isMypage || isEditPage) {

@@ -76,10 +76,7 @@ export const deletePost = async (postId) => {
     return response.data;
   } catch (error) {
     console.error(error);
-    return {
-      error: true,
-      message: error.response?.data?.message || '블로그 삭제에 실패했습니다.',
-    };
+    throw new Error(error.response?.data?.message || '블로그 삭제에 실패했습니다.');
   }
 };
 

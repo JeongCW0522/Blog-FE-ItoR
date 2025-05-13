@@ -33,7 +33,7 @@ const BlogDetail = () => {
   return (
     <>
       <GlobalStyle />
-      <Header />
+      <Header postId={id} />
       <DetailContainer>
         <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
         <BlogDetailField postId={id} />

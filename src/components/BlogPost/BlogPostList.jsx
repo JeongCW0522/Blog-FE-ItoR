@@ -31,7 +31,6 @@ const BlogPostList = () => {
   useEffect(() => {
     if (res?.data?.pageMax) {
       setTotalPage(res.data.pageMax);
-      console.log('게시물 조회에 성공했습니다.', res);
     }
   }, [res]);
 

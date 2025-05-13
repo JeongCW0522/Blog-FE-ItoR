@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ChatIcon, MoreIcon } from '@/assets';
 import { Modal } from '@/components';
 import styled from 'styled-components';
+import { deletePost } from '@/api/post';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const Container = styled.div`
   display: flex;
@@ -68,9 +70,11 @@ const StyledLink = styled(Link)`
   width: 100%;
 `;
 
-const ChatandMore = () => {
+const ChatandMore = ({ postId }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const openTooltip = () => {
     setShowTooltip((prev) => !prev);
@@ -82,6 +86,23 @@ const ChatandMore = () => {
       comment.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
+
+  const handleDeletePost = useMutation({
+    mutationFn: () => {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        throw new Error('로그인이 필요합니다.');
+      }
+      return deletePost(postId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['postList'] });
+      navigate('/');
+    },
+    onError: () => {
+      setModalOpen(false);
+    },
+  });
 
   return (
     <>
@@ -107,6 +128,7 @@ const ChatandMore = () => {
         closeText='취소'
         bgColor='#FF3F3F'
         onClose={() => setModalOpen(false)}
+        onConfirm={() => handleDeletePost.mutate()}
       />
     </>
   );
