@@ -164,7 +164,13 @@ const Mypage = () => {
         <Content>
           <ProfileContent>
             <ImageWrapper>
-              <Image src={Profile} alt='프로필' width='64px' height='64px' radius='50%' />
+              <Image
+                src={data.profilePicture || Profile}
+                alt='프로필'
+                width='64px'
+                height='64px'
+                radius='50%'
+              />
               <EditButton onClick={() => alert('프로필 수정 클릭')}>+</EditButton>
             </ImageWrapper>
             {['nickname', 'bio'].map((field) => (

@@ -1,6 +1,6 @@
 import { Axios } from './auth';
 
-export const Blogpost = async (title, content, contentOrder, contentType) => {
+export const blogPost = async (title, content, contentOrder, contentType) => {
   try {
     const response = await Axios.post('/posts', {
       title,
@@ -83,7 +83,7 @@ export const deletePost = async (postId) => {
 export const updatePost = async (postId, title, content, contentOrder, contentType) => {
   try {
     const response = await Axios.patch(`/posts?postId=${postId}`, {
-      title: title,
+      title,
       contents: [
         {
           contentOrder,

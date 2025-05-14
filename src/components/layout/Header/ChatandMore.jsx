@@ -57,7 +57,7 @@ const MenuBox = styled.div`
 const TextItem = styled.div`
   font-size: 14px;
   padding: 6px 0;
-  color: ${(props) => props.color || 'black'};
+  color: red;
   cursor: pointer;
 
   &:hover {
@@ -68,6 +68,14 @@ const TextItem = styled.div`
 const StyledLink = styled(Link)`
   text-decoration: none;
   width: 100%;
+  font-size: 14px;
+  padding: 6px 0;
+  color: black;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.6;
+  }
 `;
 
 const ChatandMore = ({ postId }) => {
@@ -87,11 +95,11 @@ const ChatandMore = ({ postId }) => {
     }
   };
 
-  const handleDeletePost = useMutation({
+  const { mutation: handleDeletePost } = useMutation({
     mutationFn: () => {
       const token = localStorage.getItem('accessToken');
       if (!token) {
-        throw new Error('로그인이 필요합니다.');
+        throw new Error();
       }
       return deletePost(postId);
     },
@@ -111,12 +119,8 @@ const ChatandMore = ({ postId }) => {
         <StyledMoreIcon onClick={openTooltip} />
         {showTooltip && (
           <MenuBox>
-            <StyledLink to='./edit'>
-              <TextItem color='black'>수정하기</TextItem>
-            </StyledLink>
-            <TextItem color='red' onClick={() => setModalOpen(true)}>
-              삭제하기
-            </TextItem>
+            <StyledLink to='./edit'>수정하기</StyledLink>
+            <TextItem onClick={() => setModalOpen(true)}>삭제하기</TextItem>
           </MenuBox>
         )}
       </Container>
@@ -128,7 +132,7 @@ const ChatandMore = ({ postId }) => {
         closeText='취소'
         bgColor='#FF3F3F'
         onClose={() => setModalOpen(false)}
-        onConfirm={() => handleDeletePost.mutate()}
+        onConfirm={handleDeletePost}
       />
     </>
   );

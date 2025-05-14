@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { AddPhoto } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
-import { Blogpost } from '@/api/post';
+import { blogPost } from '@/api/post';
 import { useQueryClient } from '@tanstack/react-query';
 
 const Container = styled.div`
@@ -116,7 +116,7 @@ const BlogWrite = () => {
       return;
     }
     try {
-      const response = await Blogpost(title, content, 1, 'TEXT');
+      const response = await blogPost(title, content, 1, 'TEXT');
       if (!response?.error) {
         await queryClient.invalidateQueries({ queryKey: ['postList'] });
         navigate(`/`, {

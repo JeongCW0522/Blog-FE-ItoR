@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -24,9 +25,17 @@ const TextButton = styled.button`
 `;
 
 const DeleteandLog = ({ onToast, onPost }) => {
+  const navigate = useNavigate();
   return (
     <Container>
-      <TextButton style={{ color: '#FF3F3F' }}>삭제하기</TextButton>
+      <TextButton
+        style={{ color: '#FF3F3F' }}
+        onClick={() => {
+          navigate('/');
+        }}
+      >
+        삭제하기
+      </TextButton>
       <TextButton
         onClick={() => {
           onToast?.();

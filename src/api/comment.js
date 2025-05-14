@@ -1,6 +1,8 @@
+import { Axios } from './auth';
+
 export const postComment = async (postId, content) => {
   try {
-    const response = await api.post(`/comments/${postId}`, {
+    const response = await Axios.post(`/comments/${postId}`, {
       content: content,
     });
     return response.data;
@@ -15,7 +17,7 @@ export const postComment = async (postId, content) => {
 
 export const deleteComment = async (commentId) => {
   try {
-    const response = await api.delete(`/comments/${commentId}`);
+    const response = await Axios.delete(`/comments/${commentId}`);
     return response.data;
   } catch (error) {
     console.error(error);

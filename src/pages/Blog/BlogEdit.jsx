@@ -3,7 +3,9 @@ import { Header, Toast } from '@/components';
 import { useState, useEffect } from 'react';
 import { AddPhoto } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getPostDetail, updatePost } from '@/api/post';
 
 const Container = styled.div`
   display: flex;
@@ -75,7 +77,7 @@ const Content = styled.div`
 `;
 
 const ContentText = styled.textarea`
-  min-height: 70px;
+  min-height: 700px;
   width: 100%;
   font-size: 14px;
   color: #696969;
@@ -86,6 +88,7 @@ const ContentText = styled.textarea`
   border: none;
   resize: none;
   outline: none;
+  overflow: hidden;
 
   &::placeholder {
     color: #b3b3b3;
@@ -95,31 +98,41 @@ const ContentText = styled.textarea`
 const BlogEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const post = location.state?.post;
-
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
-
+  const queryClient = useQueryClient();
+  const { data } = useQuery({
+    queryKey: ['postId', id],
+    queryFn: () => getPostDetail(id),
+  });
   useEffect(() => {
-    if (!post) {
-      navigate(`/detail/${id}`);
-    } else {
+    if (data?.data) {
+      const post = data.data;
+      const postContents = post.contents
+        .sort((a, b) => a.contentOrder - b.contentOrder)
+        .map((item, index) => {
+          if (item.contentType === 'TEXT') {
+            return item.content;
+          } else if (item.contentType === 'IMAGE') {
+            return `<img src="${item.content}" alt="이미지 ${index + 1}" />`;
+          }
+          return '';
+        });
       setTitle(post.title);
-      setContent(post.content);
+      setContent(postContents.join('\n'));
     }
-  }, [post, navigate, id]);
+  }, [data]);
 
-  const onToast = () => {
-    if (!content.trim()) {
-      setToastData({
-        show: true,
-        type: 'error',
-        message: '내용을 입력해주세요',
-      });
-      setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
-    } else {
+  const showToast = (type, message) => {
+    setToastData({ show: true, type, message });
+    setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
+  };
+
+  const goUpdate = useMutation({
+    mutationFn: () => updatePost(id, title, content, 1, 'TEXT'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['postId', id] });
       navigate(`/detail/${id}`, {
         state: {
           toastData: {
@@ -129,13 +142,29 @@ const BlogEdit = () => {
           },
         },
       });
+    },
+    onError: (error) => {
+      console.error('블로그 수정 오류:', error);
+    },
+  });
+
+  // 버튼 클릭 시 호출
+  const handleUpdate = () => {
+    if (!title.trim()) {
+      showToast('error', '제목을 입력해주세요');
+      return;
     }
+    if (!content.trim()) {
+      showToast('error', '내용을 입력해주세요');
+      return;
+    }
+    goUpdate.mutate();
   };
 
   return (
     <>
       <GlobalStyle />
-      <Header onToast={onToast} />
+      <Header onSave={handleUpdate} />
       <Container>
         <Line />
         <AddPhotoButton>
