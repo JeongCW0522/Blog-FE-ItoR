@@ -3,7 +3,7 @@ import { Axios } from './auth';
 export const postComment = async (postId, content) => {
   try {
     const response = await Axios.post(`/comments/${postId}`, {
-      content: content,
+      content,
     });
     return response.data;
   } catch (error) {

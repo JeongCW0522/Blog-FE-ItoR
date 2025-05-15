@@ -77,7 +77,7 @@ const Content = styled.div`
 `;
 
 const ContentText = styled.textarea`
-  min-height: 700px;
+  min-height: 5rem;
   width: 100%;
   font-size: 14px;
   color: #696969;
@@ -102,6 +102,7 @@ const BlogEdit = () => {
   const [content, setContent] = useState('');
   const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
   const queryClient = useQueryClient();
+
   const { data } = useQuery({
     queryKey: ['postId', id],
     queryFn: () => getPostDetail(id),
@@ -127,6 +128,13 @@ const BlogEdit = () => {
   const showToast = (type, message) => {
     setToastData({ show: true, type, message });
     setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
+  };
+
+  const resize = (obj) => {
+    const scrollTop = window.scrollY;
+    obj.style.height = '1px';
+    obj.style.height = 12 + obj.scrollHeight + 'px';
+    window.scrollTo({ top: scrollTop });
   };
 
   const goUpdate = useMutation({
@@ -180,6 +188,7 @@ const BlogEdit = () => {
             placeholder='어떠한 것을 깨달았나요?'
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            onInput={(e) => resize(e.target)}
           />
         </Content>
         <Toast show={toastData.show} text={toastData.message} type={toastData.type} />

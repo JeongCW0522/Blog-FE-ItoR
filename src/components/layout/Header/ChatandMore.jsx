@@ -95,7 +95,7 @@ const ChatandMore = ({ postId }) => {
     }
   };
 
-  const { mutation: handleDeletePost } = useMutation({
+  const { mutate: handleDeletePost } = useMutation({
     mutationFn: () => {
       const token = localStorage.getItem('accessToken');
       if (!token) {
