@@ -10,6 +10,7 @@ import BlogPostList from './BlogPost/BlogPostList';
 import LoginModal from './Modal/LoginModal';
 import BlogComment from './BlogPost/BlogComment';
 import SignUpHeader from './SignUp/SignUpHeader';
+import SignUpProfile from './SignUp/SignUpProfile';
 import BlogDetailField from './BlogPost/BlogDetailField';
 import BlogDetailFooter from './BlogPost/BlogDetailFooter';
 
@@ -26,6 +27,7 @@ export {
   LoginModal,
   BlogComment,
   SignUpHeader,
+  SignUpProfile,
   BlogDetailField,
   BlogDetailFooter,
 };

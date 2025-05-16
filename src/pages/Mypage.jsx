@@ -1,11 +1,17 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Header, Image, Input } from '@/components';
 import { Profile } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { createInputFields } from '@/constant/SignupFields';
 import { onValidation } from '@/utils/validation';
-import { getUserInfo, updateUserInfo, updateNickname, updatePassword } from '@/api/users';
+import {
+  getUserInfo,
+  updateUserInfo,
+  updateNickname,
+  updatePassword,
+  updatePicture,
+} from '@/api/users';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import userDummy from '@/data/userDummy';
 
@@ -51,7 +57,7 @@ const ImageWrapper = styled.div`
   height: 64px;
 `;
 
-const EditButton = styled.button`
+const ProfileButton = styled.button`
   position: absolute;
   bottom: 0;
   right: 0;
@@ -68,7 +74,7 @@ const EditButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0.9);
+    filter: brightness(0.8);
   }
 `;
 
@@ -80,6 +86,7 @@ export const Text = styled.div`
 
 const Mypage = () => {
   const queryClient = useQueryClient();
+  const fileInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -92,6 +99,8 @@ const Mypage = () => {
     profilePicture: '',
   });
   const [formError, setFormError] = useState({});
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['userInfo'],
@@ -110,6 +119,7 @@ const Mypage = () => {
         birth: userDummy.birthDate,
         bio: userDummy.introduction,
       }));
+      setPreviewUrl(data.profilePicture || '');
     }
   }, [data]);
 
@@ -119,13 +129,26 @@ const Mypage = () => {
   const handleSave = async () => {
     const nicknameCheck = formData.nickname !== data.nickname;
     const emailCheck = formData.email !== data.email;
-    const passwordCheck = formData.password === formData.confirmPassword;
+    const passwordCheck = formData.password && formData.password === formData.confirmPassword;
 
     const isValid = onValidation(formData, setFormError, '', data);
-    if (!isValid) return;
-
     try {
-      // 유저 정보 전체 변경
+      // 1. 이미지 업데이트는 유효성과 무관하게 따로 처리
+      if (selectedImageFile) {
+        const updated = await updatePicture(selectedImageFile);
+        if (updated?.profilePicture) {
+          console.log('프로필 이미지가 업데이트되었습니다.');
+          setFormData((prev) => ({
+            ...prev,
+            profilePicture: updated.profilePicture,
+          }));
+          await queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+        }
+      }
+
+      // 2. 유효성 통과 시에만 다른 정보 업데이트
+      if (!isValid) return;
+
       if (nicknameCheck && emailCheck) {
         await updateUserInfo({
           email: formData.email,
@@ -137,14 +160,10 @@ const Mypage = () => {
           introduction: formData.bio,
         });
         console.log('유저 정보가 업데이트 되었습니다.');
-      }
-      // 닉네임 업데이트
-      else if (nicknameCheck) {
+      } else if (nicknameCheck) {
         await updateNickname(formData.nickname);
         console.log('닉네임이 업데이트 되었습니다.');
-      }
-      //비밀번호 업데이트
-      else if (formData.password && passwordCheck) {
+      } else if (passwordCheck) {
         await updatePassword(formData.password);
         console.log('비밀번호가 업데이트 되었습니다.');
       }
@@ -153,6 +172,21 @@ const Mypage = () => {
     } catch (err) {
       console.error('유저 정보 저장 중 오류 발생:', err);
     }
+  };
+
+  const handleProfileClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setSelectedImageFile(file); // API 전송용 파일 저장
+    const imagePreviewUrl = URL.createObjectURL(file); // 미리보기 URL 생성
+    setPreviewUrl(imagePreviewUrl);
   };
 
   const inputFields = createInputFields(formData, setFormData, formError, false, true);
@@ -165,13 +199,20 @@ const Mypage = () => {
           <ProfileContent>
             <ImageWrapper>
               <Image
-                src={data.profilePicture || Profile}
+                src={previewUrl || Profile}
                 alt='프로필'
                 width='64px'
                 height='64px'
                 radius='50%'
               />
-              <EditButton onClick={() => alert('프로필 수정 클릭')}>+</EditButton>
+              <ProfileButton onClick={handleProfileClick}>+</ProfileButton>
+              <input
+                type='file'
+                accept='image/*'
+                style={{ display: 'none' }}
+                ref={fileInputRef}
+                onChange={handleFileChange}
+              />
             </ImageWrapper>
             {['nickname', 'bio'].map((field) => (
               <Input

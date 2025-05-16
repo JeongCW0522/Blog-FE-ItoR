@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components';
-import { AddPhoto, Profile } from '@/assets';
+import { Header, Button, Input, Modal, SignUpHeader, SignUpProfile } from '@/components';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
 import { EmailSignUp } from '@/api/SignUp';
@@ -22,6 +21,7 @@ const SignUpEmail = () => {
   });
 
   const [formError, setFormError] = useState({});
+  const [profileImage, setProfileImage] = useState('');
   const navigate = useNavigate();
 
   const onModalConfirm = () => {
@@ -35,7 +35,7 @@ const SignUpEmail = () => {
         email: formData.email,
         nickname: formData.nickname,
         password: formData.password,
-        profilePicture: '',
+        profilePicture: profileImage || '',
         birthDate: formData.birth,
         name: formData.name,
         introduction: formData.bio,
@@ -68,18 +68,7 @@ const SignUpEmail = () => {
         <Header />
         <SignUpHeader />
         <Content>
-          <Text>프로필 사진</Text>
-          <Image src={Profile} alt='프로필' width='90px' height='90px' radius='50%' />
-          <Button
-            width='145px'
-            height='27px'
-            borderStyle='1px solid #E6E6E6'
-            color='#9e9e9e'
-            radius='3px'
-            icon={AddPhoto}
-          >
-            프로필 사진 추가
-          </Button>
+          <SignUpProfile setProfileImage={setProfileImage} />
           {inputFields.map((field) => (
             <div key={field.name}>
               <Text>{field.label}</Text>

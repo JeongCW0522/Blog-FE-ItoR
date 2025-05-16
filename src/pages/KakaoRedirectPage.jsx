@@ -24,7 +24,13 @@ const KakaoRedirectPage = () => {
           navigate('/');
           setIsLogin(true);
           console.log('카카오 로그인 성공', Auth);
-          storeTokens(Auth.data.accessToken, Auth.data.refreshToken);
+          storeTokens(
+            Auth.data.accessToken,
+            Auth.data.refreshToken,
+            Auth.data.nickname,
+            Auth.data.introduction,
+            Auth.data.profilePicture,
+          );
         } else if (Auth?.code === 401) {
           const { kakaoId, nickname, picture } = Auth.data;
           navigate('/signup/Kakao', { state: { kakaoId, nickname, picture } });

@@ -8,11 +8,12 @@ const EmailLogin = async ({ email, password }) => {
       password,
     });
 
-    const { accessToken, refreshToken } = response?.data?.data || {};
+    const { accessToken, refreshToken, nickname, introduction, profilePicture } =
+      response?.data?.data || {};
 
-    // 토큰 로컬 스토리지에 저장
-    storeTokens(accessToken, refreshToken);
-    console.log(response.data);
+    // 로컬 스토리지에 저장
+    storeTokens(accessToken, refreshToken, nickname, introduction, profilePicture);
+    console.log('로그인 정보', response.data);
 
     return response.data;
   } catch (error) {

@@ -1,13 +1,9 @@
 import { Axios } from './auth';
 
-export const getPresignedUrl = async (image) => {
+export const getPresignedUrl = async (fileName) => {
   try {
-    const response = await Axios.get('/images/presigned-url', {
-      params: {
-        fileName: image,
-      },
-    });
-    return response.data;
+    const response = await Axios.get('/images/presigned-url', { params: { fileName } });
+    return response.data.data;
   } catch (error) {
     return {
       error: true,
@@ -16,14 +12,14 @@ export const getPresignedUrl = async (image) => {
   }
 };
 
-export const uploadImage = async (url, file) => {
+export const uploadImage = async (presignedUrl, file) => {
   try {
-    const response = await Axios.put(url, file, {
+    await Axios.put(presignedUrl, file, {
       headers: {
         'Content-Type': file.type,
       },
     });
-    return response.data;
+    return presignedUrl.split('?')[0];
   } catch (error) {
     return {
       error: true,
@@ -31,5 +27,3 @@ export const uploadImage = async (url, file) => {
     };
   }
 };
-
-export { getPresignedUrl, uploadImage };

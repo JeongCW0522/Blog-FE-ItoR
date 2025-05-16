@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Header, Image, Button, Input, Modal, SignUpHeader } from '@/components';
+import { Header, Button, Input, Modal, SignUpHeader, SignUpProfile } from '@/components';
 import { AddPhoto, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -22,6 +22,7 @@ const SignUpKakao = () => {
   });
 
   const [formError, setFormError] = useState({});
+  const [profileImage, setProfileImage] = useState('');
   const navigate = useNavigate();
 
   const onModalConfirm = () => {
@@ -34,7 +35,7 @@ const SignUpKakao = () => {
       KakaoSignUp({
         email: formData.email,
         nickname: formData.nickname,
-        profilePicture: picture || '',
+        profilePicture: profileImage || picture,
         birthDate: formData.birth,
         name: formData.name,
         introduction: formData.bio,
@@ -68,18 +69,7 @@ const SignUpKakao = () => {
         <Header />
         <SignUpHeader />
         <Content>
-          <Text>프로필 사진</Text>
-          <Image src={picture} alt='프로필' width='90px' height='90px' radius='50%' />
-          <Button
-            width='145px'
-            height='27px'
-            borderStyle='1px solid #E6E6E6'
-            color='#9e9e9e'
-            radius='3px'
-            icon={AddPhoto}
-          >
-            프로필 사진 추가
-          </Button>
+          <SignUpProfile setProfileImage={setProfileImage} picture={picture} />
           <Text>소셜 로그인</Text>
           <SocialBox disabled>
             <KakaoIcon />
