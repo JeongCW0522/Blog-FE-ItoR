@@ -192,7 +192,7 @@ const BlogComment = ({ post }) => {
       ))}
 
       {isLogin ? (
-        <CommentBox>
+        <CommentBox id='comment'>
           <InfoWrapper>
             <Image
               width='20px'
