@@ -194,7 +194,13 @@ const BlogComment = ({ post }) => {
       {isLogin ? (
         <CommentBox>
           <InfoWrapper>
-            <Image width='20px' height='20px' src={post.profileUrl || Profile} alt='프로필' />
+            <Image
+              width='20px'
+              height='20px'
+              radius='50%'
+              src={post.profileUrl || Profile}
+              alt='프로필'
+            />
             <span style={{ color: '#333' }}>{post.comments.nickName}</span>
           </InfoWrapper>
           <StyledTextarea

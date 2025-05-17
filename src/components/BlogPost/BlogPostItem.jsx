@@ -41,6 +41,11 @@ const Content = styled.p`
   font-weight: 300;
   line-height: 160%;
   margin: 0 0 12px;
+  display: -webkit-box; //최대 2줄까지 보이도록
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const InfoWrapper = styled.div`

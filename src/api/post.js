@@ -1,17 +1,8 @@
 import { Axios } from './auth';
 
-export const blogPost = async (title, content, contentOrder, contentType) => {
+export const blogPost = async (title, contents) => {
   try {
-    const response = await Axios.post('/posts', {
-      title,
-      contents: [
-        {
-          contentOrder,
-          content,
-          contentType,
-        },
-      ],
-    });
+    const response = await Axios.post('/posts', { title, contents });
     return response.data;
   } catch (error) {
     console.error(error);

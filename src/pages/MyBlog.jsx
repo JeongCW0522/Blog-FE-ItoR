@@ -60,7 +60,7 @@ const BioText = styled.p`
 `;
 
 const Content = styled.div`
-  min-width: 700px;
+  width: 700px;
   margin: 60px auto;
 
   @media (max-width: 700px) {

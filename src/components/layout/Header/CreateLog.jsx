@@ -14,6 +14,7 @@ const Container = styled.div`
 
   &:hover {
     cursor: pointer;
+    opacity: 0.7;
   }
 `;
 
@@ -24,10 +25,6 @@ const TextButton = styled.button`
   border: none;
   cursor: pointer;
   color: #909090;
-
-  &:hover {
-    opacity: 0.6;
-  }
 `;
 
 const CreateLog = () => {

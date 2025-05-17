@@ -46,7 +46,9 @@ const Content = styled.div`
   color: #333;
   font-weight: 300;
   line-height: 180%;
-  word-break: keep-all;
+  word-break: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 
   img {
     width: 100%;

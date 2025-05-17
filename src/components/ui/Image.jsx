@@ -8,8 +8,17 @@ const StyledImage = styled.img`
   aspect-ratio: 1/1;
 `;
 
-const Image = ({ src, alt, width, height, radius }) => {
-  return <StyledImage src={src} alt={alt} width={width} height={height} radius={radius} />;
+const Image = ({ src, alt, width, height, radius, onClick }) => {
+  return (
+    <StyledImage
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      radius={radius}
+      onClick={onClick}
+    />
+  );
 };
 
 export default Image;

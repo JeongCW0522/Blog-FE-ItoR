@@ -13,6 +13,7 @@ import MoreIcon from './more.svg?react';
 import LeftIcon from './Left.svg?react';
 import RightIcon from './Right.svg?react';
 import SettingIcon from './setting.svg?react';
+import DeleteIcon from './delete.svg?react';
 
 export {
   AddPhoto,
@@ -30,4 +31,5 @@ export {
   LeftIcon,
   RightIcon,
   SettingIcon,
+  DeleteIcon,
 };
