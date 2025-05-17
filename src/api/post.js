@@ -71,17 +71,11 @@ export const deletePost = async (postId) => {
   }
 };
 
-export const updatePost = async (postId, title, content, contentOrder, contentType) => {
+export const updatePost = async (postId, title, contents) => {
   try {
     const response = await Axios.patch(`/posts?postId=${postId}`, {
       title,
-      contents: [
-        {
-          contentOrder,
-          content,
-          contentType,
-        },
-      ],
+      contents,
     });
     return response.data;
   } catch (error) {

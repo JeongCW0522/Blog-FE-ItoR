@@ -79,7 +79,7 @@ const Content = styled.div`
 const ContentText = styled.textarea`
   min-height: 30px;
   width: 100%;
-  font-size: 14px;
+  font-size: 16px;
   color: #696969;
   font-weight: 300;
   line-height: 160%;
@@ -134,6 +134,7 @@ const DeleteBox = styled.div`
     filter: brightness(0.9);
   }
 `;
+
 const BlogWrite = () => {
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState([{ contentOrder: 1, content: '', contentType: 'TEXT' }]);
@@ -199,7 +200,7 @@ const BlogWrite = () => {
     }
     const textContent = contents.some((c) => c.contentType === 'TEXT' && c.content.trim());
     if (!textContent) {
-      showToast('error', '하나 이상의 텍스트 내용을 입력해주세요');
+      showToast('error', '내용을 입력해주세요');
       return;
     }
     goPost.mutate();
@@ -213,16 +214,17 @@ const BlogWrite = () => {
   };
 
   const resize = (obj) => {
-    const scrollTop = window.scrollY;
-    obj.style.height = '1px';
-    obj.style.height = 12 + obj.scrollHeight + 'px';
-    window.scrollTo({ top: scrollTop });
+    if (obj) {
+      obj.style.height = 'auto';
+      obj.style.height = `${obj.scrollHeight}px`;
+    }
   };
 
+  //이미지만 삭제
   const handleDeleteImage = (index) => {
-    const updatedContents = contents.filter((_, i) => i !== index && i !== index + 1);
+    const updatedContents = contents.filter((_, i) => i !== index);
     setContents(updatedContents);
-    setSelectedImageIndex(null);
+    setSelectedImage(null);
   };
 
   return (
@@ -281,7 +283,6 @@ const BlogWrite = () => {
               }
               return null;
             })}
-          <br />
         </Content>
         <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
       </Container>

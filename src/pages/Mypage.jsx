@@ -197,8 +197,7 @@ const Mypage = () => {
     try {
       const presignedUrl = await getPresignedUrl(file.name);
       const uploadedUrl = await uploadImage(presignedUrl, file);
-      console.log(presignedUrl);
-      console.log(uploadedUrl);
+
       setProfileImage(uploadedUrl);
     } catch (err) {
       console.error(err);
