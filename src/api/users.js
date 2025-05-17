@@ -21,13 +21,9 @@ export const updatePassword = async (password) => {
   return response.data;
 };
 
-export const updatePicture = async (file) => {
-  const response = await Axios.patch('/users/picture', file, {
-    headers: {
-      'Content-Type': file.type,
-    },
-    transformRequest: [(data) => data], // 파일을 그대로 보냄
+export const updatePicture = async (fileUrl) => {
+  const response = await Axios.patch('/users/picture', {
+    profilePicture: fileUrl,
   });
-
   return response.data;
 };

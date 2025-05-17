@@ -7,10 +7,7 @@ import { getPresignedUrl, uploadImage } from '@/api/Image';
 const SignUpProfile = ({ setProfileImage, picture }) => {
   const [previewImage, setPreviewImage] = useState('');
   const fileInputRef = useRef(null);
-
-  const handleImageUpload = () => {
-    fileInputRef.current.click();
-  };
+  const handleImageUpload = () => fileInputRef.current.click();
 
   const handleFileChange = async (event) => {
     const file = event.target.files?.[0];

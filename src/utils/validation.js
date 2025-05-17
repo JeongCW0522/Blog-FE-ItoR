@@ -33,6 +33,7 @@ export const onValidation = (formData, setFormError, msg = '', myPageCheck, isKa
     }
   });
 
+  //fomeData : 입력된 정보, myPageCheck : 기존에 입력되어 있던 정보
   if (myPageCheck) {
     const isSameEmail = formData.email === myPageCheck.email;
     const isSameNickname = formData.nickname === myPageCheck.nickname;

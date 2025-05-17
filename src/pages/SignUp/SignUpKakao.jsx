@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Header, Button, Input, Modal, SignUpHeader, SignUpProfile } from '@/components';
-import { AddPhoto, KakaoIcon } from '@/assets';
+import { KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { KakaoSignUp } from '@/api/SignUp';

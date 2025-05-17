@@ -1,4 +1,5 @@
 import { Axios } from './auth';
+import axios from 'axios';
 
 export const getPresignedUrl = async (fileName) => {
   try {
@@ -14,7 +15,7 @@ export const getPresignedUrl = async (fileName) => {
 
 export const uploadImage = async (presignedUrl, file) => {
   try {
-    await Axios.put(presignedUrl, file, {
+    await axios.put(presignedUrl, file, {
       headers: {
         'Content-Type': file.type,
       },

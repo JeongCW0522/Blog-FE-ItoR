@@ -12,6 +12,7 @@ import {
   updatePassword,
   updatePicture,
 } from '@/api/users';
+import { uploadImage, getPresignedUrl } from '@/api/Image';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import userDummy from '@/data/userDummy';
 
@@ -99,8 +100,8 @@ const Mypage = () => {
     profilePicture: '',
   });
   const [formError, setFormError] = useState({});
-  const [selectedImageFile, setSelectedImageFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+  const [previewImage, setPreviewImage] = useState('');
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['userInfo'],
@@ -119,7 +120,7 @@ const Mypage = () => {
         birth: userDummy.birthDate,
         bio: userDummy.introduction,
       }));
-      setPreviewUrl(data.profilePicture || '');
+      setPreviewImage(data.profilePicture || '');
     }
   }, [data]);
 
@@ -130,42 +131,48 @@ const Mypage = () => {
     const nicknameCheck = formData.nickname !== data.nickname;
     const emailCheck = formData.email !== data.email;
     const passwordCheck = formData.password && formData.password === formData.confirmPassword;
+    const isPasswordOnly = passwordCheck && !nicknameCheck && !emailCheck;
 
-    const isValid = onValidation(formData, setFormError, '', data);
     try {
-      // 1. 이미지 업데이트는 유효성과 무관하게 따로 처리
-      if (selectedImageFile) {
-        const updated = await updatePicture(selectedImageFile);
-        if (updated?.profilePicture) {
+      if (profileImage) {
+        const updateImage = await updatePicture(profileImage);
+        if (updateImage) {
           console.log('프로필 이미지가 업데이트되었습니다.');
+          setPreviewImage(profileImage);
           setFormData((prev) => ({
             ...prev,
-            profilePicture: updated.profilePicture,
+            profilePicture: profileImage,
           }));
-          await queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+          localStorage.setItem('profilePicture', profileImage);
         }
       }
-
-      // 2. 유효성 통과 시에만 다른 정보 업데이트
-      if (!isValid) return;
-
-      if (nicknameCheck && emailCheck) {
-        await updateUserInfo({
-          email: formData.email,
-          nickname: formData.nickname,
-          password: formData.password,
-          profilePicture: formData.profilePicture,
-          birthDate: formData.birth,
-          name: formData.name,
-          introduction: formData.bio,
-        });
-        console.log('유저 정보가 업데이트 되었습니다.');
-      } else if (nicknameCheck) {
-        await updateNickname(formData.nickname);
-        console.log('닉네임이 업데이트 되었습니다.');
-      } else if (passwordCheck) {
+      if (isPasswordOnly) {
         await updatePassword(formData.password);
         console.log('비밀번호가 업데이트 되었습니다.');
+      } else {
+        const isValid = onValidation(formData, setFormError, '', data);
+
+        if (!isValid) return;
+
+        if (!isValid) return;
+        if (nicknameCheck && emailCheck && passwordCheck) {
+          await updateUserInfo({
+            email: formData.email,
+            nickname: formData.nickname,
+            password: formData.password,
+            profilePicture: formData.profilePicture,
+            birthDate: formData.birth,
+            name: formData.name,
+            introduction: formData.bio,
+          });
+          console.log('유저 정보가 업데이트 되었습니다.');
+        } else if (nicknameCheck) {
+          await updateNickname(formData.nickname);
+          console.log('닉네임이 업데이트 되었습니다.');
+        } else if (passwordCheck) {
+          await updatePassword(formData.password);
+          console.log('비밀번호가 업데이트 되었습니다.');
+        }
       }
 
       await queryClient.invalidateQueries({ queryKey: ['userInfo'] });
@@ -184,9 +191,18 @@ const Mypage = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    setSelectedImageFile(file); // API 전송용 파일 저장
-    const imagePreviewUrl = URL.createObjectURL(file); // 미리보기 URL 생성
-    setPreviewUrl(imagePreviewUrl);
+    const previewUrl = URL.createObjectURL(file);
+    setPreviewImage(previewUrl);
+
+    try {
+      const presignedUrl = await getPresignedUrl(file.name);
+      const uploadedUrl = await uploadImage(presignedUrl, file);
+      console.log(presignedUrl);
+      console.log(uploadedUrl);
+      setProfileImage(uploadedUrl);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const inputFields = createInputFields(formData, setFormData, formError, false, true);
@@ -199,7 +215,7 @@ const Mypage = () => {
           <ProfileContent>
             <ImageWrapper>
               <Image
-                src={previewUrl || Profile}
+                src={previewImage || Profile}
                 alt='프로필'
                 width='64px'
                 height='64px'
