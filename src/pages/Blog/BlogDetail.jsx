@@ -15,6 +15,7 @@ const BlogDetail = () => {
   const location = useLocation();
   const { id } = useParams();
   const [toastData, setToastData] = useState({ show: false, type: '', message: '' });
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
     const stateToast = location.state?.toastData;
@@ -33,10 +34,10 @@ const BlogDetail = () => {
   return (
     <>
       <GlobalStyle />
-      <Header postId={id} />
+      <Header postId={id} isOwner={isOwner} />
       <DetailContainer>
         <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
-        <BlogDetailField postId={id} />
+        <BlogDetailField postId={id} setIsOwner={setIsOwner} />
         <BlogDetailFooter />
       </DetailContainer>
     </>

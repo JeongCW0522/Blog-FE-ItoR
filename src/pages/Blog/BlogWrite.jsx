@@ -4,7 +4,7 @@ import { AddPhoto, DeleteIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
 import { blogPost } from '@/api/post';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getPresignedUrl, uploadImage } from '@/api/Image';
 import {
   Container,
@@ -24,6 +24,7 @@ const BlogWrite = () => {
   const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const fileInputRef = useRef(null);
 
   const handleImageUpload = () => fileInputRef.current.click();
@@ -61,6 +62,7 @@ const BlogWrite = () => {
       return blogPost(title, sortedContents);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries(['postList']);
       navigate(`/`, {
         state: {
           toastData: {

@@ -78,7 +78,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const ChatandMore = ({ postId }) => {
+const ChatandMore = ({ postId, isOwner }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -116,12 +116,16 @@ const ChatandMore = ({ postId }) => {
     <>
       <Container>
         <StyledChatIcon onClick={scrollToComment} />
-        <StyledMoreIcon onClick={openTooltip} />
-        {showTooltip && (
-          <MenuBox>
-            <StyledLink to='./edit'>수정하기</StyledLink>
-            <TextItem onClick={() => setModalOpen(true)}>삭제하기</TextItem>
-          </MenuBox>
+        {isOwner && (
+          <>
+            <StyledMoreIcon onClick={openTooltip} />
+            {showTooltip && (
+              <MenuBox>
+                <StyledLink to='./edit'>수정하기</StyledLink>
+                <TextItem onClick={() => setModalOpen(true)}>삭제하기</TextItem>
+              </MenuBox>
+            )}
+          </>
         )}
       </Container>
       <Modal

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { Image, BlogComment } from '@/components';
 import { getPostDetail } from '@/api/post';
@@ -57,13 +58,19 @@ const Content = styled.div`
   }
 `;
 
-const BlogDetailField = ({ postId }) => {
+const BlogDetailField = ({ postId, setIsOwner }) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['postId', postId],
     queryFn: () => getPostDetail(postId),
     keepPreviousData: true,
     staleTime: 1000 * 60,
   });
+
+  useEffect(() => {
+    if (data?.data?.isOwner !== undefined) {
+      setIsOwner(data.data.isOwner);
+    }
+  }, [data, setIsOwner]);
 
   if (isLoading) return <div>로딩 중...</div>;
   if (isError) return <div>에러 발생</div>;
@@ -78,7 +85,9 @@ const BlogDetailField = ({ postId }) => {
       } else if (item.contentType === 'IMAGE') {
         return <img key={index} src={item.content} alt={`이미지 ${index + 1}`} />;
       }
+      return null;
     });
+
   return (
     <>
       <TitleContent>
