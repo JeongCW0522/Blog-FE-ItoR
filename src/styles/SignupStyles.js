@@ -40,6 +40,6 @@ export const SocialBox = styled.div`
   width: 100%;
   border-radius: 4px;
   font-size: 14px;
-  color: #b3b3b3;
+  color: #9e9e9e;
   pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
 `;

@@ -87,6 +87,7 @@ export const Text = styled.div`
 `;
 
 const Mypage = () => {
+  const [isEditMode, setIsEditMode] = useState(false);
   const queryClient = useQueryClient();
   const fileInputRef = useRef(null);
   const isKakao = localStorage.getItem('isKakao') === 'true';
@@ -209,7 +210,7 @@ const Mypage = () => {
     <>
       <GlobalStyle />
       <Container>
-        <Header onSave={handleSave} />
+        <Header onSave={handleSave} isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
         <Content>
           <ProfileContent>
             <ImageWrapper>
@@ -220,14 +221,18 @@ const Mypage = () => {
                 height='64px'
                 radius='50%'
               />
-              <ProfileButton onClick={handleProfileClick}>+</ProfileButton>
-              <input
-                type='file'
-                accept='image/*'
-                style={{ display: 'none' }}
-                ref={fileInputRef}
-                onChange={handleFileChange}
-              />
+              {isEditMode && (
+                <>
+                  <ProfileButton onClick={handleProfileClick}>+</ProfileButton>
+                  <input
+                    type='file'
+                    accept='image/*'
+                    style={{ display: 'none' }}
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                  />
+                </>
+              )}
             </ImageWrapper>
             {['nickname', 'bio'].map((field) => (
               <Input
@@ -241,6 +246,7 @@ const Mypage = () => {
                 onChange={(e) => setFormData((prev) => ({ ...prev, [field]: e.target.value }))}
                 errorState={field === 'nickname' ? formError.nickname : ''}
                 showHint={field === 'nickname'}
+                disabled={!isEditMode}
               />
             ))}
           </ProfileContent>
@@ -270,6 +276,7 @@ const Mypage = () => {
                   value={field.value}
                   onChange={field.onChange}
                   errorState={field.error}
+                  disabled={!isEditMode}
                 />
               </div>
             ))}

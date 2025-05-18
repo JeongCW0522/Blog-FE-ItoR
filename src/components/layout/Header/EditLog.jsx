@@ -20,31 +20,22 @@ const TextButton = styled.button`
   }
 `;
 
-const SetMypage = ({ onSave, onToast }) => {
-  const [isOpen, setOpen] = useState(false);
-
+const SetMypage = ({ onSave, onToast, isEditMode, setIsEditMode }) => {
   const handleSave = () => {
-    if (onSave) onSave();
-    setOpen(false);
+    onSave?.();
+    setIsEditMode(false);
   };
 
   return (
     <Container>
-      {!isOpen ? (
-        <TextButton onClick={() => setOpen(true)}>수정하기</TextButton>
+      {!isEditMode ? (
+        <TextButton onClick={() => setIsEditMode(true)}>수정하기</TextButton>
       ) : (
         <>
-          <TextButton onClick={() => setOpen(false)} style={{ color: '#FF3F3F' }}>
+          <TextButton onClick={() => setIsEditMode(false)} style={{ color: '#FF3F3F' }}>
             취소하기
           </TextButton>
-          <TextButton
-            onClick={() => {
-              onToast?.();
-              handleSave();
-            }}
-          >
-            저장하기
-          </TextButton>
+          <TextButton onClick={() => onToast?.()}>저장하기</TextButton>
         </>
       )}
     </Container>

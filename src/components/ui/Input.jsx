@@ -20,6 +20,12 @@ const StyledInput = styled.input`
     color: #bbb;
     font-size: ${(props) => props.$phSize || '14px'};
   }
+
+  &:disabled {
+    background-color: #e6e6e6;
+    color: #9e9e9e;
+    pointer-events: none;
+  }
 `;
 
 const ErrorText = styled.p`
