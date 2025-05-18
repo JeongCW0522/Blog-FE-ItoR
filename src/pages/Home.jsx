@@ -32,7 +32,7 @@ function Home() {
       <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
       <Header />
       <Content>
-        <BlogPostList />
+        <BlogPostList isOwer={false} />
       </Content>
     </>
   );

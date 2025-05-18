@@ -99,7 +99,7 @@ const MyBlog = () => {
           </ProfileContent>
         </ProfileBox>
         <Content>
-          <BlogPostList />
+          <BlogPostList isOwner={true} />
         </Content>
       </Container>
     </>
