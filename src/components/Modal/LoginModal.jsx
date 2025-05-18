@@ -163,7 +163,11 @@ const LoginModal = ({ isOpen, onClose }) => {
   };
 
   const onKakaoLogin = () => {
-    KakaoLogin();
+    try {
+      KakaoLogin();
+    } catch (err) {
+      console.error('카카오 로그인 오류:', err);
+    }
   };
 
   if (!isOpen) return null;

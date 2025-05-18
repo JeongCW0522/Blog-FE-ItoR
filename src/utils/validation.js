@@ -60,10 +60,10 @@ export const onValidation = (formData, setFormError, msg = '', myPageCheck, isKa
         errors.password = { message: '비밀번호 8~64자, 영문, 숫자, 특수문자가 필수입니다.' };
       }
     }
-  }
 
-  if (confirmPassword !== password) {
-    errors.confirmPassword = { message: '비밀번호가 일치하지 않습니다.' };
+    if (confirmPassword !== password) {
+      errors.confirmPassword = { message: '비밀번호가 일치하지 않습니다.' };
+    }
   }
 
   if (name && name.trim() && !nameRegex.test(name)) {

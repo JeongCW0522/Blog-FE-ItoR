@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { Header, Image, Input } from '@/components';
-import { Profile } from '@/assets';
+import { Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
 import { createInputFields } from '@/constant/SignupFields';
 import { onValidation } from '@/utils/validation';
@@ -15,6 +15,7 @@ import {
 import { uploadImage, getPresignedUrl } from '@/api/Image';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import userDummy from '@/data/userDummy';
+import { SocialBox } from '@/styles/SignupStyles';
 
 const Container = styled.div`
   position: relative;
@@ -88,7 +89,7 @@ export const Text = styled.div`
 const Mypage = () => {
   const queryClient = useQueryClient();
   const fileInputRef = useRef(null);
-
+  const isKakao = localStorage.getItem('isKakao') === 'true';
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -150,10 +151,9 @@ const Mypage = () => {
         await updatePassword(formData.password);
         console.log('비밀번호가 업데이트 되었습니다.');
       } else {
-        const isValid = onValidation(formData, setFormError, '', data);
-
-        if (!isValid) return;
-
+        const isValid = isKakao
+          ? onValidation(formData, setFormError, '', data, true)
+          : onValidation(formData, setFormError, '', data);
         if (!isValid) return;
         if (nicknameCheck && emailCheck && passwordCheck) {
           await updateUserInfo({
@@ -244,19 +244,35 @@ const Mypage = () => {
               />
             ))}
           </ProfileContent>
-          {inputFields.map((field) => (
-            <div key={field.name}>
-              <Text>{field.label}</Text>
-              <Input
-                placeholder={field.placeholder}
-                type={field.type}
-                name={field.name}
-                value={field.value}
-                onChange={field.onChange}
-                errorState={field.error}
-              />
-            </div>
-          ))}
+          {isKakao && (
+            <>
+              <Text>소셜 로그인</Text>
+              <SocialBox disabled>
+                <KakaoIcon />
+                카카오 로그인
+              </SocialBox>
+            </>
+          )}
+          {inputFields
+            .filter((field) => {
+              if (isKakao && (field.name === 'password' || field.name === 'confirmPassword')) {
+                return false;
+              }
+              return true;
+            })
+            .map((field) => (
+              <div key={field.name}>
+                <Text>{field.label}</Text>
+                <Input
+                  placeholder={field.placeholder}
+                  type={field.type}
+                  name={field.name}
+                  value={field.value}
+                  onChange={field.onChange}
+                  errorState={field.error}
+                />
+              </div>
+            ))}
         </Content>
       </Container>
     </>
