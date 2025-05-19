@@ -117,6 +117,8 @@ const BlogComment = ({ post }) => {
   const [toastData, setToastData] = useState({ show: false, type: '', message: '' });
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const nickName = localStorage.getItem('nickname');
+  const profilePicture = localStorage.getItem('profilePicture');
 
   const queryClient = useQueryClient();
 
@@ -175,7 +177,7 @@ const BlogComment = ({ post }) => {
           <PostedCommentContent>
             <InfoWrapper>
               <Image width='20px' height='20px' src={Profile} alt='프로필' />
-              <span style={{ color: '#333' }}>{comment.nickName}</span>
+              <span style={{ color: '#333' }}>Leets</span>
             </InfoWrapper>
             {comment.isOwner && (
               <StyledMoreIcon
@@ -190,7 +192,6 @@ const BlogComment = ({ post }) => {
           <PostedComment>{comment.content}</PostedComment>
         </PostedCommetBox>
       ))}
-
       {isLogin ? (
         <CommentBox id='comment'>
           <InfoWrapper>
@@ -198,10 +199,10 @@ const BlogComment = ({ post }) => {
               width='20px'
               height='20px'
               radius='50%'
-              src={post.profileUrl || Profile}
+              src={profilePicture || Profile}
               alt='프로필'
             />
-            <span style={{ color: '#333' }}>{post.comments.nickName}</span>
+            <span style={{ color: '#333' }}>{nickName}</span>
           </InfoWrapper>
           <StyledTextarea
             placeholder='댓글을 입력해주세요.'

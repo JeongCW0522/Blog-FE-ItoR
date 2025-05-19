@@ -23,7 +23,7 @@ const TextButton = styled.button`
 const SetMypage = ({ onSave, onToast, isEditMode, setIsEditMode }) => {
   const handleSave = () => {
     onSave?.();
-    setIsEditMode(false);
+    onToast?.();
   };
 
   return (
@@ -35,7 +35,7 @@ const SetMypage = ({ onSave, onToast, isEditMode, setIsEditMode }) => {
           <TextButton onClick={() => setIsEditMode(false)} style={{ color: '#FF3F3F' }}>
             취소하기
           </TextButton>
-          <TextButton onClick={() => onToast?.()}>저장하기</TextButton>
+          <TextButton onClick={handleSave}>저장하기</TextButton>
         </>
       )}
     </Container>

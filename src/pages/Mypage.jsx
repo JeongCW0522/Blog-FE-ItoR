@@ -16,6 +16,7 @@ import { uploadImage, getPresignedUrl } from '@/api/Image';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import userDummy from '@/data/userDummy';
 import { SocialBox } from '@/styles/SignupStyles';
+import { storeInfo } from '@/utils/storeTokens';
 
 const Container = styled.div`
   position: relative;
@@ -91,6 +92,7 @@ const Mypage = () => {
   const queryClient = useQueryClient();
   const fileInputRef = useRef(null);
   const isKakao = localStorage.getItem('isKakao') === 'true';
+  const introduction = localStorage.getItem('introduction');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -120,7 +122,7 @@ const Mypage = () => {
         // TODO: 이름, 생년월일, 소개
         name: userDummy.name,
         birth: userDummy.birthDate,
-        bio: userDummy.introduction,
+        bio: introduction,
       }));
       setPreviewImage(data.profilePicture || '');
     }
@@ -166,9 +168,11 @@ const Mypage = () => {
             name: formData.name,
             introduction: formData.bio,
           });
+          storeInfo(formData.nickname, formData.bio, formData.profilePicture);
           console.log('유저 정보가 업데이트 되었습니다.');
         } else if (nicknameCheck) {
           await updateNickname(formData.nickname);
+          localStorage.setItem('nickname', formData.nickname);
           console.log('닉네임이 업데이트 되었습니다.');
         } else if (passwordCheck) {
           await updatePassword(formData.password);

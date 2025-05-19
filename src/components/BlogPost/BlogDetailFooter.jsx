@@ -38,12 +38,21 @@ const ProfileContent = styled.div`
 `;
 
 const BlogDetailFooter = () => {
+  const nickName = localStorage.getItem('nickname');
+  const profilePicture = localStorage.getItem('profilePicture');
+  const introduction = localStorage.getItem('introduction');
   return (
     <ProfileBox>
       <ProfileContent>
-        <Image src={Profile} alt='프로필' width='64px' height='64px' radius='50%' />
-        <Nickname>닉네임</Nickname>
-        <BioText>한 줄 소개</BioText>
+        <Image
+          src={profilePicture || Profile}
+          alt='프로필'
+          width='64px'
+          height='64px'
+          radius='50%'
+        />
+        <Nickname>{nickName || '닉네임'}</Nickname>
+        <BioText>{introduction || '한 줄 소개'}</BioText>
       </ProfileContent>
     </ProfileBox>
   );

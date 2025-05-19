@@ -1,5 +1,5 @@
 import { Axios, BaseUrl } from './auth';
-import { storeTokens } from '@/utils/storeTokens';
+import { storeInfo, storeTokens } from '@/utils/storeTokens';
 
 const EmailLogin = async ({ email, password }) => {
   try {
@@ -12,7 +12,8 @@ const EmailLogin = async ({ email, password }) => {
       response?.data?.data || {};
 
     // 로컬 스토리지에 저장
-    storeTokens(accessToken, refreshToken, nickname, introduction, profilePicture);
+    storeTokens(accessToken, refreshToken);
+    storeInfo(nickname, introduction, profilePicture);
     console.log('로그인 정보', response.data);
 
     return response.data;

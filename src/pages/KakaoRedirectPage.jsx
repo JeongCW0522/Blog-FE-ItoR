@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { KakaoRedirect } from '@/api/Login';
 import { useLogin } from '@/context/LoginContext';
-import { storeTokens } from '@/utils/storeTokens';
+import { storeInfo, storeTokens } from '@/utils/storeTokens';
 
 const KakaoRedirectPage = () => {
   const navigate = useNavigate();
@@ -23,13 +23,8 @@ const KakaoRedirectPage = () => {
         if (Auth?.code === 200) {
           setIsLogin(true);
           localStorage.setItem('isKakao', 'true');
-          storeTokens(
-            Auth.data.accessToken,
-            Auth.data.refreshToken,
-            Auth.data.nickname,
-            Auth.data.introduction,
-            Auth.data.profilePicture,
-          );
+          storeTokens(Auth.data.accessToken, Auth.data.refreshToken);
+          storeInfo(Auth.data.nickname, Auth.data.introduction, Auth.data.profilePicture);
           navigate('/');
           console.log('카카오 로그인 성공', Auth);
         } else if (Auth?.code === 401) {

@@ -49,12 +49,21 @@ const SetButton = styled.div`
 `;
 
 const SideLogin = ({ openLogoutModal }) => {
+  const nickName = localStorage.getItem('nickname');
+  const profilePicture = localStorage.getItem('profilePicture');
+  const introduction = localStorage.getItem('introduction');
   return (
     <Container>
       <ProfileBox to='/mypage'>
-        <Image src={Profile} alt='프로필' width='80px' height='80px' radius='50%' />
-        <Nickname>닉네임</Nickname>
-        <SidebarText>You can make anything by writing</SidebarText>
+        <Image
+          src={profilePicture || Profile}
+          alt='프로필'
+          width='80px'
+          height='80px'
+          radius='50%'
+        />
+        <Nickname>{nickName || '닉네임'}</Nickname>
+        <SidebarText>{introduction || 'You can make anything by writing'}</SidebarText>
       </ProfileBox>
       <GitButton>
         <Link to='/myblog'>
