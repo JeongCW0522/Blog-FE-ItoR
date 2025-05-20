@@ -11,8 +11,10 @@ import LoginModal from './Modal/LoginModal';
 import BlogComment from './BlogPost/BlogComment';
 import SignUpHeader from './SignUp/SignUpHeader';
 import SignUpProfile from './SignUp/SignUpProfile';
-import BlogDetailField from './BlogPost/BlogDetailField';
-import BlogDetailFooter from './BlogPost/BlogDetailFooter';
+import BlogDetailField from './BlogPost/BlogDetail/BlogDetailField';
+import BlogDetailFooter from './BlogPost/BlogDetail/BlogDetailFooter';
+import BlogImageUpload from './BlogPost/BlogLogic/BlogImageUpload';
+import BlogPostContent from './BlogPost/BlogLogic/BlogPostContent';
 
 export {
   Input,
@@ -30,4 +32,6 @@ export {
   SignUpProfile,
   BlogDetailField,
   BlogDetailFooter,
+  BlogImageUpload,
+  BlogPostContent,
 };

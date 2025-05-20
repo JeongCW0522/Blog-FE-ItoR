@@ -1,6 +1,6 @@
 import axios from 'axios';
 //https://blog.leets.land
-const BaseUrl = import.meta.env.VITE_API_URL;
+const BaseUrl = 'https://blog.leets.land';
 
 const Axios = axios.create({
   baseURL: BaseUrl,

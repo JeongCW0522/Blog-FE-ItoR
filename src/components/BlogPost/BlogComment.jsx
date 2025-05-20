@@ -138,7 +138,7 @@ const BlogComment = ({ post }) => {
   const deleteCommentMutation = useMutation({
     mutationFn: (commentId) => deleteComment(commentId),
     onSuccess: () => {
-      showToast('positive', '삭제가 완료되었습니다!');
+      showToast('positive', '댓글이 삭제되었습니다!');
       setModalOpen(false);
       setDeleteId(null);
       queryClient.invalidateQueries(['postId', id]);
