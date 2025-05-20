@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Header, Image, Input } from '@/components';
 import { Profile, KakaoIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
-import { createInputFields } from '@/constant/SignupFields';
+import { createInputFields } from '@/utils/SignupFields';
 import { onValidation } from '@/utils/validation';
 import {
   getUserInfo,

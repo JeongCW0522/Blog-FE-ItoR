@@ -21,4 +21,15 @@ export const ToastProvider = ({ children }) => {
   );
 };
 
-export const useToast = () => useContext(ToastContext);
+export const useToast = () => {
+  const context = useContext(ToastContext);
+
+  // context가 없으면 그냥 동작
+  if (!context) {
+    return {
+      showToast: () => {},
+    };
+  }
+
+  return context;
+};

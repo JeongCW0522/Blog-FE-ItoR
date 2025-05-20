@@ -4,7 +4,7 @@ import GlobalStyle from '@/styles/global';
 import { useNavigate } from 'react-router-dom';
 import { EmailSignUp } from '@/api/SignUp';
 import { useMutation } from '@tanstack/react-query';
-import { createInputFields } from '@/constant/SignupFields';
+import { createInputFields } from '@/utils/SignupFields';
 import { onValidation } from '@/utils/validation';
 import { Container, Content, Text } from '@/styles/SignupStyles';
 import { useToast } from '@/context/ToastContext';

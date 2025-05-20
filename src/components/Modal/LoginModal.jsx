@@ -187,9 +187,11 @@ const LoginModal = ({ isOpen, onClose }) => {
             <Input
               placeholder='이메일'
               type='email'
+              name='email'
               borderStyle='4px'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete='email'
             />
             <Input
               placeholder='비밀번호'

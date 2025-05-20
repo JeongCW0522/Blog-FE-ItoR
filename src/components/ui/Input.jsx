@@ -56,6 +56,8 @@ const Input = ({
   disabled = false,
   value,
   showHint,
+  autoComplete,
+  name,
 }) => {
   return (
     <Wrapper>
@@ -78,6 +80,8 @@ const Input = ({
         disabled={disabled}
         value={value}
         $showHint={showHint}
+        autoComplete={autoComplete}
+        name={name}
       />
       {showHint && !errorState && <ErrorText $showHint={true}>* 20글자 이내</ErrorText>}
       {errorState && <ErrorText>* {errorState.message}</ErrorText>}
