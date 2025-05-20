@@ -6,6 +6,7 @@ import { Input, Button } from '@/components';
 import { useLogin } from '@/context/LoginContext';
 import { useMutation } from '@tanstack/react-query';
 import { KakaoLogin, EmailLogin } from '@/api/Login';
+import { useToast } from '@/context/ToastContext';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -119,6 +120,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [password, setPassword] = useState('');
   const [errorState, setErrorState] = useState(null); // 비밀번호 오류 상태
   const { setIsLogin } = useLogin();
+  const { showToast } = useToast();
 
   const loginMutation = useMutation({
     mutationFn: EmailLogin,
@@ -137,6 +139,7 @@ const LoginModal = ({ isOpen, onClose }) => {
       }
       setIsLogin(true);
       setErrorState(null);
+      showToast('positive', '로그인 되었습니다.');
       onClose();
     },
     onError: (error) => {

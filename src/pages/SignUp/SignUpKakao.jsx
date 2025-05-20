@@ -8,9 +8,11 @@ import { useMutation } from '@tanstack/react-query';
 import { createInputFields } from '@/constant/SignupFields';
 import { onValidation } from '@/utils/validation';
 import { Container, Content, Text, SocialBox } from '@/styles/SignupStyles';
+import { useToast } from '@/context/ToastContext';
 
 const SignUpKakao = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { showToast } = useToast();
   const location = useLocation();
   const { kakaoId, nickname, picture } = location.state || {};
   const [formData, setFormData] = useState({
@@ -47,10 +49,11 @@ const SignUpKakao = () => {
         console.log(data.message);
       } else {
         setModalOpen(true);
+        showToast('positive', '회원가입이 완료되었습니다.');
       }
     },
-    onError: (error) => {
-      alert(error.message);
+    onError: () => {
+      showToast('error', '회원가입에 실패했습니다.');
     },
   });
 

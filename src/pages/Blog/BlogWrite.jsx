@@ -1,4 +1,4 @@
-import { Header, Toast, Image } from '@/components';
+import { Header, Image } from '@/components';
 import { useState, useRef } from 'react';
 import { AddPhoto, DeleteIcon } from '@/assets';
 import GlobalStyle from '@/styles/global';
@@ -17,15 +17,16 @@ import {
   ImageWrapper,
   DeleteBox,
 } from '@/styles/BlogStyles';
+import { useToast } from '@/context/ToastContext';
 
 const BlogWrite = () => {
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState([{ contentOrder: 1, content: '', contentType: 'TEXT' }]);
-  const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const fileInputRef = useRef(null);
+  const { showToast } = useToast();
 
   const handleImageUpload = () => fileInputRef.current.click();
 
@@ -49,11 +50,6 @@ const BlogWrite = () => {
       console.error(err);
       showToast('error', '이미지 업로드에 실패했습니다.');
     }
-  };
-
-  const showToast = (type, message) => {
-    setToastData({ show: true, type, message });
-    setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
   };
 
   const goPost = useMutation({
@@ -169,7 +165,6 @@ const BlogWrite = () => {
               return null;
             })}
         </Content>
-        <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
       </Container>
     </>
   );

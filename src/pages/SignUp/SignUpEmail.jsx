@@ -7,9 +7,11 @@ import { useMutation } from '@tanstack/react-query';
 import { createInputFields } from '@/constant/SignupFields';
 import { onValidation } from '@/utils/validation';
 import { Container, Content, Text } from '@/styles/SignupStyles';
+import { useToast } from '@/context/ToastContext';
 
 const SignUpEmail = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -26,7 +28,7 @@ const SignUpEmail = () => {
 
   const onModalConfirm = () => {
     setModalOpen(false);
-    navigate('/', { state: { openLoginModal: true } });
+    navigate('/', { state: { openLoginModal: true } }); //로그인하기 버튼 누르면 홈으로 이동하면서 로그인 모달 띄움
   };
 
   const signupMutation = useMutation({
@@ -46,10 +48,11 @@ const SignUpEmail = () => {
         console.log(data.message);
       } else {
         setModalOpen(true);
+        showToast('positive', '회원가입이 완료되었습니다.');
       }
     },
-    onError: (error) => {
-      alert(error.message);
+    onError: () => {
+      showToast('error', '회원가입에 실패했습니다.');
     },
   });
 

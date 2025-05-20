@@ -19,6 +19,7 @@ import {
 } from '@/styles/BlogStyles';
 
 const BlogEdit = () => {
+  const [isEditMode, setIsEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState([]);
   const [toastData, setToastData] = useState({ show: false, type: 'error', message: '' });
@@ -130,7 +131,7 @@ const BlogEdit = () => {
   return (
     <>
       <GlobalStyle />
-      <Header onSave={handleUpdate} />
+      <Header onSave={handleUpdate} isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
       <Container>
         <Line />
         <input

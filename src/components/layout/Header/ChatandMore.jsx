@@ -105,7 +105,15 @@ const ChatandMore = ({ postId, isOwner }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['postList'] });
-      navigate('/');
+      navigate(`/`, {
+        state: {
+          toastData: {
+            show: true,
+            type: 'positive',
+            message: '삭제되었습니다!',
+          },
+        },
+      });
     },
     onError: () => {
       setModalOpen(false);

@@ -95,7 +95,7 @@ const Header = ({ onSave, onToast, onPost, postId, isOwner, isEditMode, setIsEdi
       />
       <HeaderContainer>
         <IconWrapper>
-          <SideBarIconClick onClick={setIsSidebarOpen} />
+          <SideBarIconClick onClick={toggleSidebar} />
           <GITLOGO onClick={() => navigate('/')} />
         </IconWrapper>
         {headerContent}

@@ -17,6 +17,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import userDummy from '@/data/userDummy';
 import { SocialBox } from '@/styles/SignupStyles';
 import { storeInfo } from '@/utils/storeTokens';
+import { useToast } from '@/context/ToastContext';
 
 const Container = styled.div`
   position: relative;
@@ -90,6 +91,7 @@ export const Text = styled.div`
 const Mypage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const queryClient = useQueryClient();
+  const { showToast } = useToast();
   const fileInputRef = useRef(null);
   const isKakao = localStorage.getItem('isKakao') === 'true';
   const introduction = localStorage.getItem('introduction');
@@ -141,7 +143,7 @@ const Mypage = () => {
       if (profileImage) {
         const updateImage = await updatePicture(profileImage);
         if (updateImage) {
-          console.log('프로필 이미지가 업데이트되었습니다.');
+          showToast('positive', '프로필 이미지가 업데이트되었습니다.');
           setPreviewImage(profileImage);
           setFormData((prev) => ({
             ...prev,
@@ -152,7 +154,7 @@ const Mypage = () => {
       }
       if (isPasswordOnly) {
         await updatePassword(formData.password);
-        console.log('비밀번호가 업데이트 되었습니다.');
+        showToast('positive', '비밀번호가 업데이트 되었습니다.');
       } else {
         const isValid = isKakao
           ? onValidation(formData, setFormError, '', data, true)
@@ -169,14 +171,14 @@ const Mypage = () => {
             introduction: formData.bio,
           });
           storeInfo(formData.nickname, formData.bio, formData.profilePicture);
-          console.log('유저 정보가 업데이트 되었습니다.');
+          showToast('positive', '유저 정보가 업데이트 되었습니다.');
         } else if (nicknameCheck) {
           await updateNickname(formData.nickname);
           localStorage.setItem('nickname', formData.nickname);
-          console.log('닉네임이 업데이트 되었습니다.');
+          showToast('positive', '닉네임이 업데이트 되었습니다.');
         } else if (passwordCheck) {
           await updatePassword(formData.password);
-          console.log('비밀번호가 업데이트 되었습니다.');
+          showToast('positive', '비밀번호가 업데이트 되었습니다.');
         }
       }
 

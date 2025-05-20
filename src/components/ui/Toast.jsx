@@ -3,7 +3,7 @@ import { ErrorIcon, DoneIcon } from '@/assets';
 
 const ToastMessage = styled.div`
   position: fixed;
-  top: 100px;
+  top: 80px;
   left: 50%;
   transform: translateX(-50%);
   padding: 8px 12px;

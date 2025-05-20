@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { KakaoRedirect } from '@/api/Login';
 import { useLogin } from '@/context/LoginContext';
 import { storeInfo, storeTokens } from '@/utils/storeTokens';
+import { useToast } from '@/context/ToastContext';
 
 const KakaoRedirectPage = () => {
   const navigate = useNavigate();
   const { setIsLogin } = useLogin();
+  const { showToast } = useToast();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -26,13 +28,13 @@ const KakaoRedirectPage = () => {
           storeTokens(Auth.data.accessToken, Auth.data.refreshToken);
           storeInfo(Auth.data.nickname, Auth.data.introduction, Auth.data.profilePicture);
           navigate('/');
-          console.log('카카오 로그인 성공', Auth);
+          showToast('positive', '로그인 되었습니다.');
         } else if (Auth?.code === 401) {
           const { kakaoId, nickname, picture } = Auth.data;
           navigate('/signup/Kakao', { state: { kakaoId, nickname, picture } });
         }
       } catch (error) {
-        console.error('카카오 로그인 실패:', error);
+        showToast('error', '로그인에 실패했습니다.');
       }
     };
 

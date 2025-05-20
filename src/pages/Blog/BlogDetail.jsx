@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyle from '@/styles/global';
-import { Toast, Header, BlogDetailField, BlogDetailFooter } from '@/components';
+import { Header, BlogDetailField, BlogDetailFooter } from '@/components';
+import { useToast } from '@/context/ToastContext';
 
 const DetailContainer = styled.div`
   display: flex;
@@ -13,30 +14,23 @@ const DetailContainer = styled.div`
 
 const BlogDetail = () => {
   const location = useLocation();
+  const { showToast } = useToast();
   const { id } = useParams();
-  const [toastData, setToastData] = useState({ show: false, type: '', message: '' });
   const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
     const stateToast = location.state?.toastData;
-    if (stateToast) {
-      setToastData(stateToast);
+    if (stateToast?.show) {
+      showToast(stateToast.type, stateToast.message);
       window.history.replaceState({}, document.title);
     }
-  }, [location.state]);
-
-  useEffect(() => {
-    if (toastData.show) {
-      setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
-    }
-  }, [toastData]);
+  }, [location.state, showToast]);
 
   return (
     <>
       <GlobalStyle />
       <Header postId={id} isOwner={isOwner} />
       <DetailContainer>
-        <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
         <BlogDetailField postId={id} setIsOwner={setIsOwner} />
         <BlogDetailFooter />
       </DetailContainer>

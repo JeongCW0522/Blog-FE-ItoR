@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Image, Modal, Toast } from '@/components';
+import { Button, Image, Modal } from '@/components';
 import { useLogin } from '@/context/LoginContext';
 import { MoreIcon, Profile } from '@/assets';
 import { postComment, deleteComment } from '@/api/comment';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useToast } from '@/context/ToastContext';
 
 const CommentContent = styled.div`
   max-width: 720px;
@@ -114,9 +115,9 @@ const BlogComment = ({ post }) => {
   const { id } = useParams();
   const { isLogin } = useLogin();
   const [commentInput, setCommentInput] = useState('');
-  const [toastData, setToastData] = useState({ show: false, type: '', message: '' });
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const { showToast } = useToast();
   const nickName = localStorage.getItem('nickname');
   const profilePicture = localStorage.getItem('profilePicture');
 
@@ -125,16 +126,11 @@ const BlogComment = ({ post }) => {
   const createdAt = dayjs(post.createdAt).format('YYYY.M.D');
   const commentList = post.comments;
 
-  const onToast = (message, type = 'positive') => {
-    setToastData({ show: true, type, message });
-    setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
-  };
-
   const postCommentMutation = useMutation({
     mutationFn: (comment) => postComment(id, comment),
     onSuccess: () => {
       setCommentInput('');
-      onToast('댓글이 등록되었습니다!');
+      showToast('positive', '댓글이 등록되었습니다!');
       queryClient.invalidateQueries(['postId', id]);
     },
   });
@@ -142,7 +138,7 @@ const BlogComment = ({ post }) => {
   const deleteCommentMutation = useMutation({
     mutationFn: (commentId) => deleteComment(commentId),
     onSuccess: () => {
-      onToast('삭제가 완료되었습니다!');
+      showToast('positive', '삭제가 완료되었습니다!');
       setModalOpen(false);
       setDeleteId(null);
       queryClient.invalidateQueries(['postId', id]);
@@ -150,7 +146,7 @@ const BlogComment = ({ post }) => {
   });
 
   const handlePostComment = () => {
-    if (!commentInput.trim()) return onToast('댓글을 입력해주세요', 'error');
+    if (!commentInput.trim()) return showToast('error', '댓글을 입력해주세요');
     postCommentMutation.mutate(commentInput);
   };
 
@@ -162,7 +158,6 @@ const BlogComment = ({ post }) => {
 
   return (
     <CommentContent>
-      <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
       <CommentHeader>
         댓글 <span>{commentList.length}</span>
       </CommentHeader>

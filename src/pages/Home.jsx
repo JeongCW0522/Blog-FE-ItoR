@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { Header, BlogPostList, Toast } from '@/components';
+import { useEffect, useState } from 'react';
+import { Header, BlogPostList, LoginModal } from '@/components';
 import { useLocation } from 'react-router-dom';
+import { useToast } from '@/context/ToastContext';
 
 const Content = styled.div`
   padding-top: 80px;
@@ -11,29 +12,31 @@ const Content = styled.div`
 
 function Home() {
   const location = useLocation();
-  const [toastData, setToastData] = useState({ show: false, type: '', message: '' });
+  const { showToast } = useToast();
+  const [isLoginModal, setIsLoginModal] = useState(false);
+
+  const openLoginModal = () => setIsLoginModal(true);
+  const closeLoginModal = () => setIsLoginModal(false);
 
   useEffect(() => {
     const stateToast = location.state?.toastData;
-    if (stateToast) {
-      setToastData(stateToast);
+    if (location.state?.openLoginModal) {
+      openLoginModal();
       window.history.replaceState({}, document.title);
     }
-  }, [location.state]);
-
-  useEffect(() => {
-    if (toastData.show) {
-      setTimeout(() => setToastData((prev) => ({ ...prev, show: false })), 2000);
+    if (stateToast?.show) {
+      showToast(stateToast.type, stateToast.message);
+      window.history.replaceState({}, document.title);
     }
-  }, [toastData]);
+  }, [location.state, showToast]);
 
   return (
     <>
-      <Toast show={toastData.show} text={toastData.message} type={toastData.type} />
       <Header />
       <Content>
         <BlogPostList isOwer={false} />
       </Content>
+      {isLoginModal && <LoginModal isOpen={isLoginModal} onClose={closeLoginModal} />}
     </>
   );
 }
