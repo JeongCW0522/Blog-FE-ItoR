@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter as Router, Route, Routes } from 'react-router-dom';
 import {
   Home,
   SignUp,
@@ -22,7 +22,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <LoginProvider>
         <ToastProvider>
-          <BrowserRouter>
+          <Router>
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/signUp' element={<SignUp />} />
@@ -35,7 +35,7 @@ function App() {
               <Route path='/myblog' element={<MyBlog />} />
               <Route path='/oauth/kakao/success' element={<KakaoRedirectPage />} />
             </Routes>
-          </BrowserRouter>
+          </Router>
         </ToastProvider>
       </LoginProvider>
     </QueryClientProvider>

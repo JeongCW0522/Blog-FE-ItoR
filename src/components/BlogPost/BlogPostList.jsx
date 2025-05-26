@@ -17,7 +17,7 @@ const BlogPostList = ({ isOwner = false }) => {
   const postsPerPage = 5;
 
   const {
-    data: res,
+    data: publicPostData,
     isLoading: isLoadingAll,
     isError: isErrorAll,
   } = useQuery({
@@ -29,7 +29,7 @@ const BlogPostList = ({ isOwner = false }) => {
   });
 
   const {
-    data: res2,
+    data: ownerPostData,
     isLoading: isLoadingOwner,
     isError: isErrorOwner,
   } = useQuery({
@@ -40,10 +40,10 @@ const BlogPostList = ({ isOwner = false }) => {
   });
 
   // 일반 게시글 리스트
-  const postList = res?.data?.post || [];
+  const postList = publicPostData?.data?.post || [];
 
   // 본인 게시글 리스트
-  const filteredPostList = (res2?.data?.post || []).filter((post) => post.isOwner);
+  const filteredPostList = (ownerPostData?.data?.post || []).filter((post) => post.isOwner);
   const ownerPostList = filteredPostList.slice(
     (currentPage - 1) * postsPerPage,
     currentPage * postsPerPage,
@@ -52,10 +52,10 @@ const BlogPostList = ({ isOwner = false }) => {
   useEffect(() => {
     if (isOwner) {
       setTotalPage(Math.ceil(filteredPostList.length / postsPerPage) || 1);
-    } else if (res?.data?.pageMax) {
-      setTotalPage(res.data.pageMax);
+    } else if (publicPostData?.data?.pageMax) {
+      setTotalPage(publicPostData.data.pageMax);
     }
-  }, [isOwner, res, filteredPostList]);
+  }, [isOwner, publicPostData, filteredPostList]);
 
   if ((isOwner && isLoadingOwner) || (!isOwner && isLoadingAll)) {
     return <div>로딩 중...</div>;

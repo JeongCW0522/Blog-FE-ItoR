@@ -43,7 +43,7 @@ const CommentBox = styled.div`
   padding: 16px;
 `;
 
-const PostedCommetBox = styled.div`
+const PostedCommentBox = styled.div`
   display: flex;
   flex-direction: column;
   margin: 50px 0 60px;
@@ -118,7 +118,7 @@ const BlogComment = ({ post }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const { showToast } = useToast();
-  const nickName = localStorage.getItem('nickname');
+  const nickname = localStorage.getItem('nickname');
   const profilePicture = localStorage.getItem('profilePicture');
 
   const queryClient = useQueryClient();
@@ -168,7 +168,7 @@ const BlogComment = ({ post }) => {
         </NoComment>
       )}
       {commentList.map((comment) => (
-        <PostedCommetBox key={comment.commentId}>
+        <PostedCommentBox key={comment.commentId}>
           <PostedCommentContent>
             <InfoWrapper>
               <Image width='20px' height='20px' src={Profile} alt='프로필' />
@@ -185,7 +185,7 @@ const BlogComment = ({ post }) => {
           </PostedCommentContent>
           <CommentData>{createdAt}</CommentData>
           <PostedComment>{comment.content}</PostedComment>
-        </PostedCommetBox>
+        </PostedCommentBox>
       ))}
       {isLogin ? (
         <CommentBox id='comment'>
@@ -197,7 +197,7 @@ const BlogComment = ({ post }) => {
               src={profilePicture || Profile}
               alt='프로필'
             />
-            <span style={{ color: '#333' }}>{nickName}</span>
+            <span style={{ color: '#333' }}>{nickname}</span>
           </InfoWrapper>
           <StyledTextarea
             placeholder='댓글을 입력해주세요.'

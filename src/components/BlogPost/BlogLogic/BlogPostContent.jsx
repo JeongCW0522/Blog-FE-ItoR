@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Content, ContentText, ImageWrapper, DeleteBox } from '@/styles/BlogStyles';
 import { DeleteIcon } from '@/assets';
 import { Image } from '@/components';
@@ -20,12 +20,13 @@ const BlogPostContent = ({ contents, setContents }) => {
     setSelectedImage(null);
   };
 
-  const resize = (obj) => {
-    if (obj) {
-      obj.style.height = 'auto';
-      obj.style.height = `${obj.scrollHeight}px`;
-    }
-  };
+  useEffect(() => {
+    const textareas = document.querySelectorAll('textarea');
+    textareas.forEach((el) => {
+      el.style.height = 'auto';
+      el.style.height = `${el.scrollHeight}px`;
+    });
+  }, [contents]);
 
   return (
     <Content>
@@ -39,7 +40,6 @@ const BlogPostContent = ({ contents, setContents }) => {
                 placeholder='어떠한 것을 깨달았나요?'
                 value={item.content}
                 onChange={(e) => handleTextChange(index, e.target.value)}
-                onInput={(e) => resize(e.target)}
               />
             );
           } else if (item.contentType === 'IMAGE') {

@@ -143,7 +143,7 @@ const Mypage = () => {
       if (profileImage) {
         const updateImage = await updatePicture(profileImage);
         if (updateImage) {
-          showToast('positive', '프로필 이미지가 업데이트되었습니다.');
+          showToast('positive', '프로필이 업데이트 되었습니다.');
           setPreviewImage(profileImage);
           setFormData((prev) => ({
             ...prev,

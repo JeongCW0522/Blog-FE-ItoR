@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { Image, BlogComment } from '@/components';
 import { getPostDetail } from '@/api/post';
@@ -13,6 +13,7 @@ const TitleContent = styled.div`
   flex-direction: column;
   padding-bottom: 24px;
 `;
+
 const Title = styled.h2`
   font-size: 28px;
   font-weight: 600;
@@ -66,27 +67,30 @@ const BlogDetailField = ({ postId, setIsOwner }) => {
     staleTime: 1000 * 60,
   });
 
+  const post = data?.data;
+
   useEffect(() => {
-    if (data?.data?.isOwner !== undefined) {
-      setIsOwner(data.data.isOwner);
-    }
+    setIsOwner(!!data?.data?.isOwner);
   }, [data, setIsOwner]);
+
+  const postContent = useMemo(() => {
+    if (!post?.contents) return null;
+    return post.contents
+      .sort((a, b) => a.contentOrder - b.contentOrder)
+      .map((item, index) => {
+        if (item.contentType === 'TEXT') {
+          return <p key={index}>{item.content}</p>;
+        } else if (item.contentType === 'IMAGE') {
+          return <img key={index} src={item.content} alt={`이미지 ${index + 1}`} />;
+        }
+        return null;
+      });
+  }, [post?.contents]);
 
   if (isLoading) return <div>로딩 중...</div>;
   if (isError) return <div>에러 발생</div>;
 
-  const post = data?.data;
   const createdAt = dayjs(post.createdAt).format('YYYY.M.D');
-  const postContent = post.contents
-    .sort((a, b) => a.contentOrder - b.contentOrder)
-    .map((item, index) => {
-      if (item.contentType === 'TEXT') {
-        return <p key={index}>{item.content}</p>;
-      } else if (item.contentType === 'IMAGE') {
-        return <img key={index} src={item.content} alt={`이미지 ${index + 1}`} />;
-      }
-      return null;
-    });
 
   return (
     <>
