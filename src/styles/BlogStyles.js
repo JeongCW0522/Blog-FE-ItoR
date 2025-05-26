@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import TextareaAutosize from 'react-textarea-autosize';
 
 export const Container = styled.div`
   display: flex;
@@ -69,7 +70,7 @@ export const Content = styled.div`
   }
 `;
 
-export const ContentText = styled.textarea`
+export const ContentText = styled(TextareaAutosize)`
   min-height: 30px;
   width: 100%;
   font-size: 14px;

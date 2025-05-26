@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Content, ContentText, ImageWrapper, DeleteBox } from '@/styles/BlogStyles';
 import { DeleteIcon } from '@/assets';
 import { Image } from '@/components';
@@ -19,14 +19,6 @@ const BlogPostContent = ({ contents, setContents }) => {
     setContents(updatedContents);
     setSelectedImage(null);
   };
-
-  useEffect(() => {
-    const textareas = document.querySelectorAll('textarea');
-    textareas.forEach((el) => {
-      el.style.height = 'auto';
-      el.style.height = `${el.scrollHeight}px`;
-    });
-  }, [contents]);
 
   return (
     <Content>
