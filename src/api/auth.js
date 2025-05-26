@@ -1,15 +1,16 @@
 import axios from 'axios';
 //https://blog.leets.land
-const BaseUrl = 'https://blog.leets.land';
+
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const Axios = axios.create({
-  baseURL: BaseUrl,
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-export { BaseUrl, Axios };
+export { BASE_URL, Axios };
 
 const getRefreshToken = async () => {
   try {

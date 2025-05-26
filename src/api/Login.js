@@ -1,4 +1,4 @@
-import { Axios, BaseUrl } from './auth';
+import { Axios, BASE_URL } from './auth';
 import { storeInfo, storeTokens } from '@/utils/storeTokens';
 
 const EmailLogin = async ({ email, password }) => {
@@ -29,7 +29,7 @@ const EmailLogin = async ({ email, password }) => {
 
 const KakaoLogin = async () => {
   try {
-    const url = `${BaseUrl}/auth/kakao`;
+    const url = `${BASE_URL}/auth/kakao`;
     window.location.href = url;
   } catch (error) {
     console.error('카카오 로그인 URL 요청 실패:', error);
